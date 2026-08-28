@@ -386,7 +386,7 @@ export function OnboardingWizard() {
 
       setIsComplete(true);
       setTimeout(() => {
-        router.push("/");
+        router.push("/#overview");
       }, 700);
     } catch (err) {
       setValidationError(err instanceof Error ? err.message : "An error occurred during registration.");

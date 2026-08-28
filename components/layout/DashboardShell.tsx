@@ -19,7 +19,6 @@ import {
   LogIn,
   LogOut,
   User,
-  Radio,
 } from "lucide-react";
 
 export type DashboardTab =
@@ -92,22 +91,22 @@ export function DashboardShell({
   const activeNavItem = ALL_NAV_ITEMS.find((n) => n.id === activeTab) || ALL_NAV_ITEMS[0];
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100 flex">
+    <div className="min-h-screen bg-[#040810] text-slate-100 flex">
       {/* ========================================================================= */}
       {/* 1. FIXED LEFT SIDEBAR (Desktop)                                           */}
       {/* ========================================================================= */}
-      <aside className="hidden lg:flex w-64 flex-col fixed inset-y-0 left-0 z-40 border-r border-neutral-800/80 bg-neutral-950/95 backdrop-blur-xl">
+      <aside className="hidden lg:flex w-64 flex-col fixed inset-y-0 left-0 z-40 border-r border-[#132742] bg-[#07111e]/95 backdrop-blur-2xl">
         {/* Branding Header */}
-        <div className="h-16 flex items-center justify-between px-5 border-b border-neutral-800/80">
+        <div className="h-16 flex items-center justify-between px-5 border-b border-[#132742]">
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-white text-black font-bold shadow-sm transition-transform group-hover:scale-105">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-500 text-slate-950 font-bold shadow-[0_0_15px_rgba(56,189,248,0.5)] transition-transform duration-200 group-hover:scale-105">
               <Sparkles className="h-4 w-4 fill-current" />
             </div>
             <div className="flex items-center gap-1.5">
               <span className="font-display font-bold text-base tracking-tight text-white">
-                Weather<span className="text-neutral-400">GPT</span>
+                Weather<span className="text-sky-400">GPT</span>
               </span>
-              <span className="rounded border border-neutral-700 bg-neutral-900 px-1.5 py-0.5 text-[9px] font-mono font-semibold text-neutral-300">
+              <span className="rounded border border-sky-500/30 bg-[#0a1628] px-1.5 py-0.5 text-[9px] font-mono font-semibold text-sky-300">
                 {SIH_PROBLEM_CODE}
               </span>
             </div>
@@ -118,7 +117,7 @@ export function DashboardShell({
         <div className="flex-1 overflow-y-auto px-3 py-5 space-y-6">
           {/* Section: INTELLIGENCE */}
           <div className="space-y-1">
-            <span className="px-3 text-[10px] font-mono uppercase tracking-widest text-neutral-500 font-semibold block mb-2">
+            <span className="px-3 text-[10px] font-mono uppercase tracking-widest text-sky-400/70 font-semibold block mb-2">
               Intelligence
             </span>
             {INTELLIGENCE_NAV_ITEMS.map((item) => {
@@ -128,14 +127,14 @@ export function DashboardShell({
                 <button
                   key={item.id}
                   onClick={() => onTabChange(item.id)}
-                  className={`w-full flex items-center justify-between rounded-xl px-3.5 py-2.5 text-xs font-medium transition-all ${
+                  className={`w-full flex items-center justify-between rounded-xl px-3.5 py-2.5 text-xs font-medium transition-all duration-150 ${
                     isActive
-                      ? "bg-neutral-900 text-white font-semibold border border-neutral-700/80 shadow-sm"
-                      : "text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 border border-transparent"
+                      ? "bg-[#0f223d] text-white font-semibold border border-sky-500/40 shadow-[0_0_15px_-3px_rgba(56,189,248,0.25)]"
+                      : "text-slate-400 hover:bg-[#0a182c] hover:text-slate-100 border border-transparent"
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <Icon className={`h-4 w-4 ${isActive ? "text-white" : "text-neutral-400"}`} />
+                    <Icon className={`h-4 w-4 transition-colors ${isActive ? "text-sky-400" : "text-slate-400"}`} />
                     <span>{item.label}</span>
                   </div>
                 </button>
@@ -145,7 +144,7 @@ export function DashboardShell({
 
           {/* Section: DISTRICT */}
           <div className="space-y-1">
-            <span className="px-3 text-[10px] font-mono uppercase tracking-widest text-neutral-500 font-semibold block mb-2">
+            <span className="px-3 text-[10px] font-mono uppercase tracking-widest text-sky-400/70 font-semibold block mb-2">
               District
             </span>
             {DISTRICT_NAV_ITEMS.map((item) => {
@@ -155,14 +154,14 @@ export function DashboardShell({
                 <button
                   key={item.id}
                   onClick={() => onTabChange(item.id)}
-                  className={`w-full flex items-center justify-between rounded-xl px-3.5 py-2.5 text-xs font-medium transition-all ${
+                  className={`w-full flex items-center justify-between rounded-xl px-3.5 py-2.5 text-xs font-medium transition-all duration-150 ${
                     isActive
-                      ? "bg-neutral-900 text-white font-semibold border border-neutral-700/80 shadow-sm"
-                      : "text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 border border-transparent"
+                      ? "bg-[#0f223d] text-white font-semibold border border-sky-500/40 shadow-[0_0_15px_-3px_rgba(56,189,248,0.25)]"
+                      : "text-slate-400 hover:bg-[#0a182c] hover:text-slate-100 border border-transparent"
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <Icon className={`h-4 w-4 ${isActive ? "text-white" : "text-neutral-400"}`} />
+                    <Icon className={`h-4 w-4 transition-colors ${isActive ? "text-sky-400" : "text-slate-400"}`} />
                     <span>{item.label}</span>
                   </div>
                 </button>
@@ -172,7 +171,7 @@ export function DashboardShell({
 
           {/* Section: SYSTEM */}
           <div className="space-y-1">
-            <span className="px-3 text-[10px] font-mono uppercase tracking-widest text-neutral-500 font-semibold block mb-2">
+            <span className="px-3 text-[10px] font-mono uppercase tracking-widest text-sky-400/70 font-semibold block mb-2">
               System
             </span>
             {SYSTEM_NAV_ITEMS.map((item) => {
@@ -182,18 +181,18 @@ export function DashboardShell({
                 <button
                   key={item.id}
                   onClick={() => onTabChange(item.id)}
-                  className={`w-full flex items-center justify-between rounded-xl px-3.5 py-2.5 text-xs font-medium transition-all ${
+                  className={`w-full flex items-center justify-between rounded-xl px-3.5 py-2.5 text-xs font-medium transition-all duration-150 ${
                     isActive
-                      ? "bg-neutral-900 text-white font-semibold border border-neutral-700/80 shadow-sm"
-                      : "text-neutral-400 hover:bg-neutral-900/50 hover:text-neutral-200 border border-transparent"
+                      ? "bg-[#0f223d] text-white font-semibold border border-sky-500/40 shadow-[0_0_15px_-3px_rgba(56,189,248,0.25)]"
+                      : "text-slate-400 hover:bg-[#0a182c] hover:text-slate-100 border border-transparent"
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <Icon className={`h-4 w-4 ${isActive ? "text-white" : "text-neutral-400"}`} />
+                    <Icon className={`h-4 w-4 transition-colors ${isActive ? "text-sky-400" : "text-slate-400"}`} />
                     <span>{item.label}</span>
                   </div>
                   {item.badge && (
-                    <span className="text-[9px] font-mono bg-neutral-800 text-neutral-300 border border-neutral-700 px-1.5 py-0.5 rounded">
+                    <span className="text-[9px] font-mono bg-sky-950/60 text-sky-300 border border-sky-500/30 px-1.5 py-0.5 rounded">
                       {item.badge}
                     </span>
                   )}
@@ -204,23 +203,23 @@ export function DashboardShell({
         </div>
 
         {/* Sidebar Footer: Authenticated User & Sign Out */}
-        <div className="p-3 border-t border-neutral-800/80 space-y-2">
+        <div className="p-3 border-t border-[#132742] space-y-2">
           {mounted && user ? (
-            <div className="rounded-xl border border-neutral-800 bg-neutral-900 p-2.5 space-y-2">
-              <div className="flex items-center gap-2 text-xs">
-                <div className="h-7 w-7 rounded-lg bg-neutral-800 border border-neutral-700 flex items-center justify-center text-white shrink-0">
+            <div className="rounded-xl border border-[#142a47] bg-[#0a1628] p-2.5 space-y-2 shadow-inner">
+              <div className="flex items-center gap-2.5 text-xs">
+                <div className="h-7 w-7 rounded-lg bg-[#07111e] border border-sky-500/30 flex items-center justify-center text-sky-400 shrink-0">
                   <User className="h-3.5 w-3.5" />
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="text-xs font-semibold text-white truncate">{user.email}</p>
-                  <p className="text-[10px] text-neutral-400 font-mono capitalize truncate">
+                  <p className="text-[10px] text-sky-300/70 font-mono capitalize truncate">
                     {userProfile?.occupation || selectedOccupation} · {userProfile?.district || selectedDistrict}
                   </p>
                 </div>
               </div>
               <button
                 onClick={() => signOut()}
-                className="w-full flex items-center justify-center gap-1.5 rounded-lg border border-neutral-800 bg-neutral-950 py-1.5 text-[11px] font-medium text-neutral-400 hover:text-white hover:border-neutral-700 transition-colors"
+                className="w-full flex items-center justify-center gap-1.5 rounded-lg border border-[#142a47] bg-[#07111e] py-1.5 text-[11px] font-medium text-slate-400 hover:text-white hover:border-sky-500/40 transition-colors"
               >
                 <LogOut className="h-3 w-3" />
                 <span>Sign Out</span>
@@ -230,14 +229,14 @@ export function DashboardShell({
             <div className="flex gap-1.5">
               <Link
                 href="/login"
-                className="flex-1 flex items-center justify-center gap-1.5 rounded-lg border border-neutral-800 bg-neutral-900 py-2 text-xs font-semibold text-neutral-200 hover:bg-neutral-800 hover:text-white transition-colors"
+                className="flex-1 flex items-center justify-center gap-1.5 rounded-lg border border-[#142a47] bg-[#0a1628] py-2 text-xs font-semibold text-slate-200 hover:bg-[#0f223d] hover:border-sky-500/30 hover:text-white transition-colors"
               >
-                <LogIn className="h-3 w-3" />
+                <LogIn className="h-3 w-3 text-sky-400" />
                 <span>Sign In</span>
               </Link>
               <Link
                 href="/signup"
-                className="flex-1 flex items-center justify-center gap-1.5 rounded-lg bg-white py-2 text-xs font-semibold text-black hover:bg-neutral-200 transition-colors shadow-sm"
+                className="flex-1 flex items-center justify-center gap-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 py-2 text-xs font-bold text-slate-950 shadow-[0_0_12px_rgba(56,189,248,0.4)] transition-all"
               >
                 <User className="h-3 w-3" />
                 <span>Sign Up</span>
@@ -255,21 +254,21 @@ export function DashboardShell({
           {/* Backdrop */}
           <div
             onClick={() => setMobileSidebarOpen(false)}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity"
           />
 
           {/* Drawer Content */}
-          <div className="relative w-64 bg-neutral-950 border-r border-neutral-800 flex flex-col h-full z-10 p-4 space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-neutral-800">
+          <div className="relative w-64 bg-[#07111e] border-r border-[#132742] flex flex-col h-full z-10 p-4 space-y-4 shadow-2xl">
+            <div className="flex items-center justify-between pb-3 border-b border-[#132742]">
               <div className="flex items-center gap-2">
-                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white text-black font-bold">
+                <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-sky-500 text-slate-950 font-bold">
                   <Sparkles className="h-3.5 w-3.5 fill-current" />
                 </div>
-                <span className="font-bold text-sm text-white">WeatherGPT</span>
+                <span className="font-bold text-sm text-white">Weather<span className="text-sky-400">GPT</span></span>
               </div>
               <button
                 onClick={() => setMobileSidebarOpen(false)}
-                className="p-1 rounded-lg text-neutral-400 hover:bg-neutral-900"
+                className="p-1 rounded-lg text-slate-400 hover:bg-[#0a1628] hover:text-white transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -277,7 +276,7 @@ export function DashboardShell({
 
             <div className="flex-1 overflow-y-auto space-y-4">
               <div>
-                <span className="px-3 text-[10px] font-mono uppercase tracking-widest text-neutral-500 font-semibold block mb-1.5">
+                <span className="px-3 text-[10px] font-mono uppercase tracking-widest text-sky-400/70 font-semibold block mb-1.5">
                   Intelligence
                 </span>
                 <div className="space-y-1">
@@ -291,13 +290,13 @@ export function DashboardShell({
                           onTabChange(item.id);
                           setMobileSidebarOpen(false);
                         }}
-                        className={`w-full flex items-center gap-3 rounded-xl px-3.5 py-2 text-xs font-medium ${
+                        className={`w-full flex items-center gap-3 rounded-xl px-3.5 py-2 text-xs font-medium transition-colors ${
                           isActive
-                            ? "bg-neutral-900 text-white font-semibold border border-neutral-700"
-                            : "text-neutral-400 hover:bg-neutral-900 hover:text-white"
+                            ? "bg-[#0f223d] text-white font-semibold border border-sky-500/40"
+                            : "text-slate-400 hover:bg-[#0a1628] hover:text-white"
                         }`}
                       >
-                        <Icon className="h-4 w-4" />
+                        <Icon className={`h-4 w-4 ${isActive ? "text-sky-400" : "text-slate-400"}`} />
                         <span>{item.label}</span>
                       </button>
                     );
@@ -306,7 +305,7 @@ export function DashboardShell({
               </div>
 
               <div>
-                <span className="px-3 text-[10px] font-mono uppercase tracking-widest text-neutral-500 font-semibold block mb-1.5">
+                <span className="px-3 text-[10px] font-mono uppercase tracking-widest text-sky-400/70 font-semibold block mb-1.5">
                   District
                 </span>
                 <div className="space-y-1">
@@ -320,13 +319,13 @@ export function DashboardShell({
                           onTabChange(item.id);
                           setMobileSidebarOpen(false);
                         }}
-                        className={`w-full flex items-center gap-3 rounded-xl px-3.5 py-2 text-xs font-medium ${
+                        className={`w-full flex items-center gap-3 rounded-xl px-3.5 py-2 text-xs font-medium transition-colors ${
                           isActive
-                            ? "bg-neutral-900 text-white font-semibold border border-neutral-700"
-                            : "text-neutral-400 hover:bg-neutral-900 hover:text-white"
+                            ? "bg-[#0f223d] text-white font-semibold border border-sky-500/40"
+                            : "text-slate-400 hover:bg-[#0a1628] hover:text-white"
                         }`}
                       >
-                        <Icon className="h-4 w-4" />
+                        <Icon className={`h-4 w-4 ${isActive ? "text-sky-400" : "text-slate-400"}`} />
                         <span>{item.label}</span>
                       </button>
                     );
@@ -335,7 +334,7 @@ export function DashboardShell({
               </div>
 
               <div>
-                <span className="px-3 text-[10px] font-mono uppercase tracking-widest text-neutral-500 font-semibold block mb-1.5">
+                <span className="px-3 text-[10px] font-mono uppercase tracking-widest text-sky-400/70 font-semibold block mb-1.5">
                   System
                 </span>
                 <div className="space-y-1">
@@ -349,13 +348,13 @@ export function DashboardShell({
                           onTabChange(item.id);
                           setMobileSidebarOpen(false);
                         }}
-                        className={`w-full flex items-center gap-3 rounded-xl px-3.5 py-2 text-xs font-medium ${
+                        className={`w-full flex items-center gap-3 rounded-xl px-3.5 py-2 text-xs font-medium transition-colors ${
                           isActive
-                            ? "bg-neutral-900 text-white font-semibold border border-neutral-700"
-                            : "text-neutral-400 hover:bg-neutral-900 hover:text-white"
+                            ? "bg-[#0f223d] text-white font-semibold border border-sky-500/40"
+                            : "text-slate-400 hover:bg-[#0a1628] hover:text-white"
                         }`}
                       >
-                        <Icon className="h-4 w-4" />
+                        <Icon className={`h-4 w-4 ${isActive ? "text-sky-400" : "text-slate-400"}`} />
                         <span>{item.label}</span>
                       </button>
                     );
@@ -364,14 +363,14 @@ export function DashboardShell({
               </div>
             </div>
 
-            <div className="pt-3 border-t border-neutral-800 space-y-2">
+            <div className="pt-3 border-t border-[#132742] space-y-2">
               {mounted && user ? (
                 <button
                   onClick={() => {
                     signOut();
                     setMobileSidebarOpen(false);
                   }}
-                  className="w-full flex items-center justify-center gap-2 rounded-xl border border-neutral-800 bg-neutral-900 py-2 text-xs font-semibold text-neutral-300"
+                  className="w-full flex items-center justify-center gap-2 rounded-xl border border-[#142a47] bg-[#0a1628] py-2 text-xs font-semibold text-slate-300 hover:text-white hover:border-sky-500/30"
                 >
                   <LogOut className="h-3.5 w-3.5" />
                   <span>Sign Out</span>
@@ -381,14 +380,14 @@ export function DashboardShell({
                   <Link
                     href="/login"
                     onClick={() => setMobileSidebarOpen(false)}
-                    className="flex-1 text-center rounded-xl border border-neutral-800 bg-neutral-900 py-2 text-xs font-semibold text-neutral-200"
+                    className="flex-1 text-center rounded-xl border border-[#142a47] bg-[#0a1628] py-2 text-xs font-semibold text-slate-200 hover:bg-[#0f223d]"
                   >
                     Sign In
                   </Link>
                   <Link
                     href="/signup"
                     onClick={() => setMobileSidebarOpen(false)}
-                    className="flex-1 text-center rounded-xl bg-white py-2 text-xs font-semibold text-black"
+                    className="flex-1 text-center rounded-xl bg-sky-500 hover:bg-sky-400 py-2 text-xs font-bold text-slate-950 shadow-sm"
                   >
                     Sign Up
                   </Link>
@@ -403,19 +402,19 @@ export function DashboardShell({
       {/* 3. MAIN VIEWPORT AREA (Desktop: pl-64, Minimal Top Bar + Content Area)     */}
       {/* ========================================================================= */}
       <div className="flex-1 flex flex-col min-w-0 lg:pl-64">
-        {/* Minimal Top Bar (Part 4) */}
-        <header className="sticky top-0 z-30 h-16 border-b border-neutral-800/80 bg-neutral-950/80 backdrop-blur-xl px-4 sm:px-8 flex items-center justify-between">
+        {/* Minimal Top Bar */}
+        <header className="sticky top-0 z-30 h-16 border-b border-[#132742] bg-[#040810]/85 backdrop-blur-xl px-4 sm:px-8 flex items-center justify-between">
           {/* Left: Active View Breadcrumb & Mobile Menu */}
           <div className="flex items-center gap-3">
             <button
               onClick={() => setMobileSidebarOpen(true)}
-              className="lg:hidden p-2 -ml-2 rounded-xl text-neutral-400 hover:bg-neutral-900 hover:text-white"
+              className="lg:hidden p-2 -ml-2 rounded-xl text-slate-400 hover:bg-[#0a1628] hover:text-white transition-colors"
               aria-label="Open sidebar"
             >
               <Menu className="h-5 w-5" />
             </button>
             <div className="flex items-center gap-2">
-              <span className="text-xs font-mono text-neutral-500 hidden sm:inline">WeatherGPT /</span>
+              <span className="text-xs font-mono text-slate-500 hidden sm:inline">WeatherGPT /</span>
               <h1 className="text-sm sm:text-base font-bold text-white tracking-tight">
                 {activeNavItem.label}
               </h1>
@@ -424,20 +423,23 @@ export function DashboardShell({
 
           {/* Right: Live Telemetry Indicator & Authenticated User / Sign Out */}
           <div className="flex items-center gap-3">
-            <div className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-neutral-800 bg-neutral-900/80 px-3 py-1 text-[11px] font-mono text-neutral-300">
-              <Radio className="h-2.5 w-2.5 text-white animate-pulse" />
+            <div className="hidden sm:inline-flex items-center gap-2 rounded-full border border-sky-500/20 bg-[#0a1628]/90 px-3 py-1 text-[11px] font-mono text-sky-300 shadow-sm">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400" />
+              </span>
               <span>{isLive ? "Open-Meteo High-Res" : "Preset Mode"}</span>
             </div>
 
             {mounted && user ? (
               <div className="flex items-center gap-2">
-                <div className="hidden md:flex items-center gap-2 rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-xs font-medium text-neutral-200">
-                  <User className="h-3 w-3 text-neutral-400" />
+                <div className="hidden md:flex items-center gap-2 rounded-xl border border-[#142a47] bg-[#0a1628] px-3 py-1.5 text-xs font-medium text-slate-200">
+                  <User className="h-3 w-3 text-sky-400" />
                   <span className="max-w-[140px] truncate">{user.email}</span>
                 </div>
                 <button
                   onClick={() => signOut()}
-                  className="rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-xs font-semibold text-neutral-300 hover:text-white hover:border-neutral-700 transition-colors"
+                  className="rounded-xl border border-[#142a47] bg-[#0a1628] px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-white hover:border-sky-500/40 transition-colors"
                 >
                   Sign Out
                 </button>
@@ -446,13 +448,13 @@ export function DashboardShell({
               <div className="flex items-center gap-2">
                 <Link
                   href="/login"
-                  className="rounded-xl border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-xs font-semibold text-neutral-300 hover:text-white hover:border-neutral-700 transition-colors"
+                  className="rounded-xl border border-[#142a47] bg-[#0a1628] px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-white hover:border-sky-500/30 transition-colors"
                 >
                   Sign In
                 </Link>
                 <Link
                   href="/signup"
-                  className="rounded-xl bg-white px-3 py-1.5 text-xs font-semibold text-black hover:bg-neutral-200 transition-colors shadow-sm"
+                  className="rounded-xl bg-sky-500 hover:bg-sky-400 px-3.5 py-1.5 text-xs font-bold text-slate-950 shadow-[0_0_15px_rgba(56,189,248,0.35)] transition-all"
                 >
                   Sign Up
                 </Link>

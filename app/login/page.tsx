@@ -29,7 +29,7 @@ export default function LoginPage() {
       setError(result.error.message);
       setIsSubmitting(false);
     } else {
-      router.push("/");
+      router.push("/#overview");
     }
   };
 
@@ -39,22 +39,22 @@ export default function LoginPage() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-black font-bold shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500 text-slate-950 font-bold shadow-[0_0_20px_rgba(56,189,248,0.5)]">
               <Sparkles className="h-5 w-5 fill-current" />
             </div>
             <div className="text-left">
               <h1 className="font-display text-2xl font-bold tracking-tight text-white">
-                Weather<span className="text-neutral-400">GPT</span>
+                Weather<span className="text-sky-400">GPT</span>
               </h1>
               <div className="flex items-center gap-2 mt-0.5">
-                <span className="inline-flex items-center rounded-full border border-neutral-700 bg-neutral-900 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-neutral-300">
+                <span className="inline-flex items-center rounded-full border border-sky-500/30 bg-[#0a1628] px-2 py-0.5 text-[10px] font-semibold tracking-wide text-sky-300">
                   {SIH_PROBLEM_CODE}
                 </span>
-                <span className="text-[11px] text-neutral-400">Sign In</span>
+                <span className="text-[11px] text-slate-400">Sign In</span>
               </div>
             </div>
           </div>
-          <p className="text-xs sm:text-sm text-neutral-400 mt-2">
+          <p className="text-xs sm:text-sm text-slate-400 mt-2">
             Access your personalized weather risk dashboard
           </p>
         </div>
@@ -63,22 +63,22 @@ export default function LoginPage() {
         <Card variant="glassStrong" className="space-y-6">
           <div className="space-y-1">
             <h2 className="text-xl font-bold text-white tracking-tight">Welcome Back</h2>
-            <p className="text-xs text-neutral-400">
+            <p className="text-xs text-slate-400">
               Enter your registered credentials to proceed.
             </p>
           </div>
 
           {error && (
-            <div className="rounded-xl border border-neutral-700 bg-neutral-900 p-3.5 text-xs text-neutral-200 flex items-start gap-2.5">
-              <span className="text-white font-bold">!</span>
+            <div className="rounded-xl border border-rose-500/30 bg-rose-950/40 p-3.5 text-xs text-rose-200 flex items-start gap-2.5">
+              <span className="text-rose-400 font-bold">!</span>
               <p className="flex-1">{error}</p>
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1.5">
-              <label htmlFor="email" className="flex items-center gap-2 text-xs font-semibold text-neutral-300">
-                <Mail className="h-3.5 w-3.5 text-neutral-400" />
+              <label htmlFor="email" className="flex items-center gap-2 text-xs font-semibold text-slate-300">
+                <Mail className="h-3.5 w-3.5 text-sky-400" />
                 Email Address
               </label>
               <input
@@ -87,15 +87,15 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full rounded-xl border border-neutral-800 bg-neutral-900 px-4 py-2.5 text-xs sm:text-sm text-white placeholder-neutral-500 transition-colors focus:border-white focus:outline-none"
+                className="w-full rounded-xl border border-[#142a47] bg-[#07111e] px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 transition-all duration-150 focus:border-sky-400 focus:ring-1 focus:ring-sky-400/50 focus:outline-none"
                 placeholder="you@example.com"
                 disabled={isSubmitting}
               />
             </div>
 
             <div className="space-y-1.5">
-              <label htmlFor="password" className="flex items-center gap-2 text-xs font-semibold text-neutral-300">
-                <Lock className="h-3.5 w-3.5 text-neutral-400" />
+              <label htmlFor="password" className="flex items-center gap-2 text-xs font-semibold text-slate-300">
+                <Lock className="h-3.5 w-3.5 text-sky-400" />
                 Password
               </label>
               <input
@@ -104,7 +104,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full rounded-xl border border-neutral-800 bg-neutral-900 px-4 py-2.5 text-xs sm:text-sm text-white placeholder-neutral-500 transition-colors focus:border-white focus:outline-none"
+                className="w-full rounded-xl border border-[#142a47] bg-[#07111e] px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 transition-all duration-150 focus:border-sky-400 focus:ring-1 focus:ring-sky-400/50 focus:outline-none"
                 placeholder="••••••••"
                 disabled={isSubmitting}
               />
@@ -122,12 +122,12 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <div className="pt-4 border-t border-neutral-800 text-center">
-            <p className="text-xs text-neutral-400">
+          <div className="pt-4 border-t border-[#142a47] text-center">
+            <p className="text-xs text-slate-400">
               Don&apos;t have an account?{" "}
               <Link
                 href="/signup"
-                className="font-semibold text-white hover:underline transition-colors"
+                className="font-semibold text-sky-300 hover:text-sky-200 hover:underline transition-colors"
               >
                 Start Onboarding
               </Link>
@@ -137,24 +137,24 @@ export default function LoginPage() {
 
         {/* Feature Highlights */}
         <div className="mt-8 grid grid-cols-3 gap-3">
-          <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-3 text-center">
-            <ShieldCheck className="h-4 w-4 text-white mx-auto mb-1" />
-            <p className="text-[11px] font-medium text-neutral-300">Verified</p>
+          <div className="rounded-xl border border-[#142a47] bg-[#0a1628]/80 p-3 text-center">
+            <ShieldCheck className="h-4 w-4 text-sky-400 mx-auto mb-1" />
+            <p className="text-[11px] font-medium text-slate-300">Verified</p>
           </div>
-          <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-3 text-center">
-            <User className="h-4 w-4 text-white mx-auto mb-1" />
-            <p className="text-[11px] font-medium text-neutral-300">Personalized</p>
+          <div className="rounded-xl border border-[#142a47] bg-[#0a1628]/80 p-3 text-center">
+            <User className="h-4 w-4 text-sky-400 mx-auto mb-1" />
+            <p className="text-[11px] font-medium text-slate-300">Personalized</p>
           </div>
-          <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-3 text-center">
-            <CheckCircle2 className="h-4 w-4 text-white mx-auto mb-1" />
-            <p className="text-[11px] font-medium text-neutral-300">Targeted</p>
+          <div className="rounded-xl border border-[#142a47] bg-[#0a1628]/80 p-3 text-center">
+            <CheckCircle2 className="h-4 w-4 text-sky-400 mx-auto mb-1" />
+            <p className="text-[11px] font-medium text-slate-300">Targeted</p>
           </div>
         </div>
 
         <div className="mt-6 text-center">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs text-neutral-500 hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-sky-300 transition-colors"
           >
             <ArrowRight className="h-3 w-3 rotate-180" />
             <span>Back to Dashboard</span>

@@ -44,11 +44,11 @@ export function ProductFlowVisualizer({
   return (
     <div className="space-y-6">
       {/* Pipeline Header */}
-      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-neutral-800 pb-4">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-[#142a47] pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
-            <span className="text-[11px] font-semibold uppercase tracking-widest text-neutral-400 font-mono">
+            <span className="h-1.5 w-1.5 rounded-full bg-sky-400 animate-pulse" />
+            <span className="text-[11px] font-semibold uppercase tracking-widest text-sky-400 font-mono">
               Pipeline Architecture
             </span>
           </div>
@@ -56,8 +56,8 @@ export function ProductFlowVisualizer({
             Locked 7-Step Intelligence Flow
           </h2>
         </div>
-        <div className="inline-flex items-center gap-2 rounded-full border border-neutral-700 bg-neutral-900 px-3.5 py-1.5 text-xs font-semibold text-white">
-          <span className="h-1.5 w-1.5 rounded-full bg-white" />
+        <div className="inline-flex items-center gap-2 rounded-full border border-sky-500/30 bg-[#0a1628] px-3.5 py-1.5 text-xs font-semibold text-sky-300 shadow-[0_0_12px_-2px_rgba(56,189,248,0.25)]">
+          <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
           <span>Step 0{activeStep} Active</span>
         </div>
       </div>
@@ -65,7 +65,7 @@ export function ProductFlowVisualizer({
       {/* Connected 7-Step Pipeline Nodes */}
       <div className="relative">
         {/* Horizontal Connector Line for Desktop */}
-        <div className="absolute top-1/2 left-6 right-6 hidden -translate-y-1/2 border-t border-neutral-800 lg:block z-0" />
+        <div className="absolute top-1/2 left-6 right-6 hidden -translate-y-1/2 border-t border-[#142a47] lg:block z-0" />
 
         <div className="relative z-10 grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7">
           {PRODUCT_FLOW.map((stepTitle, idx) => {
@@ -79,10 +79,10 @@ export function ProductFlowVisualizer({
                 key={stepTitle}
                 type="button"
                 onClick={() => onStepSelect(stepNumber)}
-                className={`group relative flex flex-col justify-between rounded-xl p-4 text-left transition-all border ${
+                className={`group relative flex flex-col justify-between rounded-xl p-4 text-left transition-all duration-200 border ${
                   isActive
-                    ? "border-white bg-neutral-900 shadow-md ring-1 ring-white"
-                    : "border-neutral-800 bg-neutral-950 hover:border-neutral-700 hover:bg-neutral-900/60"
+                    ? "border-sky-400 bg-[#0f223d] shadow-[0_0_20px_-3px_rgba(56,189,248,0.35)] ring-1 ring-sky-400/50"
+                    : "border-[#142a47] bg-[#07111e] hover:border-sky-500/30 hover:bg-[#0a1628]"
                 }`}
               >
                 <div>
@@ -90,16 +90,16 @@ export function ProductFlowVisualizer({
                   <div className="flex items-center justify-between mb-3">
                     <span
                       className={`font-mono text-xs font-bold ${
-                        isActive ? "text-white" : "text-neutral-500"
+                        isActive ? "text-sky-300" : "text-slate-500"
                       }`}
                     >
                       0{stepNumber}
                     </span>
                     <div
-                      className={`flex h-7 w-7 items-center justify-center rounded-lg border ${
+                      className={`flex h-7 w-7 items-center justify-center rounded-lg border transition-colors ${
                         isActive
-                          ? "bg-white text-black border-white"
-                          : "bg-neutral-900 text-neutral-400 border-neutral-800"
+                          ? "bg-sky-500 text-slate-950 border-sky-400 shadow-[0_0_10px_rgba(56,189,248,0.5)]"
+                          : "bg-[#0a1628] text-slate-400 border-[#142a47] group-hover:text-sky-300"
                       }`}
                     >
                       <Icon className="h-3.5 w-3.5" />
@@ -107,21 +107,25 @@ export function ProductFlowVisualizer({
                   </div>
 
                   {/* Phase Eyebrow Tag */}
-                  <span className="text-[9px] font-mono uppercase tracking-wider text-neutral-500 font-semibold block mb-1">
+                  <span className={`text-[9px] font-mono uppercase tracking-wider font-semibold block mb-1 ${
+                    isActive ? "text-sky-400" : "text-slate-500"
+                  }`}>
                     {phaseLabel}
                   </span>
 
                   {/* Step Title */}
                   <div
                     className={`text-xs font-semibold leading-tight line-clamp-2 ${
-                      isActive ? "text-white" : "text-neutral-300"
+                      isActive ? "text-white" : "text-slate-300"
                     }`}
                   >
                     {stepTitle}
                   </div>
                 </div>
 
-                <div className="mt-3 pt-2 border-t border-neutral-800/80 text-[10px] text-neutral-500">
+                <div className={`mt-3 pt-2 border-t border-[#142a47]/80 text-[10px] ${
+                  isActive ? "text-sky-300/80 font-mono font-medium" : "text-slate-500"
+                }`}>
                   {isActive ? "Viewing output" : "Click to view"}
                 </div>
               </button>

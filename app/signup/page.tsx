@@ -14,22 +14,22 @@ export default function SignupPage() {
         {/* Top Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center gap-3 mb-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white text-black font-bold shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-sky-500 text-slate-950 font-bold shadow-[0_0_20px_rgba(56,189,248,0.5)]">
               <Sparkles className="h-5 w-5 fill-current" />
             </div>
             <div className="text-left">
               <h1 className="font-display text-2xl font-bold tracking-tight text-white">
-                Weather<span className="text-neutral-400">GPT</span>
+                Weather<span className="text-sky-400">GPT</span>
               </h1>
               <div className="flex items-center gap-2 mt-0.5">
-                <span className="inline-flex items-center rounded-full border border-neutral-700 bg-neutral-900 px-2 py-0.5 text-[10px] font-semibold tracking-wide text-neutral-300">
+                <span className="inline-flex items-center rounded-full border border-sky-500/30 bg-[#0a1628] px-2 py-0.5 text-[10px] font-semibold tracking-wide text-sky-300">
                   {SIH_PROBLEM_CODE}
                 </span>
-                <span className="text-[11px] text-neutral-400">Onboarding</span>
+                <span className="text-[11px] text-slate-400">Onboarding</span>
               </div>
             </div>
           </div>
-          <p className="text-xs sm:text-sm text-neutral-400 max-w-sm mx-auto">
+          <p className="text-xs sm:text-sm text-slate-400 max-w-sm mx-auto">
             Configure your personalized weather risk profile in 6 simple steps.
           </p>
         </div>
@@ -41,7 +41,7 @@ export default function SignupPage() {
         <div className="mt-8 text-center">
           <Link
             href="/"
-            className="inline-flex items-center gap-1.5 text-xs text-neutral-500 hover:text-white transition-colors"
+            className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-sky-300 transition-colors"
           >
             <ArrowRight className="h-3 w-3 rotate-180" />
             <span>Back to Dashboard</span>

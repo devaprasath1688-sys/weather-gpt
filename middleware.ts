@@ -57,6 +57,7 @@ export async function middleware(request: NextRequest) {
   if (isAuthPath && user) {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = "/";
+    redirectUrl.hash = "overview";
     return NextResponse.redirect(redirectUrl);
   }
 

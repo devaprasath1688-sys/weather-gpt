@@ -11,8 +11,8 @@ const LeafletFallbackMap = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="flex items-center justify-center h-full w-full bg-neutral-950 text-neutral-400">
-        <Loader2 className="h-6 w-6 animate-spin text-white" />
+      <div className="flex items-center justify-center h-full w-full bg-[#040810] text-slate-400">
+        <Loader2 className="h-6 w-6 animate-spin text-sky-400" />
       </div>
     ),
   }
@@ -183,23 +183,23 @@ export function LiveWeatherMap({
   const isUsingGoogleMaps = Boolean(apiKey) && googleMapsLoaded && !googleMapsError;
 
   return (
-    <div className="relative w-full rounded-2xl overflow-hidden border border-neutral-800 bg-neutral-950 shadow-sm">
+    <div className="relative w-full rounded-2xl overflow-hidden border border-[#142a47] bg-[#07111e] shadow-xl">
       {/* Map Header Controls */}
-      <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-3.5 border-b border-neutral-800 bg-neutral-950/90 backdrop-blur-md">
+      <div className="flex flex-wrap items-center justify-between gap-3 px-5 py-3.5 border-b border-[#142a47] bg-[#07111e]/95 backdrop-blur-md">
         <div className="flex items-center gap-3">
-          <MapPin className="h-4 w-4 text-white shrink-0" />
+          <MapPin className="h-4 w-4 text-sky-400 shrink-0" />
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold uppercase tracking-wider text-white">
                 LIVE WEATHER MAP · {selectedDistrict} District
               </span>
-              <span className="hidden sm:inline-flex text-[10px] font-mono text-neutral-400 bg-neutral-900 border border-neutral-800 px-2 py-0.5 rounded-full">
+              <span className="hidden sm:inline-flex text-[10px] font-mono text-sky-300 bg-[#0a1628] border border-sky-500/20 px-2 py-0.5 rounded-full">
                 {activeLat.toFixed(4)}°N, {activeLon.toFixed(4)}°E
               </span>
             </div>
             {updatedAt && (
-              <p className="text-[11px] text-neutral-400 font-mono flex items-center gap-1 mt-0.5">
-                <Clock className="h-3 w-3 text-neutral-500" />
+              <p className="text-[11px] text-slate-400 font-mono flex items-center gap-1 mt-0.5">
+                <Clock className="h-3 w-3 text-slate-500" />
                 <span>Updated {updatedAt}</span>
               </p>
             )}
@@ -212,26 +212,26 @@ export function LiveWeatherMap({
               type="button"
               onClick={onUseGPS}
               disabled={gpsLoading}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-800 bg-neutral-900 px-3 py-1.5 text-xs font-semibold text-neutral-200 hover:bg-neutral-800 hover:text-white transition-colors disabled:opacity-50"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-[#142a47] bg-[#0a1628] px-3 py-1.5 text-xs font-semibold text-slate-200 hover:bg-[#0f223d] hover:border-sky-500/40 hover:text-white transition-colors disabled:opacity-50"
             >
               {gpsLoading ? (
-                <Loader2 className="h-3.5 w-3.5 animate-spin" />
+                <Loader2 className="h-3.5 w-3.5 animate-spin text-sky-400" />
               ) : (
-                <Crosshair className="h-3.5 w-3.5 text-white" />
+                <Crosshair className="h-3.5 w-3.5 text-sky-400" />
               )}
               <span>{locationSource === "gps" ? "GPS Active" : "Detect via GPS"}</span>
             </button>
           )}
 
-          <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-semibold text-neutral-300 bg-neutral-900 border border-neutral-800 px-2.5 py-1.5 rounded-lg">
-            <span className="h-1.5 w-1.5 rounded-full bg-white animate-pulse" />
+          <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-semibold text-sky-300 bg-[#0a1628] border border-sky-500/30 px-2.5 py-1.5 rounded-lg shadow-sm">
+            <span className="h-1.5 w-1.5 rounded-full bg-sky-400 animate-pulse" />
             <span>{isUsingGoogleMaps ? "Google Hybrid Mode" : "Satellite & Roads View"}</span>
           </span>
         </div>
       </div>
 
-      {/* Map Viewport Area (Large Expansive Viewport) */}
-      <div className="relative h-[420px] sm:h-[500px] lg:h-[560px] w-full bg-neutral-950">
+      {/* Map Viewport Area */}
+      <div className="relative h-[420px] sm:h-[500px] lg:h-[560px] w-full bg-[#040810]">
         {isUsingGoogleMaps ? (
           <div ref={googleMapRef} className="h-full w-full" />
         ) : (
@@ -244,13 +244,13 @@ export function LiveWeatherMap({
 
         {/* Location Badge Overlay */}
         <div className="absolute bottom-4 left-4 z-10 pointer-events-none">
-          <div className="rounded-xl border border-neutral-800/90 bg-neutral-950/90 backdrop-blur-md px-3.5 py-2 shadow-lg flex items-center gap-2.5">
-            <div className="h-2.5 w-2.5 rounded-full bg-white animate-pulse" />
+          <div className="rounded-xl border border-sky-500/30 bg-[#07111e]/90 backdrop-blur-md px-3.5 py-2 shadow-2xl flex items-center gap-2.5">
+            <div className="h-2.5 w-2.5 rounded-full bg-sky-400 animate-pulse" />
             <div>
               <p className="text-xs font-bold text-white leading-none">
                 {locationSource === "gps" ? "Your Location (GPS)" : `${selectedDistrict} District`}
               </p>
-              <p className="text-[10px] text-neutral-400 font-mono mt-0.5">
+              <p className="text-[10px] text-sky-300/70 font-mono mt-0.5">
                 {activeLat.toFixed(4)}°N, {activeLon.toFixed(4)}°E · Tamil Nadu
               </p>
             </div>
