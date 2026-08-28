@@ -239,6 +239,7 @@ export function LiveWeatherMap({
             center={[activeLat, activeLon]}
             zoom={13}
             selectedDistrict={selectedDistrict}
+            locationSource={locationSource}
           />
         )}
 

@@ -628,7 +628,7 @@ export function generatePersonalizedRecommendation(
   }
 
   return {
-    id: `rec_p6_${profile.district.toLowerCase().replace(/\s+/g, "_")}_${profile.occupation}_${Date.now()}`,
+    id: `rec_p6_${profile.district.toLowerCase().replace(/\s+/g, "_")}_${profile.occupation}`,
     occupation: profile.occupation,
     district: profile.district,
     severity,

@@ -46,47 +46,10 @@ export default function HomePage() {
   const { permissionState, requestLocation } = useGeolocation();
 
   // Mode: "landing" (default for root URL) vs "dashboard" (when viewing dashboard tabs)
-  const [viewMode, setViewMode] = useState<"landing" | "dashboard">(() => {
-    if (typeof window !== "undefined" && window.location.hash) {
-      const hash = window.location.hash.replace("#", "");
-      const validDashboardTabs = [
-        "overview",
-        "weather",
-        "risk",
-        "alerts",
-        "recommendations",
-        "district",
-        "pipeline",
-        "trust",
-        "dashboard",
-      ];
-      if (validDashboardTabs.includes(hash)) {
-        return "dashboard";
-      }
-    }
-    return "landing";
-  });
+  const [viewMode, setViewMode] = useState<"landing" | "dashboard">("landing");
 
-  // Active navigation tab with lazy initializer
-  const [activeTab, setActiveTab] = useState<DashboardTab>(() => {
-    if (typeof window !== "undefined" && window.location.hash) {
-      const hash = window.location.hash.replace("#", "") as DashboardTab;
-      const validTabs: DashboardTab[] = [
-        "overview",
-        "weather",
-        "risk",
-        "alerts",
-        "recommendations",
-        "district",
-        "pipeline",
-        "trust",
-      ];
-      if (validTabs.includes(hash)) {
-        return hash;
-      }
-    }
-    return "overview";
-  });
+  // Active navigation tab
+  const [activeTab, setActiveTab] = useState<DashboardTab>("overview");
 
   const handleTabChange = (tab: DashboardTab) => {
     setActiveTab(tab);

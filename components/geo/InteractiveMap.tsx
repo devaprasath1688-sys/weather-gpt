@@ -114,11 +114,16 @@ export function InteractiveMap({
         zoomControl={true}
         attributionControl={false}
       >
-        {/* High-Legibility Map Tiles — CartoDB Voyager / OpenStreetMap (Free, Legal, Zero API Key) */}
+        {/* High-Legibility Map Tiles — OpenStreetMap Standard / Custom Map Tile URL (Free, Legal, Zero API Key) */}
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-          maxZoom={19}
+          url={
+            process.env.NEXT_PUBLIC_MAP_TILE_URL ||
+            "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          }
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+          maxZoom={20}
+          maxNativeZoom={19}
+          errorTileUrl="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
         />
 
         {/* Recenter on center/zoom change */}
