@@ -46,6 +46,13 @@ function parseWmoCode(code: number): {
   }
 }
 
+function formatForecastHour(localTimestamp: string): string {
+  const hour = Number(localTimestamp.slice(11, 13));
+  if (!Number.isInteger(hour) || hour < 0 || hour > 23) return localTimestamp;
+
+  return `${hour % 12 || 12} ${hour >= 12 ? "PM" : "AM"}`;
+}
+
 /**
  * Server-Side Open-Meteo Meteorological Fetcher.
  * Fetches real-time temperature, precipitation, wind, UV index, hourly & daily forecast.
@@ -129,17 +136,21 @@ export async function fetchOpenMeteoWeather(
       }),
     };
 
-    // Build hourly forecast (next 6 hours)
+    // Open-Meteo returns timestamps in the requested location's timezone.
+    // Start at that location's current hour, then include the next five hours.
     const hourlyList: HourlyForecast[] = [];
     const hourlyTimes = hourly.time || [];
-    for (let i = 0; i < Math.min(6, hourlyTimes.length); i++) {
-      const hTime = new Date(hourlyTimes[i]).toLocaleTimeString("en-US", {
-        hour: "numeric",
-        hour12: true,
-      });
+    const currentHourKey = typeof current.time === "string" ? current.time.slice(0, 13) : "";
+    const matchingHourIndex = hourlyTimes.findIndex((time: string) => time.slice(0, 13) === currentHourKey);
+    const nextAvailableHourIndex = currentHourKey
+      ? hourlyTimes.findIndex((time: string) => time.slice(0, 13) > currentHourKey)
+      : -1;
+    const startIndex = matchingHourIndex >= 0 ? matchingHourIndex : Math.max(nextAvailableHourIndex, 0);
+
+    for (let i = startIndex; i < Math.min(startIndex + 6, hourlyTimes.length); i++) {
       const hWmo = parseWmoCode(hourly.weather_code?.[i] ?? 0);
       hourlyList.push({
-        time: hTime,
+        time: formatForecastHour(hourlyTimes[i]),
         tempC: Math.round(hourly.temperature_2m?.[i] ?? tempC),
         popPercent: Math.round(hourly.precipitation_probability?.[i] ?? 20),
         rainfallMm: Math.round((hourly.precipitation?.[i] ?? 0) * 10) / 10,

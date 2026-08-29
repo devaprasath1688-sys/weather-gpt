@@ -72,7 +72,7 @@ export function getHealthPayload() {
         : "Phase 1 Demo Mode - Authentication and database features require Supabase configuration.",
       "Phase 2 Live Weather & Forecast Service is operational via Open-Meteo High-Res Engine.",
       "Optional key-based weather providers (WeatherAPI/OpenWeatherMap) can be configured via WEATHER_API_KEY.",
-      "No AI, map, alert, notification, or voice providers are called yet.",
+      "The WeatherGPT AI Assistant uses the server-side LLM_API_KEY only when configured; voice remains reserved for a later phase.",
       "Secret values are never returned.",
     ],
   };

@@ -16,7 +16,6 @@ import {
   Zap,
   Thermometer,
 } from "lucide-react";
-import { SIH_PROBLEM_CODE, CURRENT_PHASE } from "@/lib/constants";
 import { useAuth } from "@/contexts/auth-context";
 import { useIsMounted } from "@/lib/useIsMounted";
 
@@ -46,9 +45,6 @@ export function LandingPage({
             <div className="flex items-center gap-2">
               <span className="font-display text-lg font-bold tracking-tight text-white">
                 Weather<span className="text-sky-400">GPT</span>
-              </span>
-              <span className="inline-flex items-center rounded-full border border-sky-500/30 bg-[#0a1628] px-2 py-0.5 text-[10px] font-semibold tracking-wide text-sky-300 font-mono">
-                {SIH_PROBLEM_CODE}
               </span>
             </div>
           </Link>
@@ -106,13 +102,6 @@ export function LandingPage({
                   className="rounded-xl border border-[#142a47] bg-[#0a1628] px-3.5 py-1.5 text-xs font-semibold text-slate-300 hover:border-sky-500/40 hover:bg-[#0f223d] hover:text-white transition-all"
                 >
                   Sign In
-                </Link>
-                <Link
-                  href="/signup"
-                  className="flex items-center gap-1.5 rounded-xl bg-sky-500 hover:bg-sky-400 px-4 py-1.5 text-xs font-bold text-slate-950 shadow-[0_0_15px_rgba(56,189,248,0.4)] transition-all hover:shadow-[0_0_20px_rgba(56,189,248,0.6)]"
-                >
-                  <span>Get Started</span>
-                  <ArrowRight className="h-3.5 w-3.5" />
                 </Link>
               </div>
             )}
@@ -177,22 +166,13 @@ export function LandingPage({
                   Launch Dashboard
                 </button>
               ) : (
-                <>
-                  <Link
-                    href="/login"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex-1 text-center rounded-xl border border-[#142a47] bg-[#0a1628] py-2 text-xs font-semibold text-slate-200"
-                  >
-                    Sign In
-                  </Link>
-                  <Link
-                    href="/signup"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex-1 text-center rounded-xl bg-sky-500 py-2 text-xs font-bold text-slate-950 shadow-sm"
-                  >
-                    Get Started
-                  </Link>
-                </>
+                <Link
+                  href="/login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex-1 text-center rounded-xl border border-[#142a47] bg-[#0a1628] py-2 text-xs font-semibold text-slate-200"
+                >
+                  Sign In
+                </Link>
               )}
             </div>
           </div>
@@ -210,7 +190,7 @@ export function LandingPage({
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400" />
             </span>
-            <span>Next-Gen Climate Intelligence · {SIH_PROBLEM_CODE} · Phase {CURRENT_PHASE}</span>
+            <span>Next-Gen Climate Intelligence</span>
           </div>
 
           {/* Main Headline */}
@@ -498,10 +478,6 @@ export function LandingPage({
                   <Sparkles className="h-3 w-3 fill-current" />
                 </div>
                 <span className="font-bold text-sm text-white">Weather<span className="text-sky-400">GPT</span></span>
-                <span>·</span>
-                <span className="text-sky-300 font-mono">{SIH_PROBLEM_CODE}</span>
-                <span>·</span>
-                <span>Smart India Hackathon 2026</span>
               </div>
               <p className="text-slate-400 max-w-md">
                 Personalized Weather Intelligence &amp; Grounded Alert Verification Platform.
@@ -513,13 +489,10 @@ export function LandingPage({
                 <ShieldCheck className="h-3.5 w-3.5 text-sky-400" />
                 Official Source Verification
               </span>
-              <span>•</span>
-              <span className="text-sky-300 font-medium">Phase {CURRENT_PHASE} Active</span>
             </div>
           </div>
 
           <div className="pt-6 border-t border-[#142a47] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-[11px] text-slate-500">
-            <p>© 2026 WeatherGPT · Built for Smart India Hackathon (SIH26068).</p>
             <div className="flex items-center gap-4">
               <a href="#telemetry-strip" className="hover:text-sky-300 transition-colors">Telemetry</a>
               <a href="#capabilities" className="hover:text-sky-300 transition-colors">Capabilities</a>

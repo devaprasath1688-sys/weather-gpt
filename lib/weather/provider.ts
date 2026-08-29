@@ -28,6 +28,9 @@ function getPersonaFallback(districtName: string): WeatherNormalizedPayload {
       (p) => p.profile.district.toLowerCase() === districtName.toLowerCase()
     ) || MOCK_PERSONAS.chennai_student;
 
+  const currentHour = new Date();
+  currentHour.setMinutes(0, 0, 0);
+
   return {
     metadata: {
       providerId: "mock_demo",
@@ -37,13 +40,22 @@ function getPersonaFallback(districtName: string): WeatherNormalizedPayload {
       cachedAt: new Date().toISOString(),
     },
     current: persona.weather,
-    hourlyForecast: [
-      { time: "12 PM", tempC: persona.weather.temperatureC, popPercent: 80, rainfallMm: 12, condition: persona.weather.conditionCategory },
-      { time: "1 PM", tempC: persona.weather.temperatureC - 1, popPercent: 85, rainfallMm: 15, condition: persona.weather.conditionCategory },
-      { time: "2 PM", tempC: persona.weather.temperatureC - 1, popPercent: 90, rainfallMm: 18, condition: persona.weather.conditionCategory },
-      { time: "3 PM", tempC: persona.weather.temperatureC - 2, popPercent: 70, rainfallMm: 10, condition: persona.weather.conditionCategory },
-      { time: "4 PM", tempC: persona.weather.temperatureC - 2, popPercent: 50, rainfallMm: 5, condition: persona.weather.conditionCategory },
-    ],
+    hourlyForecast: Array.from({ length: 6 }, (_, offset) => {
+      const forecastTime = new Date(currentHour);
+      forecastTime.setHours(forecastTime.getHours() + offset);
+
+      return {
+        time: forecastTime.toLocaleTimeString("en-US", {
+          timeZone: "Asia/Kolkata",
+          hour: "numeric",
+          hour12: true,
+        }),
+        tempC: persona.weather.temperatureC - Math.min(offset, 2),
+        popPercent: Math.max(50, 80 - offset * 5),
+        rainfallMm: Math.max(0, 12 - offset * 2),
+        condition: persona.weather.conditionCategory,
+      };
+    }),
     dailyForecast: [
       { date: "Today", dayLabel: "Today", tempMaxC: persona.weather.temperatureC + 2, tempMinC: persona.weather.temperatureC - 3, popPercent: 85, condition: persona.weather.conditionCategory },
       { date: "Tomorrow", dayLabel: "Tomorrow", tempMaxC: persona.weather.temperatureC + 1, tempMinC: persona.weather.temperatureC - 4, popPercent: 60, condition: persona.weather.conditionCategory },

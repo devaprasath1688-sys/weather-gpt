@@ -9,3 +9,4 @@ export * from "./recommendations";
 export * from "./recommendation-engine";
 export * from "./notifications";
 export * from "./health";
+export * from "./assistant";
