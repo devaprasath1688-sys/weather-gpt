@@ -3,7 +3,6 @@
 import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import L from "leaflet";
-import { Map as MapIcon, Globe } from "lucide-react";
 import "leaflet/dist/leaflet.css";
 
 // 1x1 transparent PNG fallback for missing/error tiles
@@ -43,11 +42,13 @@ function MapController({
   return null;
 }
 
-type LeafletFallbackMapProps = {
+export type LeafletFallbackMapProps = {
   center: [number, number];
   zoom?: number;
   selectedDistrict: string;
   locationSource?: "gps" | "manual";
+  mapMode?: "hybrid" | "street";
+  onMapModeChange?: (mode: "hybrid" | "street") => void;
 };
 
 export function LeafletFallbackMap({
@@ -55,8 +56,10 @@ export function LeafletFallbackMap({
   zoom = 13,
   selectedDistrict,
   locationSource = "manual",
+  mapMode: propMapMode,
 }: LeafletFallbackMapProps) {
-  const [mapMode, setMapMode] = useState<"hybrid" | "street">("hybrid");
+  const [internalMapMode] = useState<"hybrid" | "street">("hybrid");
+  const activeMapMode = propMapMode ?? internalMapMode;
 
   // Optional custom tile URL via environment variable
   const customTileUrl = process.env.NEXT_PUBLIC_MAP_TILE_URL;
@@ -65,7 +68,7 @@ export function LeafletFallbackMap({
     customTileUrl || "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 
   return (
-    <div className="relative h-full w-full bg-[#040810]">
+    <div className="relative h-full w-full bg-[#040810] overflow-hidden">
       <MapContainer
         center={center}
         zoom={zoom}
@@ -79,7 +82,7 @@ export function LeafletFallbackMap({
         {/* =================================================================== */}
         {/* BASE TILE LAYERS                                                    */}
         {/* =================================================================== */}
-        {mapMode === "hybrid" ? (
+        {activeMapMode === "hybrid" ? (
           <>
             {/* Esri World Imagery (Satellite) with maxNativeZoom: 17 to prevent "Map not available" errors */}
             <TileLayer
@@ -136,37 +139,6 @@ export function LeafletFallbackMap({
           </Popup>
         </Marker>
       </MapContainer>
-
-      {/* ===================================================================== */}
-      {/* FLOATING MAP CONTROLS                                                 */}
-      {/* ===================================================================== */}
-      {/* Map / Satellite Mode Toggle */}
-      <div className="absolute top-4 right-4 z-[400] flex items-center rounded-xl border border-[#142a47] bg-[#07111e]/95 p-1 shadow-2xl backdrop-blur-md">
-        <button
-          type="button"
-          onClick={() => setMapMode("hybrid")}
-          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-all ${
-            mapMode === "hybrid"
-              ? "bg-sky-500 text-slate-950 shadow-[0_0_12px_rgba(56,189,248,0.5)]"
-              : "text-slate-400 hover:text-white"
-          }`}
-        >
-          <Globe className="h-3.5 w-3.5" />
-          <span>Satellite</span>
-        </button>
-        <button
-          type="button"
-          onClick={() => setMapMode("street")}
-          className={`flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-bold transition-all ${
-            mapMode === "street"
-              ? "bg-sky-500 text-slate-950 shadow-[0_0_12px_rgba(56,189,248,0.5)]"
-              : "text-slate-400 hover:text-white"
-          }`}
-        >
-          <MapIcon className="h-3.5 w-3.5" />
-          <span>Road Map</span>
-        </button>
-      </div>
     </div>
   );
 }

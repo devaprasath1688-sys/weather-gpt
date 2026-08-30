@@ -194,30 +194,35 @@ export function LandingPage({
           </div>
 
           {/* Main Headline */}
-          <div className="space-y-3">
+          <div className="space-y-4">
             <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.08]">
-              Weather Intelligence.<br />
-              <span className="text-gradient-cyan">Zero Announcement Fatigue.</span>
+              Precision Climate Intelligence.<br />
+              <span className="text-gradient-cyan">Grounded in Live Telemetry &amp; Truth.</span>
             </h1>
-            <p className="max-w-2xl mx-auto text-base sm:text-lg text-slate-300/90 leading-relaxed pt-2">
-              WeatherGPT transforms live weather, district intelligence, official government alerts, and personal context into one clear action plan.
+            <p className="max-w-3xl mx-auto text-base sm:text-lg text-slate-300/90 leading-relaxed pt-1 font-sans">
+              WeatherGPT synthesizes high-resolution sensor feeds, district hazard matrices, verified administrative bulletins, and personal context into auditable, life-saving action plans.
             </p>
           </div>
 
           {/* Core Communication Architecture Pipeline Banner */}
-          <div className="inline-flex flex-wrap items-center justify-center gap-2 sm:gap-3 rounded-2xl border border-[#142a47] bg-[#0a1628]/80 px-4 sm:px-6 py-2.5 text-[11px] sm:text-xs font-mono font-semibold text-slate-300 shadow-inner backdrop-blur-md">
-            <span className="flex items-center gap-1.5 text-sky-400">
+          <div className="inline-flex flex-wrap items-center justify-center gap-2 sm:gap-3 rounded-2xl border border-sky-500/30 bg-[#0a1628]/90 px-5 sm:px-7 py-3 text-[11px] sm:text-xs font-mono font-semibold text-slate-200 shadow-[0_0_25px_rgba(56,189,248,0.15)] backdrop-blur-md">
+            <span className="flex items-center gap-1.5 text-sky-400 font-bold">
               <Radio className="h-3.5 w-3.5" />
-              LIVE DATA
+              LIVE WEATHER
             </span>
             <span className="text-slate-600">→</span>
-            <span className="flex items-center gap-1.5 text-sky-300">
+            <span className="flex items-center gap-1.5 text-sky-300 font-bold">
               <Zap className="h-3.5 w-3.5" />
-              AI INTELLIGENCE
+              INTELLIGENCE
             </span>
             <span className="text-slate-600">→</span>
-            <span className="flex items-center gap-1.5 text-white">
-              <CheckCircle2 className="h-3.5 w-3.5 text-sky-400" />
+            <span className="flex items-center gap-1.5 text-amber-300 font-bold">
+              <Activity className="h-3.5 w-3.5" />
+              RISK MATRIX
+            </span>
+            <span className="text-slate-600">→</span>
+            <span className="flex items-center gap-1.5 text-emerald-300 font-bold">
+              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
               PERSONALIZED ACTION
             </span>
           </div>

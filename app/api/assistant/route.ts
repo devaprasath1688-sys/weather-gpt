@@ -1,10 +1,8 @@
 import { NextResponse } from "next/server";
-import { GoogleGenAI } from "@google/genai";
 import {
   buildAssistantInstructions,
   detectAssistantLanguageStyle,
   type AssistantMessage,
-  type WeatherAssistantContext,
 } from "@/lib/ai";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import type { AssistantChatRequest } from "@/types";
@@ -13,7 +11,8 @@ export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
 const MAX_MESSAGE_LENGTH = 2_000;
-const MAX_HISTORY_MESSAGES = 8;
+const MAX_HISTORY_MESSAGES = 10;
+const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 
 function isAssistantMessage(value: unknown): value is AssistantMessage {
   if (!value || typeof value !== "object") return false;
@@ -28,33 +27,20 @@ function isAssistantMessage(value: unknown): value is AssistantMessage {
   );
 }
 
-function isContext(value: unknown): value is WeatherAssistantContext {
-  if (!value || typeof value !== "object") return false;
-
-  const context = value as Record<string, unknown>;
-
-  return Boolean(
-    context.profile &&
-      context.weather &&
-      context.forecast &&
-      context.risk &&
-      context.recommendation &&
-      context.verifiedAlerts
-  );
-}
-
 export async function POST(request: Request) {
-  // Gemini API key must remain server-side.
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.GROQ_API_KEY;
 
   if (!apiKey) {
     return NextResponse.json(
-      { error: "AI_SERVICE_NOT_CONFIGURED" },
+      {
+        error: "AI_SERVICE_NOT_CONFIGURED",
+        message:
+          "Groq API key is not configured. Please set GROQ_API_KEY in your environment variables.",
+      },
       { status: 503 }
     );
   }
 
-  // Keep existing authentication behaviour.
   const supabase = await createServerSupabaseClient();
 
   if (supabase) {
@@ -64,7 +50,7 @@ export async function POST(request: Request) {
 
     if (!user) {
       return NextResponse.json(
-        { error: "UNAUTHORIZED" },
+        { error: "UNAUTHORIZED", message: "Authentication required." },
         { status: 401 }
       );
     }
@@ -76,108 +62,126 @@ export async function POST(request: Request) {
     body = await request.json();
   } catch {
     return NextResponse.json(
-      { error: "INVALID_REQUEST" },
+      { error: "INVALID_REQUEST", message: "Malformed JSON payload in request." },
       { status: 400 }
     );
   }
 
-  // Keep only valid messages and limit conversation history.
   const messages = Array.isArray(body.messages)
-    ? body.messages.filter(isAssistantMessage).slice(-MAX_HISTORY_MESSAGES)
+    ? body.messages
+        .filter(isAssistantMessage)
+        .slice(-MAX_HISTORY_MESSAGES)
     : [];
-if (!messages.length || !isContext(body.context)) {
-  return NextResponse.json(
-    {
-      error: "INVALID_REQUEST",
-      details: {
-        messagesValid: messages.length > 0,
-        contextValid: isContext(body.context),
-        hasContext: Boolean(body.context),
-        contextKeys:
-          body.context && typeof body.context === "object"
-            ? Object.keys(body.context)
-            : [],
-      },
-    },
-    { status: 400 }
-  );
-}
 
-  // Find the latest user message for language detection.
   const latestUserMessage = [...messages]
     .reverse()
     .find((message) => message.role === "user");
 
   if (!latestUserMessage) {
     return NextResponse.json(
-      { error: "INVALID_REQUEST" },
+      { error: "INVALID_REQUEST", message: "No user message found in conversation history." },
       { status: 400 }
     );
   }
 
   try {
-    const ai = new GoogleGenAI({
-      apiKey,
-    });
-
-    // Detect English / Tamil / Tanglish from the latest user message.
     const languageStyle = detectAssistantLanguageStyle(
       latestUserMessage.content
     );
 
-    // Preserve the existing WeatherGPT context and instructions.
     const systemInstructions = buildAssistantInstructions(
       body.context,
       languageStyle
     );
 
-    // Convert existing chat history to Gemini format.
-    const conversation = messages.map((message) => ({
-      role: message.role === "assistant" ? "model" : "user",
-      parts: [
+    const groqModel = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
+
+    const groqPayload = {
+      model: groqModel,
+      messages: [
         {
-          text: message.content,
+          role: "system",
+          content: systemInstructions,
         },
+        ...messages.map((msg) => ({
+          role: msg.role === "assistant" ? "assistant" : "user",
+          content: msg.content,
+        })),
       ],
-    }));
+      temperature: 0.6,
+      max_tokens: 1000,
+    };
 
-    const response = await ai.models.generateContent({
-      model: process.env.GEMINI_MODEL || "gemini-3.7-flash",
-
-      contents: conversation,
-
-      config: {
-        systemInstruction: systemInstructions,
-
-        // Keep responses concise for the assistant UI.
-        maxOutputTokens: 500,
-
-        // Slightly deterministic responses for weather guidance.
-      
+    const groqResponse = await fetch(GROQ_API_URL, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey.trim()}`,
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify(groqPayload),
     });
 
-    const message = response.text?.trim();
+    if (!groqResponse.ok) {
+      const errorData = await groqResponse.json().catch(() => null);
+      const errorMsg =
+        errorData?.error?.message ||
+        `Groq API responded with status ${groqResponse.status}`;
 
-    if (!message) {
+      console.error("[WeatherGPT Assistant] Groq API error:", {
+        status: groqResponse.status,
+        error: errorMsg,
+      });
+
+      let userFriendly =
+        "The AI assistant is temporarily unavailable. Please try again in a moment.";
+
+      if (groqResponse.status === 401) {
+        userFriendly = "Groq API authentication failed. Please verify your GROQ_API_KEY.";
+      } else if (groqResponse.status === 429) {
+        userFriendly =
+          "Groq API rate limit reached. Please wait a few moments before sending another message.";
+      } else if (groqResponse.status === 404 || errorMsg.includes("model")) {
+        userFriendly = `The configured Groq model (${groqModel}) is unavailable.`;
+      }
+
       return NextResponse.json(
-        { error: "INVALID_AI_RESPONSE" },
+        {
+          error: "AI_SERVICE_UNAVAILABLE",
+          message: userFriendly,
+        },
+        { status: 502 }
+      );
+    }
+
+    const result = await groqResponse.json();
+    const assistantText = result?.choices?.[0]?.message?.content?.trim();
+
+    if (!assistantText) {
+      return NextResponse.json(
+        {
+          error: "INVALID_AI_RESPONSE",
+          message: "Empty response generated by AI assistant.",
+        },
         { status: 502 }
       );
     }
 
     return NextResponse.json({
-      message,
+      message: assistantText,
     });
- } catch (error) {
-  console.error("[WeatherGPT Assistant] Gemini request failed:", error);
+  } catch (error) {
+    console.error("[WeatherGPT Assistant] Assistant request failed:", error);
 
-  return NextResponse.json(
-    {
-      error: "AI_SERVICE_UNAVAILABLE",
-      details: error instanceof Error ? error.message : String(error),
-    },
-    { status: 502 }
-  );
-}
+    const errStr = error instanceof Error ? error.message : String(error);
+
+    return NextResponse.json(
+      {
+        error: "AI_SERVICE_UNAVAILABLE",
+        message:
+          "Unable to connect to the WeatherGPT intelligence service. Please try again in a moment.",
+        details: errStr,
+      },
+      { status: 502 }
+    );
+  }
 }

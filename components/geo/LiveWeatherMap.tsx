@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import { Loader2, MapPin, Crosshair, Clock } from "lucide-react";
+import { Loader2, MapPin, Crosshair, Clock, Globe, Map as MapIcon } from "lucide-react";
 import { DISTRICT_COORDINATES } from "@/lib/geo/districtCoordinates";
 
 // High-resolution satellite & hybrid fallback map when Google Maps API key is absent/unavailable
@@ -54,6 +54,7 @@ export function LiveWeatherMap({
 
   const [googleMapsLoaded, setGoogleMapsLoaded] = useState(false);
   const [googleMapsError, setGoogleMapsError] = useState(false);
+  const [mapMode, setMapMode] = useState<"hybrid" | "street">("hybrid");
 
   // Resolved coordinates
   const districtCoord = DISTRICT_COORDINATES[selectedDistrict] || {
@@ -206,7 +207,37 @@ export function LiveWeatherMap({
           </div>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex flex-wrap items-center gap-2.5">
+          {/* Map / Satellite Mode Toggle (Strictly in header) */}
+          {!isUsingGoogleMaps && (
+            <div className="flex items-center rounded-lg border border-[#142a47] bg-[#0a1628] p-0.5 shadow-sm">
+              <button
+                type="button"
+                onClick={() => setMapMode("hybrid")}
+                className={`flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-semibold transition-all ${
+                  mapMode === "hybrid"
+                    ? "bg-sky-500 text-slate-950 font-bold shadow-sm"
+                    : "text-slate-400 hover:text-white"
+                }`}
+              >
+                <Globe className="h-3.5 w-3.5" />
+                <span>Satellite</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setMapMode("street")}
+                className={`flex items-center gap-1 rounded-md px-2.5 py-1 text-xs font-semibold transition-all ${
+                  mapMode === "street"
+                    ? "bg-sky-500 text-slate-950 font-bold shadow-sm"
+                    : "text-slate-400 hover:text-white"
+                }`}
+              >
+                <MapIcon className="h-3.5 w-3.5" />
+                <span>Road Map</span>
+              </button>
+            </div>
+          )}
+
           {onUseGPS && (
             <button
               type="button"
@@ -223,15 +254,17 @@ export function LiveWeatherMap({
             </button>
           )}
 
-          <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-semibold text-sky-300 bg-[#0a1628] border border-sky-500/30 px-2.5 py-1.5 rounded-lg shadow-sm">
-            <span className="h-1.5 w-1.5 rounded-full bg-sky-400 animate-pulse" />
-            <span>{isUsingGoogleMaps ? "Google Hybrid Mode" : "Satellite & Roads View"}</span>
-          </span>
+          {isUsingGoogleMaps && (
+            <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-semibold text-sky-300 bg-[#0a1628] border border-sky-500/30 px-2.5 py-1.5 rounded-lg shadow-sm">
+              <span className="h-1.5 w-1.5 rounded-full bg-sky-400 animate-pulse" />
+              <span>Google Hybrid</span>
+            </span>
+          )}
         </div>
       </div>
 
       {/* Map Viewport Area */}
-      <div className="relative h-[420px] sm:h-[500px] lg:h-[560px] w-full bg-[#040810]">
+      <div className="relative h-[420px] sm:h-[500px] lg:h-[560px] w-full bg-[#040810] overflow-hidden">
         {isUsingGoogleMaps ? (
           <div ref={googleMapRef} className="h-full w-full" />
         ) : (
@@ -240,6 +273,7 @@ export function LiveWeatherMap({
             zoom={13}
             selectedDistrict={selectedDistrict}
             locationSource={locationSource}
+            mapMode={mapMode}
           />
         )}
 
