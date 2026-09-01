@@ -1,5 +1,5 @@
 import React from "react";
-import { ShieldAlert, AlertTriangle, CheckCircle, Info } from "lucide-react";
+import { ShieldAlert, TriangleAlert as AlertTriangle, CircleCheck as CheckCircle, Info } from "lucide-react";
 
 type RiskMeterProps = {
   score: number; // 0 - 100
@@ -75,7 +75,7 @@ export function RiskMeter({
       </div>
 
       {/* Reason / Why it exists */}
-      <div className="pt-2.5 border-t border-[#142a47] text-xs text-slate-300 leading-relaxed">
+      <div className="wgpt-body-text pt-2.5 border-t border-[#142a47] text-xs text-slate-300">
         <span className="text-sky-300 font-semibold font-mono">Telemetry Rationale: </span>
         <span className="text-slate-300">{reason || explanation}</span>
       </div>

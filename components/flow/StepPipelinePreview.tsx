@@ -1,29 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useMemo } from "react";
-import {
-  User,
-  CloudRain,
-  Thermometer,
-  Wind,
-  Sun,
-  ShieldAlert,
-  Sparkles,
-  CheckCircle2,
-  Bell,
-  Check,
-  Cpu,
-  Activity,
-  Radio,
-  AlertTriangle,
-  Building2,
-  ExternalLink,
-  ShieldCheck,
-  XCircle,
-  Zap,
-  Info,
-  Layers,
-} from "lucide-react";
+import { User, CloudRain, Thermometer, Wind, Sun, ShieldAlert, Sparkles, CircleCheck as CheckCircle2, Bell, Check, Cpu, Activity, Radio, TriangleAlert as AlertTriangle, Building2, ExternalLink, ShieldCheck, Circle as XCircle, Zap, Info, Layers } from "lucide-react";
 import type { PersonaPreset } from "@/lib/demo-data";
 import type { WeatherNormalizedPayload } from "@/types";
 import { analyzeWeatherRisk } from "@/lib/risk/analyzeRisk";
@@ -157,7 +135,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
           <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-5 space-y-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">Occupation Vector</span>
             <p className="text-xl font-bold text-white capitalize">{profile.occupation}</p>
-            <p className="text-xs text-neutral-400 leading-relaxed">{profile.activityNotes || "Standard commuter / outdoor profile"}</p>
+            <p className="wgpt-body-text text-xs text-neutral-400">{profile.activityNotes || "Standard commuter / outdoor profile"}</p>
           </div>
 
           <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-5 space-y-2">
@@ -309,7 +287,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
                 <AlertTriangle className="h-4 w-4 text-white shrink-0" />
                 {riskAnalysis.primaryHazard}
               </p>
-              <p className="text-xs text-neutral-300 leading-relaxed">{riskAnalysis.explanation}</p>
+              <p className="wgpt-body-text text-xs text-neutral-300">{riskAnalysis.explanation}</p>
             </div>
           </div>
 
@@ -322,7 +300,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
                 </span>
                 <span className="text-[10px] font-mono text-neutral-500">Deterministic Analysis</span>
               </div>
-              <p className="text-xs text-neutral-300 leading-relaxed">
+              <p className="wgpt-body-text text-xs text-neutral-300">
                 {riskAnalysis.occupationImpact}
               </p>
             </div>
@@ -412,7 +390,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
             <span className="text-neutral-500">Updated: {districtIntel.lastUpdated}</span>
           </div>
 
-          <p className="text-xs text-neutral-300 leading-relaxed font-medium">
+          <p className="wgpt-body-text text-xs text-neutral-300 font-medium">
             {districtIntel.expectedLocalImpact}
           </p>
 
@@ -535,7 +513,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
                   </div>
                   <span className="text-[10px] font-mono text-neutral-500">English &amp; Tamil</span>
                 </div>
-                <p className="text-sm font-medium text-neutral-100 leading-relaxed">
+                <p className="wgpt-body-text text-sm font-medium text-neutral-100">
                   {groundedSummary.en}
                 </p>
                 {groundedSummary.ta && (
@@ -543,7 +521,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
                     <span className="text-[11px] font-mono text-neutral-400 font-semibold block mb-1">
                       Tamil (தமிழ்):
                     </span>
-                    <p className="text-xs text-neutral-300 leading-relaxed">
+                    <p className="wgpt-body-text text-xs text-neutral-300">
                       {groundedSummary.ta}
                     </p>
                   </div>
@@ -641,7 +619,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
           {phase6Recommendation.primaryDirective.ta && (
             <div className="pt-2 border-t border-neutral-800">
               <span className="text-[11px] font-mono text-neutral-400 font-semibold block mb-1">Tamil (தமிழ்):</span>
-              <p className="text-sm text-neutral-300 leading-relaxed">
+              <p className="wgpt-body-text text-sm text-neutral-300">
                 {phase6Recommendation.primaryDirective.ta}
               </p>
             </div>
@@ -697,13 +675,13 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
             <AlertTriangle className="h-4 w-4 text-neutral-400" />
             <span className="text-xs font-bold uppercase tracking-wider text-neutral-300">Why This Recommendation?</span>
           </div>
-          <p className="text-xs text-neutral-300 leading-relaxed">
+          <p className="wgpt-body-text text-xs text-neutral-300">
             {phase6Recommendation.reasoning.en}
           </p>
           {phase6Recommendation.reasoning.ta && (
             <div className="pt-2 border-t border-neutral-800">
               <span className="text-[10px] font-mono text-neutral-400">Tamil:</span>
-              <p className="text-xs text-neutral-400 leading-relaxed mt-0.5">
+              <p className="wgpt-body-text text-xs text-neutral-400 mt-0.5">
                 {phase6Recommendation.reasoning.ta}
               </p>
             </div>
@@ -774,7 +752,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
             <span>Payload: &quot;{recommendation.headline.en.slice(0, 50)}...&quot;</span>
             <span>Target District: {profile.district}</span>
           </div>
-          <p className="text-neutral-300 leading-relaxed pt-2 border-t border-neutral-800">{notificationReason}</p>
+          <p className="wgpt-body-text text-neutral-300 pt-2 border-t border-neutral-800">{notificationReason}</p>
         </div>
       </div>
     </div>

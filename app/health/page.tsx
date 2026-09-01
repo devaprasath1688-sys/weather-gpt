@@ -36,7 +36,7 @@ export default function HealthPage() {
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
             System Health &amp; Telemetry Status
           </h1>
-          <p className="max-w-2xl text-xs sm:text-sm text-neutral-400 leading-relaxed">
+          <p className="wgpt-body-text max-w-2xl text-xs sm:text-sm text-neutral-400">
             Confirms the WeatherGPT application engine is running with locked 7-step pipeline modules.
           </p>
         </div>

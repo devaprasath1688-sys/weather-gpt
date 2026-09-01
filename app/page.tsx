@@ -26,16 +26,7 @@ import { analyzeWeatherRisk } from "@/lib/risk/analyzeRisk";
 import { calculateDistrictIntelligence } from "@/lib/district/calculateDistrictIntelligence";
 import { verifyOfficialAlert } from "@/lib/alerts/verifyAlert";
 import { generatePersonalizedRecommendation } from "@/lib/recommendations/generateRecommendation";
-import {
-  ShieldCheck,
-  CheckCircle2,
-  ExternalLink,
-  Activity,
-  UserCheck,
-  Thermometer,
-  CloudRain,
-  Wind,
-} from "lucide-react";
+import { ShieldCheck, CircleCheck as CheckCircle2, ExternalLink, Activity, UserCheck, Thermometer, CloudRain, Wind } from "lucide-react";
 import { RiskMeter } from "@/components/ui/RiskMeter";
 import { useAuth } from "@/contexts/auth-context";
 import { WeatherAssistant, type AssistantContext } from "@/components/assistant/WeatherAssistant";
@@ -739,7 +730,7 @@ export default function HomePage() {
                 {/* Rationale Box */}
                 <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-4 space-y-1 text-xs">
                   <span className="text-sky-300 font-bold block font-mono">Why this risk score exists:</span>
-                  <p className="text-slate-300 leading-relaxed">
+                  <p className="wgpt-body-text text-slate-300">
                     {riskAnalysis.explanation}
                   </p>
                 </div>
@@ -844,7 +835,7 @@ export default function HomePage() {
                     <h3 className="text-xs font-bold text-white uppercase tracking-wider font-mono">
                       NO VERIFIED OFFICIAL ALERTS
                     </h3>
-                    <p className="text-xs text-slate-400 max-w-lg mx-auto leading-relaxed">
+                    <p className="wgpt-body-text text-xs text-slate-400 max-w-lg mx-auto">
                       No verified official government alert is currently active for {selectedDistrict} District. Normal administrative operations are in effect.
                     </p>
                   </div>
@@ -875,7 +866,7 @@ export default function HomePage() {
                   <span className="text-white font-bold text-sm block">
                     Because you&apos;re a {selectedOccupation.charAt(0).toUpperCase() + selectedOccupation.slice(1)} in {selectedDistrict}...
                   </span>
-                  <p className="text-slate-300 leading-relaxed">
+                  <p className="wgpt-body-text text-slate-300">
                     {riskAnalysis.occupationImpact}
                   </p>
                 </div>
@@ -975,7 +966,7 @@ export default function HomePage() {
                         </span>
                       </div>
                       <span className="text-[10px] text-slate-500 font-mono block">{area.subdivision}</span>
-                      <p className="text-slate-400 text-[11px] leading-relaxed">{area.disruptionLevel}</p>
+                      <p className="wgpt-body-text text-slate-400 text-[11px]">{area.disruptionLevel}</p>
                     </div>
                   ))}
                 </div>
@@ -999,7 +990,7 @@ export default function HomePage() {
                 <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
                   Right Information. Right User.
                 </h2>
-                <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
                   WeatherGPT filters live weather, verified official information, district intelligence, and your personal context to deliver only what matters to you.
                 </p>
               </div>
@@ -1040,7 +1031,7 @@ export default function HomePage() {
           <div className="space-y-8">
             <div className="space-y-2 border-b border-[#142a47] pb-4">
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Live Weather Telemetry</h2>
-              <p className="text-xs sm:text-sm text-slate-400">
+              <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
                 High-resolution meteorological sensor stream for <strong className="text-white">{selectedDistrict} District</strong>.
               </p>
             </div>
@@ -1118,7 +1109,7 @@ export default function HomePage() {
           <div className="space-y-8">
             <div className="space-y-2 border-b border-[#142a47] pb-4">
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Risk &amp; Impact Analysis</h2>
-              <p className="text-xs sm:text-sm text-slate-400">
+              <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
                 Deterministic mathematical hazard modeling tailored to <strong className="text-white capitalize">{selectedOccupation}</strong> in <strong className="text-white">{selectedDistrict} District</strong>.
               </p>
             </div>
@@ -1185,7 +1176,7 @@ export default function HomePage() {
                 <div className="space-y-3 text-xs">
                   <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-4 space-y-1.5">
                     <span className="font-bold text-white block">Active Profile: {selectedOccupation.toUpperCase()}</span>
-                    <p className="text-slate-300 leading-relaxed">{riskAnalysis.occupationImpact}</p>
+                    <p className="wgpt-body-text text-slate-300">{riskAnalysis.occupationImpact}</p>
                   </div>
                   <div className="space-y-2">
                     <span className="text-[10px] font-mono uppercase text-sky-400 font-semibold block">
@@ -1213,7 +1204,7 @@ export default function HomePage() {
           <div className="space-y-8">
             <div className="space-y-2 border-b border-[#142a47] pb-4">
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Official Government Bulletins</h2>
-              <p className="text-xs sm:text-sm text-slate-400">
+              <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
                 Ground-truth official orders verified against District Collectorate and IMD administrative portals for <strong className="text-white">{selectedDistrict} District</strong>.
               </p>
             </div>
@@ -1250,7 +1241,7 @@ export default function HomePage() {
                           </span>
                         </div>
 
-                        <p className="text-xs text-slate-300 font-mono bg-[#040810] p-3 rounded-lg border border-[#142a47] leading-relaxed">
+                        <p className="text-xs text-slate-300 font-mono bg-[#040810] p-3 rounded-lg border border-[#142a47]">
                           &quot;{alert.rawAnnouncement}&quot;
                         </p>
 
@@ -1284,7 +1275,7 @@ export default function HomePage() {
                 <div className="text-center py-10 space-y-3">
                   <CheckCircle2 className="h-10 w-10 text-sky-400 mx-auto" />
                   <h4 className="font-bold text-white text-sm uppercase tracking-wider font-mono">No Active Warnings</h4>
-                  <p className="text-xs text-slate-400 max-w-md mx-auto">
+                  <p className="wgpt-body-text text-xs text-slate-400 max-w-md mx-auto">
                     All administrative operations, educational institutions, and public transit schedules for {selectedDistrict} District are operating normally.
                   </p>
                 </div>
@@ -1300,7 +1291,7 @@ export default function HomePage() {
           <div className="space-y-8">
             <div className="space-y-2 border-b border-[#142a47] pb-4">
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Personalized Directives</h2>
-              <p className="text-xs sm:text-sm text-slate-400">
+              <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
                 Contextual safety decisions generated for <strong className="text-white capitalize">{selectedOccupation}</strong> profile in <strong className="text-white">{selectedDistrict} District</strong>.
               </p>
             </div>
@@ -1320,7 +1311,7 @@ export default function HomePage() {
                       {recommendation.primaryDirective.en}
                     </p>
                     {recommendation.primaryDirective.ta && (
-                      <p className="text-sm text-slate-300 pt-3 border-t border-[#142a47] leading-relaxed">
+                      <p className="wgpt-body-text text-sm text-slate-300 pt-3 border-t border-[#142a47]">
                         <strong className="text-sky-400 font-mono text-xs uppercase block mb-1">தமிழ் வழிகாட்டல்:</strong>
                         {recommendation.primaryDirective.ta}
                       </p>
@@ -1339,7 +1330,7 @@ export default function HomePage() {
                         className="flex items-start gap-3 rounded-xl border border-[#142a47] bg-[#07111e] p-4 text-slate-200"
                       >
                         <span className="font-mono font-bold text-sky-400 text-sm">0{i + 1}.</span>
-                        <span className="leading-relaxed">{action}</span>
+                        <span className="wgpt-body-text">{action}</span>
                       </div>
                     ))}
                   </div>
@@ -1376,7 +1367,7 @@ export default function HomePage() {
           <div className="space-y-8">
             <div className="space-y-2 border-b border-[#142a47] pb-4">
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white">District Intelligence &amp; Flood Zones</h2>
-              <p className="text-xs sm:text-sm text-slate-400">
+              <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
                 Subdivision vulnerability, waterlogging risk, and emergency response contacts for <strong className="text-white">{selectedDistrict} District</strong>.
               </p>
             </div>
@@ -1394,7 +1385,7 @@ export default function HomePage() {
                     </span>
                   </div>
                   <span className="text-xs text-slate-400 font-mono block">Subdivision: {area.subdivision}</span>
-                  <p className="text-xs text-slate-300 leading-relaxed pt-1 border-t border-[#142a47]">
+                  <p className="wgpt-body-text text-xs text-slate-300 pt-1 border-t border-[#142a47]">
                     {area.disruptionLevel}
                   </p>
                 </div>
@@ -1424,7 +1415,7 @@ export default function HomePage() {
           <div className="space-y-8">
             <div className="space-y-2 border-b border-[#142a47] pb-4">
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white">7-Step Intelligence Architecture</h2>
-              <p className="text-xs sm:text-sm text-slate-400">
+              <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
                 The deterministic 7-step pipeline powering WeatherGPT from raw sensor telemetry to targeted user dispatch.
               </p>
             </div>
@@ -1449,7 +1440,7 @@ export default function HomePage() {
           <div className="space-y-8">
             <div className="space-y-2 border-b border-[#142a47] pb-4">
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white">WeatherGPT Trust Architecture</h2>
-              <p className="text-xs sm:text-sm text-slate-400">
+              <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
                 Core architectural principles ensuring zero hallucinated closures and 100% grounded meteorological intelligence.
               </p>
             </div>
@@ -1457,10 +1448,10 @@ export default function HomePage() {
             <div className="rounded-2xl border border-[#142a47] bg-[#0a1628]/90 p-6 sm:p-8 space-y-6 shadow-xl backdrop-blur-sm">
               <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-5 space-y-2">
                 <span className="text-[10px] font-mono uppercase text-sky-400 font-semibold block">Separation of Concerns Principle</span>
-                <p className="text-sm font-semibold text-white leading-relaxed">
+                <p className="text-sm font-semibold text-white">
                   DATA → AI ANALYSIS → OFFICIAL INFORMATION → PERSONALIZED RECOMMENDATION
                 </p>
-                <p className="text-xs text-slate-400 leading-relaxed pt-1">
+                <p className="wgpt-body-text text-xs text-slate-400 pt-1">
                   AI does not make government decisions. Official authorities remain the sole source for closures, disaster declarations, and administrative orders.
                 </p>
               </div>
