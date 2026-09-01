@@ -83,7 +83,7 @@ export function UserProfileOnboarding({
                   {persona.name}
                 </h3>
 
-                <p className="text-xs text-neutral-400 leading-relaxed">
+                <p className="wgpt-body-text text-xs text-neutral-400">
                   {persona.subtitle}
                 </p>
               </div>

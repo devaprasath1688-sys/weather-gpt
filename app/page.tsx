@@ -1176,7 +1176,7 @@ export default function HomePage() {
                 <div className="space-y-3 text-xs">
                   <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-4 space-y-1.5">
                     <span className="font-bold text-white block">Active Profile: {selectedOccupation.toUpperCase()}</span>
-                    <p className="text-slate-300 leading-relaxed">{riskAnalysis.occupationImpact}</p>
+                    <p className="wgpt-body-text text-slate-300">{riskAnalysis.occupationImpact}</p>
                   </div>
                   <div className="space-y-2">
                     <span className="text-[10px] font-mono uppercase text-sky-400 font-semibold block">
@@ -1241,7 +1241,7 @@ export default function HomePage() {
                           </span>
                         </div>
 
-                        <p className="text-xs text-slate-300 font-mono bg-[#040810] p-3 rounded-lg border border-[#142a47] leading-relaxed">
+                        <p className="text-xs text-slate-300 font-mono bg-[#040810] p-3 rounded-lg border border-[#142a47]">
                           &quot;{alert.rawAnnouncement}&quot;
                         </p>
 
@@ -1311,7 +1311,7 @@ export default function HomePage() {
                       {recommendation.primaryDirective.en}
                     </p>
                     {recommendation.primaryDirective.ta && (
-                      <p className="text-sm text-slate-300 pt-3 border-t border-[#142a47] leading-relaxed">
+                      <p className="wgpt-body-text text-sm text-slate-300 pt-3 border-t border-[#142a47]">
                         <strong className="text-sky-400 font-mono text-xs uppercase block mb-1">தமிழ் வழிகாட்டல்:</strong>
                         {recommendation.primaryDirective.ta}
                       </p>
@@ -1330,7 +1330,7 @@ export default function HomePage() {
                         className="flex items-start gap-3 rounded-xl border border-[#142a47] bg-[#07111e] p-4 text-slate-200"
                       >
                         <span className="font-mono font-bold text-sky-400 text-sm">0{i + 1}.</span>
-                        <span className="leading-relaxed">{action}</span>
+                        <span className="wgpt-body-text">{action}</span>
                       </div>
                     ))}
                   </div>
@@ -1448,7 +1448,7 @@ export default function HomePage() {
             <div className="rounded-2xl border border-[#142a47] bg-[#0a1628]/90 p-6 sm:p-8 space-y-6 shadow-xl backdrop-blur-sm">
               <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-5 space-y-2">
                 <span className="text-[10px] font-mono uppercase text-sky-400 font-semibold block">Separation of Concerns Principle</span>
-                <p className="text-sm font-semibold text-white leading-relaxed">
+                <p className="text-sm font-semibold text-white">
                   DATA → AI ANALYSIS → OFFICIAL INFORMATION → PERSONALIZED RECOMMENDATION
                 </p>
                 <p className="wgpt-body-text text-xs text-slate-400 pt-1">

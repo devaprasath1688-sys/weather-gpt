@@ -1,21 +1,7 @@
 "use client";
 
 import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
-import {
-  Bot,
-  X,
-  Trash2,
-  Send,
-  Loader2,
-  Sparkles,
-  User,
-  AlertCircle,
-  Mic,
-  MicOff,
-  Volume2,
-  VolumeX,
-  Globe,
-} from "lucide-react";
+import { Bot, X, Trash2, Send, Loader as Loader2, Sparkles, User, CircleAlert as AlertCircle, Mic, MicOff, Volume2, VolumeX, Globe } from "lucide-react";
 import {
   useSpeechRecognition,
   useSpeechSynthesis,
