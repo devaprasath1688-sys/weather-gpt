@@ -89,7 +89,7 @@ export async function fetchOpenMeteoWeather(
       headers: {
         Accept: "application/json",
       },
-      next: { revalidate: 300 }, // Cache server-side for 5 mins
+      next: { revalidate: 1800 }, // Cache server-side for 30 mins  
     });
 
     clearTimeout(timeoutId);
