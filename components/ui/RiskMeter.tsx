@@ -1,5 +1,5 @@
 import React from "react";
-import { ShieldAlert, AlertTriangle, CheckCircle, Info } from "lucide-react";
+import { ShieldAlert, TriangleAlert as AlertTriangle, CircleCheck as CheckCircle, Info } from "lucide-react";
 
 type RiskMeterProps = {
   score: number; // 0 - 100
