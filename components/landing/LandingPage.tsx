@@ -2,20 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import {
-  Sparkles,
-  ArrowRight,
-  ShieldCheck,
-  Activity,
-  CheckCircle2,
-  Compass,
-  Radio,
-  Layers,
-  Menu,
-  X,
-  Zap,
-  Thermometer,
-} from "lucide-react";
+import { Sparkles, ArrowRight, ShieldCheck, Activity, CircleCheck as CheckCircle2, Compass, Radio, Layers, Menu, X, Zap, Thermometer } from "lucide-react";
 import { useAuth } from "@/contexts/auth-context";
 import { useIsMounted } from "@/lib/useIsMounted";
 
@@ -199,7 +186,7 @@ export function LandingPage({
               Precision Climate Intelligence.<br />
               <span className="text-gradient-cyan">Grounded in Live Telemetry &amp; Truth.</span>
             </h1>
-            <p className="max-w-3xl mx-auto text-base sm:text-lg text-slate-300/90 leading-relaxed pt-1 font-sans">
+            <p className="wgpt-body-text max-w-3xl mx-auto text-base sm:text-lg text-slate-300/90 pt-1 font-sans">
               WeatherGPT synthesizes high-resolution sensor feeds, district hazard matrices, verified administrative bulletins, and personal context into auditable, life-saving action plans.
             </p>
           </div>
@@ -309,7 +296,7 @@ export function LandingPage({
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
             Engineered to Eliminate Misinformation
           </h2>
-          <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+          <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
             Three foundational pillars ensure WeatherGPT gives you actionable safety decisions without generic weather noise.
           </p>
         </div>
@@ -323,7 +310,7 @@ export function LandingPage({
             <h3 className="text-lg font-bold text-white tracking-tight">
               Live Weather Intelligence
             </h3>
-            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
               High-resolution meteorological sensor integration tracking dry-bulb temperatures, inundation load, wind gusts, and UV radiation with zero delay.
             </p>
             <div className="pt-2 border-t border-[#142a47] text-[11px] font-mono text-sky-300 flex items-center gap-1.5">
@@ -340,7 +327,7 @@ export function LandingPage({
             <h3 className="text-lg font-bold text-white tracking-tight">
               Verified Government Alerts
             </h3>
-            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
               Strict domain-verified ground truth from District Collectorates and IMD bulletins. AI never fabricates or hallucinates administrative closures.
             </p>
             <div className="pt-2 border-t border-[#142a47] text-[11px] font-mono text-sky-300 flex items-center gap-1.5">
@@ -357,7 +344,7 @@ export function LandingPage({
             <h3 className="text-lg font-bold text-white tracking-tight">
               Personalized Risk Guidance
             </h3>
-            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
               Mathematical risk synthesis tuned directly to your occupation, transit route, and regional district with bilingual action checklists.
             </p>
             <div className="pt-2 border-t border-[#142a47] text-[11px] font-mono text-sky-300 flex items-center gap-1.5">
@@ -381,7 +368,7 @@ export function LandingPage({
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">
               7-Step Deterministic Intelligence Flow
             </h2>
-            <p className="text-xs sm:text-sm text-slate-400 leading-relaxed">
+            <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
               From raw telemetry ingestion to targeted personalized dispatch, every step is grounded and auditable.
             </p>
           </div>
@@ -438,7 +425,7 @@ export function LandingPage({
             <h2 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
               AI Informs. Authorities Decide.
             </h2>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            <p className="wgpt-body-text text-xs sm:text-sm text-slate-300">
               WeatherGPT adheres to a strict architectural rule: AI models calculate environmental risk and provide personal precautions, but never invent administrative closure orders. Official authorities remain the sole source of truth.
             </p>
           </div>
@@ -447,25 +434,25 @@ export function LandingPage({
             <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-5 space-y-2">
               <span className="font-mono font-bold text-lg text-sky-400/40">01</span>
               <h3 className="font-bold text-white text-sm">Live Weather Data</h3>
-              <p className="text-slate-400 text-[11px] leading-relaxed">Real-time open meteorological feeds with continuous telemetry validation.</p>
+              <p className="wgpt-body-text text-slate-400 text-[11px]">Real-time open meteorological feeds with continuous telemetry validation.</p>
             </div>
 
             <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-5 space-y-2">
               <span className="font-mono font-bold text-lg text-sky-400/40">02</span>
               <h3 className="font-bold text-white text-sm">Geospatial Context</h3>
-              <p className="text-slate-400 text-[11px] leading-relaxed">Precise GPS pinning and district-boundary reverse geocoding across Tamil Nadu.</p>
+              <p className="wgpt-body-text text-slate-400 text-[11px]">Precise GPS pinning and district-boundary reverse geocoding across Tamil Nadu.</p>
             </div>
 
             <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-5 space-y-2">
               <span className="font-mono font-bold text-lg text-sky-400/40">03</span>
               <h3 className="font-bold text-white text-sm">Official Verification</h3>
-              <p className="text-slate-400 text-[11px] leading-relaxed">Whitelist filtering against verified government and disaster authority portals.</p>
+              <p className="wgpt-body-text text-slate-400 text-[11px]">Whitelist filtering against verified government and disaster authority portals.</p>
             </div>
 
             <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-5 space-y-2">
               <span className="font-mono font-bold text-lg text-sky-400/40">04</span>
               <h3 className="font-bold text-white text-sm">Personalized Context</h3>
-              <p className="text-slate-400 text-[11px] leading-relaxed">Tailored exposure calculations and actionable advice for your daily routine.</p>
+              <p className="wgpt-body-text text-slate-400 text-[11px]">Tailored exposure calculations and actionable advice for your daily routine.</p>
             </div>
           </div>
         </div>
@@ -484,7 +471,7 @@ export function LandingPage({
                 </div>
                 <span className="font-bold text-sm text-white">Weather<span className="text-sky-400">GPT</span></span>
               </div>
-              <p className="text-slate-400 max-w-md">
+              <p className="wgpt-body-text text-slate-400 max-w-md">
                 Personalized Weather Intelligence &amp; Grounded Alert Verification Platform.
               </p>
             </div>

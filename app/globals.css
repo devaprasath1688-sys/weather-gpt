@@ -254,6 +254,13 @@ body {
   box-shadow: 0 20px 45px -10px rgba(2, 6, 23, 0.8), 0 0 20px -5px rgba(56, 189, 248, 0.05);
 }
 
+/* Editorial body text — matches landing-page supporting paragraph style */
+.wgpt-body-text {
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.625;
+  letter-spacing: -0.01em;
+}
+
 /* Respect prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   *,

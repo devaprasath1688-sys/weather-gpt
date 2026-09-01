@@ -764,7 +764,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
                     }
                   `}
                 >
-                  <p className="whitespace-pre-wrap break-words leading-relaxed font-sans">
+                  <p className="wgpt-body-text whitespace-pre-wrap break-words">
                     {message.content}
                   </p>
 
@@ -864,7 +864,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
               >
                 <Loader2 className="h-3.5 w-3.5 animate-spin text-sky-400" />
 
-                <span className="text-xs text-slate-300 font-medium font-sans">
+                <span className="wgpt-body-text text-xs text-slate-300 font-medium">
                   {wasVoiceInput ? "Analyzing query & telemetry..." : "Thinking..."}
                 </span>
 
@@ -972,7 +972,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
         >
           <AlertCircle className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-400" />
 
-          <span className="leading-relaxed">{error || sttError}</span>
+          <span className="wgpt-body-text">{error || sttError}</span>
         </div>
       )}
 

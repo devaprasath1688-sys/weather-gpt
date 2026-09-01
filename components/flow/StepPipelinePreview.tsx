@@ -157,7 +157,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
           <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-5 space-y-2">
             <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">Occupation Vector</span>
             <p className="text-xl font-bold text-white capitalize">{profile.occupation}</p>
-            <p className="text-xs text-neutral-400 leading-relaxed">{profile.activityNotes || "Standard commuter / outdoor profile"}</p>
+            <p className="wgpt-body-text text-xs text-neutral-400">{profile.activityNotes || "Standard commuter / outdoor profile"}</p>
           </div>
 
           <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-5 space-y-2">
@@ -309,7 +309,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
                 <AlertTriangle className="h-4 w-4 text-white shrink-0" />
                 {riskAnalysis.primaryHazard}
               </p>
-              <p className="text-xs text-neutral-300 leading-relaxed">{riskAnalysis.explanation}</p>
+              <p className="wgpt-body-text text-xs text-neutral-300">{riskAnalysis.explanation}</p>
             </div>
           </div>
 
@@ -322,7 +322,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
                 </span>
                 <span className="text-[10px] font-mono text-neutral-500">Deterministic Analysis</span>
               </div>
-              <p className="text-xs text-neutral-300 leading-relaxed">
+              <p className="wgpt-body-text text-xs text-neutral-300">
                 {riskAnalysis.occupationImpact}
               </p>
             </div>
@@ -412,7 +412,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
             <span className="text-neutral-500">Updated: {districtIntel.lastUpdated}</span>
           </div>
 
-          <p className="text-xs text-neutral-300 leading-relaxed font-medium">
+          <p className="wgpt-body-text text-xs text-neutral-300 font-medium">
             {districtIntel.expectedLocalImpact}
           </p>
 
