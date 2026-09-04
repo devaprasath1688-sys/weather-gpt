@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { Loader2, MapPin, Crosshair, Clock, Globe, Map as MapIcon } from "lucide-react";
 import { DISTRICT_COORDINATES } from "@/lib/geo/districtCoordinates";
+import { useLanguage } from "@/contexts/language-context";
 
 // High-resolution satellite & hybrid fallback map when Google Maps API key is absent/unavailable
 const LeafletFallbackMap = dynamic(
@@ -44,6 +45,7 @@ export function LiveWeatherMap({
   onUseGPS,
   gpsLoading = false,
 }: LiveWeatherMapProps) {
+  const { t } = useLanguage();
   const googleMapRef = useRef<HTMLDivElement>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const mapInstanceRef = useRef<any>(null);
@@ -113,7 +115,7 @@ export function LiveWeatherMap({
     if (!googleMapsLoaded || !googleMapRef.current || !window.google?.maps) return;
 
     try {
-      const locationTitle = locationSource === "gps" ? "Your Current Location" : `${selectedDistrict} District Center`;
+      const locationTitle = locationSource === "gps" ? t("map.yourLocation") : `${selectedDistrict} ${t("map.districtCenter")}`;
 
       if (!mapInstanceRef.current) {
         // Initialize with Google Maps HYBRID mode (Satellite + Roads + Labels)
@@ -192,7 +194,7 @@ export function LiveWeatherMap({
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-bold uppercase tracking-wider text-white">
-                LIVE WEATHER MAP · {selectedDistrict} District
+                {t("nav.weather")} · {selectedDistrict} District
               </span>
               <span className="hidden sm:inline-flex text-[10px] font-mono text-sky-300 bg-[#0a1628] border border-sky-500/20 px-2 py-0.5 rounded-full">
                 {activeLat.toFixed(4)}°N, {activeLon.toFixed(4)}°E
@@ -201,7 +203,7 @@ export function LiveWeatherMap({
             {updatedAt && (
               <p className="text-[11px] text-slate-400 font-mono flex items-center gap-1 mt-0.5">
                 <Clock className="h-3 w-3 text-slate-500" />
-                <span>Updated {updatedAt}</span>
+                <span>{t("map.updated")} {updatedAt}</span>
               </p>
             )}
           </div>
@@ -221,7 +223,7 @@ export function LiveWeatherMap({
                 }`}
               >
                 <Globe className="h-3.5 w-3.5" />
-                <span>Satellite</span>
+                <span>{t("map.satellite")}</span>
               </button>
               <button
                 type="button"
@@ -233,7 +235,7 @@ export function LiveWeatherMap({
                 }`}
               >
                 <MapIcon className="h-3.5 w-3.5" />
-                <span>Road Map</span>
+                <span>{t("map.road")}</span>
               </button>
             </div>
           )}
@@ -250,14 +252,14 @@ export function LiveWeatherMap({
               ) : (
                 <Crosshair className="h-3.5 w-3.5 text-sky-400" />
               )}
-              <span>{locationSource === "gps" ? "GPS Active" : "Detect via GPS"}</span>
+              <span>{locationSource === "gps" ? t("weather.gpsActive") : t("map.detect")}</span>
             </button>
           )}
 
           {isUsingGoogleMaps && (
             <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-semibold text-sky-300 bg-[#0a1628] border border-sky-500/30 px-2.5 py-1.5 rounded-lg shadow-sm">
               <span className="h-1.5 w-1.5 rounded-full bg-sky-400 animate-pulse" />
-              <span>Google Hybrid</span>
+              <span>{t("map.googleHybrid")}</span>
             </span>
           )}
         </div>
@@ -283,7 +285,7 @@ export function LiveWeatherMap({
             <div className="h-2.5 w-2.5 rounded-full bg-sky-400 animate-pulse" />
             <div>
               <p className="text-xs font-bold text-white leading-none">
-                {locationSource === "gps" ? "Your Location (GPS)" : `${selectedDistrict} District`}
+                {locationSource === "gps" ? t("map.yourLocation") : `${selectedDistrict} District`}
               </p>
               <p className="text-[10px] text-sky-300/70 font-mono mt-0.5">
                 {activeLat.toFixed(4)}°N, {activeLon.toFixed(4)}°E · Tamil Nadu

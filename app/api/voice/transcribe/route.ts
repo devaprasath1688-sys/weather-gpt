@@ -29,12 +29,14 @@ export async function POST(request: Request) {
 
     // Map language parameter to Sarvam's expected format
     let targetLanguageCode = requestedLang;
-    if (requestedLang === "ta" || requestedLang === "ta-IN") {
-      targetLanguageCode = "ta-IN";
-    } else if (requestedLang === "en" || requestedLang === "en-IN") {
-      targetLanguageCode = "en-IN";
-    } else if (requestedLang === "hi" || requestedLang === "hi-IN") {
-      targetLanguageCode = "hi-IN";
+    const languageCodes: Record<string, string> = {
+      en: "en-IN", hi: "hi-IN", ta: "ta-IN", te: "te-IN", ml: "ml-IN",
+      kn: "kn-IN", ur: "ur-IN", mr: "mr-IN", bn: "bn-IN", or: "od-IN",
+    };
+    if (languageCodes[requestedLang]) {
+      targetLanguageCode = languageCodes[requestedLang];
+    } else if (Object.values(languageCodes).includes(requestedLang)) {
+      targetLanguageCode = requestedLang;
     } else {
       targetLanguageCode = "unknown";
     }

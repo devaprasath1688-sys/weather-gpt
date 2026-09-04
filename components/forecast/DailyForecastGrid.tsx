@@ -3,6 +3,7 @@
 import React from "react";
 import { Calendar, Sun, CloudSun, Cloud, CloudRain, Zap, Flame, Wind } from "lucide-react";
 import type { DailyForecast } from "@/types";
+import { useLanguage } from "@/contexts/language-context";
 
 type DailyForecastGridProps = {
   dailyData: DailyForecast[];
@@ -50,20 +51,21 @@ function getConditionCardBg(condition: string) {
 }
 
 export function DailyForecastGrid({ dailyData, formatTemp }: DailyForecastGridProps) {
+  const { t } = useLanguage();
   return (
     <section className="space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="font-mono text-xs font-bold text-sky-400 uppercase tracking-wider">
-            03 / Multi-Day Outlook
+            03 / {t("forecast.daily")}
           </span>
           <h2 className="text-sm font-bold text-white uppercase tracking-wide">
-            7-Day Meteorological Forecast
+            {t("forecast.sevenDay")}
           </h2>
         </div>
         <div className="flex items-center gap-1.5 text-xs text-slate-400 font-mono">
           <Calendar className="h-3.5 w-3.5 text-sky-400" />
-          <span>Next 7 Days Trend</span>
+          <span>{t("forecast.nextSeven")}</span>
         </div>
       </div>
 
@@ -114,7 +116,7 @@ export function DailyForecastGrid({ dailyData, formatTemp }: DailyForecastGridPr
 
                 <div className="space-y-1">
                   <div className="flex items-center justify-between text-[10px] font-mono text-sky-300">
-                    <span>Rain PoP</span>
+                    <span>{t("forecast.rainPop")}</span>
                     <span className="font-bold">{day.popPercent}%</span>
                   </div>
                   <div className="h-1 w-full bg-[#040810] rounded-full overflow-hidden">

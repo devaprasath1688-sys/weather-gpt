@@ -6,8 +6,10 @@ import { Container } from "@/components/layout/SiteShell";
 import { OnboardingWizard } from "@/components/profile/OnboardingWizard";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { SIH_PROBLEM_CODE } from "@/lib/constants";
+import { useLanguage } from "@/contexts/language-context";
 
 export default function SignupPage() {
+  const { t } = useLanguage();
   return (
     <div className="min-h-screen py-10 px-4 sm:px-6 lg:px-8 bg-radar-mesh">
       <Container className="w-full max-w-xl">
@@ -25,12 +27,12 @@ export default function SignupPage() {
                 <span className="inline-flex items-center rounded-full border border-sky-500/30 bg-[#0a1628] px-2 py-0.5 text-[10px] font-semibold tracking-wide text-sky-300">
                   {SIH_PROBLEM_CODE}
                 </span>
-                <span className="text-[11px] text-slate-400">Onboarding</span>
+                <span className="text-[11px] text-slate-400">{t("auth.onboarding")}</span>
               </div>
             </div>
           </div>
           <p className="text-xs sm:text-sm text-slate-400 max-w-sm mx-auto">
-            Configure your personalized weather risk profile in 6 simple steps.
+            {t("auth.setup")}
           </p>
         </div>
 
@@ -44,7 +46,7 @@ export default function SignupPage() {
             className="inline-flex items-center gap-1.5 text-xs text-slate-500 hover:text-sky-300 transition-colors"
           >
             <ArrowRight className="h-3 w-3 rotate-180" />
-            <span>Back to Dashboard</span>
+            <span>{t("auth.backDashboard")}</span>
           </Link>
         </div>
       </Container>

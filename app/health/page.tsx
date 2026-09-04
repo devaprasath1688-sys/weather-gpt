@@ -1,3 +1,5 @@
+"use client";
+
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
 import { StatusDot } from "@/components/ui/StatusDot";
@@ -5,6 +7,7 @@ import { Container } from "@/components/layout/SiteShell";
 import { CURRENT_PHASE, SIH_PROBLEM_CODE } from "@/lib/constants";
 import { getHealthPayload } from "@/lib/env";
 import { Activity, Cpu, Terminal } from "lucide-react";
+import { useLanguage } from "@/contexts/language-context";
 
 const LABELS: Record<string, string> = {
   supabase: "Database / Auth (Supabase)",
@@ -23,6 +26,7 @@ export const metadata = {
 };
 
 export default function HealthPage() {
+  const { t } = useLanguage();
   const health = getHealthPayload();
 
   return (
@@ -44,16 +48,16 @@ export default function HealthPage() {
         <div className="grid gap-4 sm:grid-cols-3">
           <Card variant="glassStrong" className="space-y-2">
             <div className="flex items-center justify-between text-xs font-mono uppercase text-neutral-400">
-              <span>Engine Status</span>
+              <span>{t("health.engine")}</span>
               <Activity className="h-4 w-4 text-white" />
             </div>
-            <p className="text-2xl font-bold text-white">Operational</p>
+            <p className="text-2xl font-bold text-white">{t("health.operational")}</p>
             <Badge tone="ok">All Core Pipelines Active</Badge>
           </Card>
 
           <Card variant="glassStrong" className="space-y-2">
             <div className="flex items-center justify-between text-xs font-mono uppercase text-neutral-400">
-              <span>Service Identifier</span>
+              <span>{t("health.service")}</span>
               <Cpu className="h-4 w-4 text-white" />
             </div>
             <p className="text-2xl font-bold text-white">{health.service}</p>
@@ -62,7 +66,7 @@ export default function HealthPage() {
 
           <Card variant="glassStrong" className="space-y-2">
             <div className="flex items-center justify-between text-xs font-mono uppercase text-neutral-400">
-              <span>Last Heartbeat</span>
+              <span>{t("health.heartbeat")}</span>
               <Terminal className="h-4 w-4 text-white" />
             </div>
             <p className="text-xs font-mono text-neutral-300 break-all pt-1">{health.timestamp}</p>
@@ -72,8 +76,8 @@ export default function HealthPage() {
 
         <Card variant="glassStrong" className="space-y-4">
           <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
-            <h2 className="text-base font-bold text-white">Provider Integration Grid</h2>
-            <span className="text-xs text-neutral-400">Connected Services</span>
+            <h2 className="text-base font-bold text-white">{t("health.grid")}</h2>
+            <span className="text-xs text-neutral-400">{t("health.connected")}</span>
           </div>
 
           <ul className="divide-y divide-neutral-800">
@@ -95,7 +99,7 @@ export default function HealthPage() {
         </Card>
 
         <div className="rounded-2xl border border-neutral-800 bg-neutral-950 p-5 space-y-3">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">System Architecture Notes</h3>
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">{t("health.notes")}</h3>
           <ul className="list-disc space-y-1.5 pl-5 text-xs text-neutral-400">
             {health.notes.map((note) => (
               <li key={note}>{note}</li>

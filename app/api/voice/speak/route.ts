@@ -32,16 +32,15 @@ export async function POST(request: Request) {
 
     // Determine Sarvam target language code
     let targetLanguageCode = "en-IN";
-    if (
-      requestedLang.startsWith("ta") ||
-      /[\u0B80-\u0BFF]/.test(textToSpeak)
-    ) {
-      targetLanguageCode = "ta-IN";
-    } else if (requestedLang.startsWith("hi")) {
-      targetLanguageCode = "hi-IN";
-    } else {
+    const languageCodes: Record<string, string> = {
+      en: "en-IN", hi: "hi-IN", ta: "ta-IN", te: "te-IN", ml: "ml-IN",
+      kn: "kn-IN", ur: "ur-IN", mr: "mr-IN", bn: "bn-IN", or: "od-IN",
+    };
+    targetLanguageCode = languageCodes[requestedLang] || requestedLang || "en-IN";
+    if (!Object.values(languageCodes).includes(targetLanguageCode) && !/[\u0B80-\u0BFF]/.test(textToSpeak)) {
       targetLanguageCode = "en-IN";
     }
+    if (/[\u0B80-\u0BFF]/.test(textToSpeak)) targetLanguageCode = "ta-IN";
 
     const speaker = process.env.SARVAM_SPEAKER || "kavitha";
     const ttsModel = process.env.SARVAM_TTS_MODEL || "bulbul:v3";

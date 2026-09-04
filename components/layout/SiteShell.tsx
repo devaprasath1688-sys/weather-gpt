@@ -5,6 +5,8 @@ import Link from "next/link";
 import { APP_NAME, SIH_PROBLEM_CODE, CURRENT_PHASE } from "@/lib/constants";
 import { useAuth } from "@/contexts/auth-context";
 import { useIsMounted } from "@/lib/useIsMounted";
+import { useLanguage } from "@/contexts/language-context";
+import { LanguageSelector } from "@/components/ui/LanguageSelector";
 import {
   Sparkles,
   Layers,
@@ -35,6 +37,7 @@ export function Container({ children, className = "" }: ContainerProps) {
 
 export function SiteHeader() {
   const { user, signOut } = useAuth();
+  const { t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const mounted = useIsMounted();
 
@@ -63,49 +66,49 @@ export function SiteHeader() {
             className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-300 transition-colors hover:bg-[#0f223d] hover:text-white"
           >
             <Compass className="h-3.5 w-3.5 text-sky-400" />
-            <span>Overview</span>
+            <span>{t("nav.overview")}</span>
           </Link>
           <Link
             href="/#risk"
             className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-300 transition-colors hover:bg-[#0f223d] hover:text-white"
           >
             <Activity className="h-3.5 w-3.5 text-sky-400" />
-            <span>Risk &amp; Impact</span>
+            <span>{t("nav.risk")}</span>
           </Link>
           <Link
             href="/#alerts"
             className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-300 transition-colors hover:bg-[#0f223d] hover:text-white"
           >
             <ShieldAlert className="h-3.5 w-3.5 text-sky-400" />
-            <span>Official Alerts</span>
+            <span>{t("nav.alerts")}</span>
           </Link>
           <Link
             href="/#recommendations"
             className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-300 transition-colors hover:bg-[#0f223d] hover:text-white"
           >
             <Sparkles className="h-3.5 w-3.5 text-sky-400" />
-            <span>For You</span>
+            <span>{t("nav.recommendations")}</span>
           </Link>
           <Link
             href="/#map"
             className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-300 transition-colors hover:bg-[#0f223d] hover:text-white"
           >
             <MapPin className="h-3.5 w-3.5 text-sky-400" />
-            <span>Risk Map</span>
+            <span>{t("nav.risk")}</span>
           </Link>
           <Link
             href="/#pipeline"
             className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-400 transition-colors hover:bg-[#0f223d] hover:text-white"
           >
             <Layers className="h-3.5 w-3.5 text-slate-500" />
-            <span>7-Step Flow</span>
+            <span>{t("nav.pipeline")}</span>
           </Link>
           <Link
             href="/#trust"
             className="flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium text-slate-400 transition-colors hover:bg-[#0f223d] hover:text-white"
           >
             <ShieldCheck className="h-3.5 w-3.5 text-slate-500" />
-            <span>Trust</span>
+            <span>{t("nav.trust")}</span>
           </Link>
         </div>
 
@@ -122,7 +125,7 @@ export function SiteHeader() {
                 className="flex items-center gap-2 rounded-xl border border-[#142a47] bg-[#0a1628] px-3.5 py-1.5 text-xs font-semibold text-slate-300 transition-all hover:border-sky-500/40 hover:bg-[#0f223d] hover:text-white"
               >
                 <LogOut className="h-3.5 w-3.5 text-slate-400" />
-                <span>Sign Out</span>
+                <span>{t("nav.signOut")}</span>
               </button>
             </>
           ) : (
@@ -132,25 +135,26 @@ export function SiteHeader() {
                 className="flex items-center gap-2 rounded-xl border border-[#142a47] bg-[#0a1628] px-3.5 py-1.5 text-xs font-semibold text-slate-300 transition-all hover:border-sky-500/30 hover:bg-[#0f223d] hover:text-white"
               >
                 <LogIn className="h-3.5 w-3.5 text-sky-400" />
-                <span>Sign In</span>
+                <span>{t("nav.signIn")}</span>
               </Link>
               <Link
                 href="/signup"
                 className="flex items-center gap-2 rounded-xl bg-sky-500 hover:bg-sky-400 px-3.5 py-1.5 text-xs font-bold text-slate-950 shadow-[0_0_15px_rgba(56,189,248,0.35)] transition-all"
               >
                 <User className="h-3.5 w-3.5" />
-                <span>Sign Up</span>
+                <span>{t("nav.signUp")}</span>
               </Link>
             </>
           )}
         </div>
 
         {/* Mobile Menu Toggle Button */}
-        <button
+          <LanguageSelector />
+          <button
           type="button"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           className="rounded-lg p-2 text-slate-400 hover:bg-[#0a1628] lg:hidden transition-colors"
-          aria-label="Toggle navigation menu"
+            aria-label={t("nav.toggle")}
         >
           {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
@@ -165,7 +169,7 @@ export function SiteHeader() {
             className="flex items-center gap-2 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-200 hover:bg-[#0f223d]"
           >
             <Compass className="h-4 w-4 text-sky-400" />
-            <span>Overview</span>
+            <span>{t("nav.overview")}</span>
           </Link>
           <Link
             href="/#risk"
@@ -173,7 +177,7 @@ export function SiteHeader() {
             className="flex items-center gap-2 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-200 hover:bg-[#0f223d]"
           >
             <Activity className="h-4 w-4 text-sky-400" />
-            <span>Risk &amp; Impact</span>
+            <span>{t("nav.risk")}</span>
           </Link>
           <Link
             href="/#alerts"
@@ -181,7 +185,7 @@ export function SiteHeader() {
             className="flex items-center gap-2 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-200 hover:bg-[#0f223d]"
           >
             <ShieldAlert className="h-4 w-4 text-sky-400" />
-            <span>Official Alerts</span>
+            <span>{t("nav.alerts")}</span>
           </Link>
           <Link
             href="/#recommendations"
@@ -189,7 +193,7 @@ export function SiteHeader() {
             className="flex items-center gap-2 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-200 hover:bg-[#0f223d]"
           >
             <Sparkles className="h-4 w-4 text-sky-400" />
-            <span>Personalized For You</span>
+            <span>{t("nav.recommendations")}</span>
           </Link>
           <Link
             href="/#map"
@@ -197,7 +201,7 @@ export function SiteHeader() {
             className="flex items-center gap-2 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-200 hover:bg-[#0f223d]"
           >
             <MapPin className="h-4 w-4 text-sky-400" />
-            <span>District Risk Map</span>
+            <span>{t("nav.risk")}</span>
           </Link>
           <Link
             href="/#pipeline"
@@ -205,7 +209,7 @@ export function SiteHeader() {
             className="flex items-center gap-2 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-200 hover:bg-[#0f223d]"
           >
             <Layers className="h-4 w-4 text-slate-400" />
-            <span>7-Step Flow</span>
+            <span>{t("nav.pipeline")}</span>
           </Link>
           <Link
             href="/#trust"
@@ -213,7 +217,7 @@ export function SiteHeader() {
             className="flex items-center gap-2 rounded-xl px-3.5 py-2.5 text-sm font-medium text-slate-200 hover:bg-[#0f223d]"
           >
             <ShieldCheck className="h-4 w-4 text-slate-400" />
-            <span>Trust Model</span>
+            <span>{t("nav.trust")}</span>
           </Link>
           <div className="border-t border-[#142a47] pt-3 space-y-2">
             {mounted && user ? (
@@ -230,7 +234,7 @@ export function SiteHeader() {
                   className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#142a47] bg-[#0a1628] px-4 py-2.5 text-xs font-semibold text-slate-200 hover:bg-[#0f223d]"
                 >
                   <LogOut className="h-3.5 w-3.5 text-slate-400" />
-                  <span>Sign Out</span>
+                  <span>{t("nav.signOut")}</span>
                 </button>
               </>
             ) : (
@@ -241,7 +245,7 @@ export function SiteHeader() {
                   className="flex w-full items-center justify-center gap-2 rounded-xl border border-[#142a47] bg-[#0a1628] px-4 py-2.5 text-xs font-semibold text-slate-200"
                 >
                   <LogIn className="h-3.5 w-3.5 text-sky-400" />
-                  <span>Sign In</span>
+                  <span>{t("nav.signIn")}</span>
                 </Link>
                 <Link
                   href="/signup"
@@ -249,7 +253,7 @@ export function SiteHeader() {
                   className="flex w-full items-center justify-center gap-2 rounded-xl bg-sky-500 py-2.5 text-xs font-bold text-slate-950 shadow-sm"
                 >
                   <User className="h-3.5 w-3.5" />
-                  <span>Sign Up</span>
+                  <span>{t("nav.signUp")}</span>
                 </Link>
               </>
             )}

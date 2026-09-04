@@ -5,6 +5,8 @@ import Link from "next/link";
 import { SIH_PROBLEM_CODE } from "@/lib/constants";
 import { useAuth } from "@/contexts/auth-context";
 import { useIsMounted } from "@/lib/useIsMounted";
+import { useLanguage, type MessageKey } from "@/contexts/language-context";
+import { LanguageSelector } from "@/components/ui/LanguageSelector";
 import {
   LayoutDashboard,
   CloudSun,
@@ -33,14 +35,14 @@ export type DashboardTab =
 
 export const INTELLIGENCE_NAV_ITEMS: Array<{
   id: DashboardTab;
-  label: string;
+  label: MessageKey;
   icon: React.ElementType;
 }> = [
-  { id: "overview", label: "Overview", icon: LayoutDashboard },
-  { id: "weather", label: "Live Weather", icon: CloudSun },
-  { id: "risk", label: "Risk & Impact", icon: Activity },
-  { id: "alerts", label: "Official Alerts", icon: ShieldCheck },
-  { id: "recommendations", label: "For You", icon: Sparkles },
+  { id: "overview", label: "nav.overview", icon: LayoutDashboard },
+  { id: "weather", label: "nav.weather", icon: CloudSun },
+  { id: "risk", label: "nav.risk", icon: Activity },
+  { id: "alerts", label: "nav.alerts", icon: ShieldCheck },
+  { id: "recommendations", label: "nav.recommendations", icon: Sparkles },
 ];
 
 export const DISTRICT_NAV_ITEMS: Array<{
@@ -48,7 +50,7 @@ export const DISTRICT_NAV_ITEMS: Array<{
   label: string;
   icon: React.ElementType;
 }> = [
-  { id: "district", label: "District Intelligence", icon: Building2 },
+  { id: "district", label: "nav.district", icon: Building2 },
 ];
 
 export const SYSTEM_NAV_ITEMS: Array<{
@@ -57,8 +59,8 @@ export const SYSTEM_NAV_ITEMS: Array<{
   icon: React.ElementType;
   badge?: string;
 }> = [
-  { id: "pipeline", label: "7-Step Flow", icon: Layers, badge: "Pipeline" },
-  { id: "trust", label: "Trust Model", icon: Shield },
+  { id: "pipeline", label: "nav.pipeline", icon: Layers, badge: "Pipeline" },
+  { id: "trust", label: "nav.trust", icon: Shield },
 ];
 
 export const ALL_NAV_ITEMS = [
@@ -87,6 +89,7 @@ export function DashboardShell({
   const { user, userProfile, signOut } = useAuth();
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const mounted = useIsMounted();
+  const { t } = useLanguage();
 
   const activeNavItem = ALL_NAV_ITEMS.find((n) => n.id === activeTab) || ALL_NAV_ITEMS[0];
 
@@ -127,7 +130,7 @@ export function DashboardShell({
           {/* Section: INTELLIGENCE */}
           <div className="space-y-1">
             <span className="px-3 text-[10px] font-mono uppercase tracking-widest text-sky-400/70 font-semibold block mb-2">
-              Intelligence
+              {t("nav.intelligence")}
             </span>
             {INTELLIGENCE_NAV_ITEMS.map((item) => {
               const Icon = item.icon;
@@ -140,7 +143,7 @@ export function DashboardShell({
                 >
                   <div className="flex items-center gap-3">
                     <Icon className={`h-4 w-4 transition-colors ${isActive ? "text-sky-400" : "text-slate-500"}`} />
-                    <span>{item.label}</span>
+                    <span>{t(item.label as MessageKey)}</span>
                   </div>
                 </button>
               );
@@ -150,7 +153,7 @@ export function DashboardShell({
           {/* Section: DISTRICT */}
           <div className="space-y-1">
             <span className="px-3 text-[10px] font-mono uppercase tracking-widest text-sky-400/70 font-semibold block mb-2">
-              District
+              {t("nav.districtSection")}
             </span>
             {DISTRICT_NAV_ITEMS.map((item) => {
               const Icon = item.icon;
@@ -163,7 +166,7 @@ export function DashboardShell({
                 >
                   <div className="flex items-center gap-3">
                     <Icon className={`h-4 w-4 transition-colors ${isActive ? "text-sky-400" : "text-slate-500"}`} />
-                    <span>{item.label}</span>
+                    <span>{t(item.label as MessageKey)}</span>
                   </div>
                 </button>
               );
@@ -173,7 +176,7 @@ export function DashboardShell({
           {/* Section: SYSTEM */}
           <div className="space-y-1">
             <span className="px-3 text-[10px] font-mono uppercase tracking-widest text-sky-400/70 font-semibold block mb-2">
-              System
+              {t("nav.system")}
             </span>
             {SYSTEM_NAV_ITEMS.map((item) => {
               const Icon = item.icon;
@@ -186,7 +189,7 @@ export function DashboardShell({
                 >
                   <div className="flex items-center gap-3">
                     <Icon className={`h-4 w-4 transition-colors ${isActive ? "text-sky-400" : "text-slate-500"}`} />
-                    <span>{item.label}</span>
+                    <span>{t(item.label as MessageKey)}</span>
                   </div>
                   {item.badge && (
                     <span className="text-[9px] font-mono bg-sky-500/10 text-sky-300 border border-sky-500/20 px-1.5 py-0.5 rounded">
@@ -219,7 +222,7 @@ export function DashboardShell({
                 className="w-full flex items-center justify-center gap-1.5 rounded-lg border border-white/[0.06] bg-white/[0.03] py-1.5 text-[11px] font-medium text-slate-400 hover:text-white hover:border-sky-500/20 transition-colors press-tactile"
               >
                 <LogOut className="h-3 w-3" />
-                <span>Sign Out</span>
+                <span>{t("nav.signOut")}</span>
               </button>
             </div>
           ) : (
@@ -229,14 +232,14 @@ export function DashboardShell({
                 className="flex-1 flex items-center justify-center gap-1.5 rounded-lg border border-white/[0.06] bg-white/[0.03] py-2 text-xs font-semibold text-slate-200 hover:bg-white/[0.06] hover:text-white transition-colors"
               >
                 <LogIn className="h-3 w-3 text-sky-400" />
-                <span>Sign In</span>
+                  <span>{t("nav.signIn")}</span>
               </Link>
               <Link
                 href="/signup"
                 className="flex-1 flex items-center justify-center gap-1.5 rounded-lg bg-sky-500 hover:bg-sky-400 py-2 text-xs font-bold text-slate-950 shadow-[0_0_12px_-2px_rgba(56,189,248,0.3)] transition-all press-tactile"
               >
                 <User className="h-3 w-3" />
-                <span>Sign Up</span>
+                  <span>{t("nav.signUp")}</span>
               </Link>
             </div>
           )}
@@ -290,7 +293,7 @@ export function DashboardShell({
                         className={`w-full flex items-center gap-3 rounded-xl px-3.5 py-2 text-xs font-medium transition-colors ${isActive ? mobileActiveClass : mobileInactiveClass}`}
                       >
                         <Icon className={`h-4 w-4 ${isActive ? "text-sky-400" : "text-slate-500"}`} />
-                        <span>{item.label}</span>
+                        <span>{t(item.label as MessageKey)}</span>
                       </button>
                     );
                   })}
@@ -315,7 +318,7 @@ export function DashboardShell({
                         className={`w-full flex items-center gap-3 rounded-xl px-3.5 py-2 text-xs font-medium transition-colors ${isActive ? mobileActiveClass : mobileInactiveClass}`}
                       >
                         <Icon className={`h-4 w-4 ${isActive ? "text-sky-400" : "text-slate-500"}`} />
-                        <span>{item.label}</span>
+                        <span>{t(item.label as MessageKey)}</span>
                       </button>
                     );
                   })}
@@ -340,7 +343,7 @@ export function DashboardShell({
                         className={`w-full flex items-center gap-3 rounded-xl px-3.5 py-2 text-xs font-medium transition-colors ${isActive ? mobileActiveClass : mobileInactiveClass}`}
                       >
                         <Icon className={`h-4 w-4 ${isActive ? "text-sky-400" : "text-slate-500"}`} />
-                        <span>{item.label}</span>
+                        <span>{t(item.label as MessageKey)}</span>
                       </button>
                     );
                   })}
@@ -358,7 +361,7 @@ export function DashboardShell({
                   className="w-full flex items-center justify-center gap-2 rounded-xl border border-white/[0.06] bg-white/[0.03] py-2 text-xs font-semibold text-slate-300 hover:text-white hover:border-sky-500/20 transition-colors"
                 >
                   <LogOut className="h-3.5 w-3.5" />
-                  <span>Sign Out</span>
+                  <span>{t("nav.signOut")}</span>
                 </button>
               ) : (
                 <div className="flex gap-2">
@@ -367,14 +370,14 @@ export function DashboardShell({
                     onClick={() => setMobileSidebarOpen(false)}
                     className="flex-1 text-center rounded-xl border border-white/[0.06] bg-white/[0.03] py-2 text-xs font-semibold text-slate-200 hover:bg-white/[0.06]"
                   >
-                    Sign In
+                    {t("nav.signIn")}
                   </Link>
                   <Link
                     href="/signup"
                     onClick={() => setMobileSidebarOpen(false)}
                     className="flex-1 text-center rounded-xl bg-sky-500 hover:bg-sky-400 py-2 text-xs font-bold text-slate-950 shadow-sm"
                   >
-                    Sign Up
+                    {t("nav.signUp")}
                   </Link>
                 </div>
               )}
@@ -401,19 +404,20 @@ export function DashboardShell({
             <div className="flex items-center gap-2">
               <span className="text-xs font-mono text-slate-500 hidden sm:inline">WeatherGPT /</span>
               <h1 className="text-sm sm:text-base font-bold text-white tracking-tight">
-                {activeNavItem.label}
+                {t(activeNavItem.label as MessageKey)}
               </h1>
             </div>
           </div>
 
           {/* Right: Live Telemetry Indicator & Authenticated User / Sign Out */}
           <div className="flex items-center gap-3">
+            <LanguageSelector />
             <div className="hidden sm:inline-flex items-center gap-2 rounded-full border border-sky-500/15 bg-sky-500/5 px-3 py-1 text-[11px] font-mono text-sky-300">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-sky-400" />
               </span>
-              <span>{isLive ? "Open-Meteo High-Res" : "Preset Mode"}</span>
+              <span>{isLive ? t("status.live") : t("status.preset")}</span>
             </div>
 
             {mounted && user ? (
@@ -426,7 +430,7 @@ export function DashboardShell({
                   onClick={() => signOut()}
                   className="rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-white hover:border-sky-500/20 transition-colors press-tactile"
                 >
-                  Sign Out
+                  {t("nav.signOut")}
                 </button>
               </div>
             ) : (
@@ -435,13 +439,13 @@ export function DashboardShell({
                   href="/login"
                   className="rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 py-1.5 text-xs font-semibold text-slate-300 hover:text-white hover:border-white/10 transition-colors"
                 >
-                  Sign In
+                  {t("nav.signIn")}
                 </Link>
                 <Link
                   href="/signup"
                   className="rounded-xl bg-sky-500 hover:bg-sky-400 px-3.5 py-1.5 text-xs font-bold text-slate-950 shadow-[0_4px_16px_-4px_rgba(56,189,248,0.3)] transition-all press-tactile"
                 >
-                  Sign Up
+                  {t("nav.signUp")}
                 </Link>
               </div>
             )}

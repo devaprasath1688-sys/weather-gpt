@@ -5,6 +5,7 @@ import { MapPin, Briefcase, Languages, BellRing, Sparkles, Check } from "lucide-
 import type { UserProfile, OccupationKey, LanguageCode } from "@/types";
 import { MOCK_PERSONAS } from "@/lib/demo-data";
 import { SUPPORTED_LANGUAGES, DISTRICT_OPTIONS } from "@/lib/constants";
+import { useLanguage } from "@/contexts/language-context";
 
 type UserProfileOnboardingProps = {
   activeProfile: UserProfile;
@@ -30,6 +31,7 @@ export function UserProfileOnboarding({
   onSelectPreset,
   selectedPresetKey,
 }: UserProfileOnboardingProps) {
+  const { t } = useLanguage();
   return (
     <div className="space-y-10">
       {/* Section Header */}
@@ -37,10 +39,10 @@ export function UserProfileOnboarding({
         <div className="space-y-1.5">
           <div className="inline-flex items-center gap-2 rounded-full border border-neutral-700 bg-neutral-900 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-neutral-300">
             <Sparkles className="h-3.5 w-3.5" />
-            <span>Scenario Telemetry Switcher</span>
+            <span>{t("profile.scenarioSwitcher")}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-            Live Intelligence Scenarios
+            {t("nav.intelligence")}
           </h2>
           <p className="text-xs sm:text-sm text-neutral-400 max-w-xl">
             Select a target profile to observe how WeatherGPT computes custom risk vectors and suppresses irrelevant announcements.
@@ -102,9 +104,9 @@ export function UserProfileOnboarding({
       <div className="rounded-2xl border border-neutral-800 bg-neutral-950 p-6 sm:p-7 space-y-6">
         <div className="flex items-center justify-between border-b border-neutral-800 pb-3">
           <span className="text-xs font-bold uppercase tracking-wider text-neutral-300 flex items-center gap-2">
-            <span>Custom Telemetry Calibration</span>
+            <span>{t("profile.calibration")}</span>
           </span>
-          <span className="text-[10px] font-mono text-neutral-400">Active Profile Override</span>
+          <span className="text-[10px] font-mono text-neutral-400">{t("profile.override")}</span>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-3">
@@ -112,7 +114,7 @@ export function UserProfileOnboarding({
           <div className="space-y-1.5">
             <label className="flex items-center gap-1.5 text-xs font-medium text-neutral-400">
               <MapPin className="h-3.5 w-3.5 text-neutral-400" />
-              <span>Target District</span>
+              <span>{t("profile.targetDistrict")}</span>
             </label>
             <select
               value={activeProfile.district}
@@ -136,7 +138,7 @@ export function UserProfileOnboarding({
           <div className="space-y-1.5">
             <label className="flex items-center gap-1.5 text-xs font-medium text-neutral-400">
               <Briefcase className="h-3.5 w-3.5 text-neutral-400" />
-              <span>Occupational Role</span>
+              <span>{t("profile.role")}</span>
             </label>
             <select
               value={activeProfile.occupation}
@@ -160,7 +162,7 @@ export function UserProfileOnboarding({
           <div className="space-y-1.5">
             <label className="flex items-center gap-1.5 text-xs font-medium text-neutral-400">
               <Languages className="h-3.5 w-3.5 text-neutral-400" />
-              <span>Preferred Language</span>
+              <span>{t("profile.language")}</span>
             </label>
             <select
               value={activeProfile.language}
@@ -185,9 +187,9 @@ export function UserProfileOnboarding({
         <div className="rounded-xl border border-neutral-800 bg-neutral-900/60 p-3.5 text-xs text-neutral-400 flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <BellRing className="h-4 w-4 text-white shrink-0" />
-            <span>Right User → Right Notification dispatch filtering is active.</span>
+            <span>{t("profile.notificationActive")}</span>
           </div>
-          <span className="font-mono text-[10px] text-neutral-300">RULESET: OCCUPATION_DISASTER_MATRIX</span>
+          <span className="font-mono text-[10px] text-neutral-300">{t("profile.ruleset")}</span>
         </div>
       </div>
     </div>

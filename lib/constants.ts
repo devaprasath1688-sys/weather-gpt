@@ -30,6 +30,13 @@ export const SUPPORTED_LANGUAGES = [
   { code: "en", label: "English" },
   { code: "hi", label: "Hindi" },
   { code: "ta", label: "Tamil" },
+  { code: "te", label: "Telugu" },
+  { code: "ml", label: "Malayalam" },
+  { code: "kn", label: "Kannada" },
+  { code: "ur", label: "Urdu" },
+  { code: "mr", label: "Marathi" },
+  { code: "bn", label: "Bengali" },
+  { code: "or", label: "Odia" },
 ] as const;
 
 export const DISTRICT_OPTIONS = [

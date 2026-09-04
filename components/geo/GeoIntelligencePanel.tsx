@@ -19,6 +19,7 @@ import { verifyOfficialAlert } from "@/lib/alerts/verifyAlert";
 import { generatePersonalizedRecommendation } from "@/lib/recommendations/generateRecommendation";
 import type { PersonaPreset } from "@/lib/demo-data";
 import type { WeatherNormalizedPayload } from "@/types";
+import { useLanguage } from "@/contexts/language-context";
 
 // Dynamically import InteractiveMap to avoid SSR issues with Leaflet
 const InteractiveMap = dynamic(
@@ -29,7 +30,7 @@ const InteractiveMap = dynamic(
       <div className="flex items-center justify-center h-full rounded-2xl border border-neutral-800 bg-neutral-950">
         <div className="flex flex-col items-center gap-3 text-neutral-400">
           <Loader2 className="h-6 w-6 animate-spin text-white" />
-          <span className="text-xs font-mono">Initializing Geospatial View...</span>
+          <span className="text-xs font-mono">{t("map.initializing")}</span>
         </div>
       </div>
     ),
@@ -41,6 +42,7 @@ type GeoIntelligencePanelProps = {
 };
 
 export function GeoIntelligencePanel({ persona }: GeoIntelligencePanelProps) {
+  const { t } = useLanguage();
   const { profile, alerts } = persona;
 
   // Geolocation
@@ -182,18 +184,18 @@ export function GeoIntelligencePanel({ persona }: GeoIntelligencePanelProps) {
         <div className="space-y-1.5">
           <div className="inline-flex items-center gap-2 rounded-full border border-neutral-700 bg-neutral-900 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-neutral-300">
             <Globe className="h-3.5 w-3.5" />
-            <span>Interactive Geospatial Engine</span>
+            <span>{t("map.interactiveEngine")}</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-            District Geospatial Intelligence
+            {t("map.districtIntel")}
           </h2>
           <p className="text-xs sm:text-sm text-neutral-400 max-w-xl">
-            Explore live district risk contours, subdivision inundations, and verified official alerts on the geospatial map.
+            {t("map.explore")}
           </p>
         </div>
         <div className="flex items-center gap-2">
           <Badge tone={isLive ? "ok" : "warn"}>
-            {isLive ? "LIVE DATA" : "PRESET DATA"}
+            {isLive ? t("map.liveData") : t("map.presetData")}
           </Badge>
           <Badge tone="neutral">
             {selectedDistrict} District
@@ -235,7 +237,7 @@ export function GeoIntelligencePanel({ persona }: GeoIntelligencePanelProps) {
           {weatherLoading ? (
             <div className="rounded-2xl border border-neutral-800 bg-neutral-950 p-6 flex items-center justify-center gap-2 text-neutral-400 text-xs">
               <Loader2 className="h-4 w-4 animate-spin text-white" />
-              <span>Fetching weather telemetry...</span>
+              <span>{t("map.fetching")}</span>
             </div>
           ) : (
             <WeatherOverlay
@@ -251,7 +253,7 @@ export function GeoIntelligencePanel({ persona }: GeoIntelligencePanelProps) {
             <div className="flex items-center justify-between border-b border-neutral-800 pb-2">
               <span className="text-xs font-bold uppercase tracking-wider text-white flex items-center gap-1.5">
                 <Sparkles className="h-3.5 w-3.5" />
-                Action Directive
+                {t("common.actionDirective")}
               </span>
               <span className="text-[10px] font-bold font-mono uppercase text-white bg-neutral-900 border border-neutral-700 px-2 py-0.5 rounded-full">
                 {recommendation.severity}
@@ -269,7 +271,7 @@ export function GeoIntelligencePanel({ persona }: GeoIntelligencePanelProps) {
               ))}
             </ul>
             <div className="pt-2 border-t border-neutral-800 text-[10px] text-neutral-400 font-mono">
-              Target: {profile.occupation.toUpperCase()} · {selectedDistrict}
+              {t("pipeline.target")} {profile.occupation.toUpperCase()} · {selectedDistrict}
             </div>
           </div>
         </div>

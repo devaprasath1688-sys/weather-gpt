@@ -4,6 +4,7 @@ import React from "react";
 import { Crosshair, MapPin, Navigation, Loader2, XCircle, AlertTriangle } from "lucide-react";
 import type { GeoPermissionState } from "@/lib/geo/useGeolocation";
 import { DISTRICT_COORDINATES } from "@/lib/geo/districtCoordinates";
+import { useLanguage } from "@/contexts/language-context";
 
 type LocationSource = "gps" | "manual" | "demo";
 
@@ -32,12 +33,13 @@ export function LocationControls({
   onSelectDistrict,
   onRecenter,
 }: LocationControlsProps) {
+  const { t } = useLanguage();
   return (
     <div className="rounded-2xl border border-neutral-800 bg-neutral-950 p-5 space-y-4 shadow-xl">
       <div className="flex items-center justify-between border-b border-neutral-800 pb-2.5">
         <span className="text-xs font-bold uppercase tracking-wider text-neutral-300 flex items-center gap-1.5">
           <Navigation className="h-3.5 w-3.5 text-white" />
-          Location Control
+          {t("profile.location")}
         </span>
         <span className="text-[10px] font-mono font-bold text-white px-2 py-0.5 rounded-full bg-neutral-900 border border-neutral-700">
           {locationSource === "gps" ? "📍 GPS LIVE" : locationSource === "manual" ? "📌 MANUAL" : "🎭 PRESET"}
@@ -54,12 +56,12 @@ export function LocationControls({
         {permissionState === "requesting" ? (
           <>
             <Loader2 className="h-3.5 w-3.5 animate-spin" />
-            <span>Detecting Coordinates...</span>
+            <span>{t("location.detecting")}</span>
           </>
         ) : (
           <>
             <Crosshair className="h-3.5 w-3.5" />
-            <span>Use My Location (GPS)</span>
+            <span>{t("location.use")}</span>
           </>
         )}
       </button>
@@ -79,7 +81,7 @@ export function LocationControls({
       {/* GPS Coordinates Display */}
       {gpsLat !== null && gpsLon !== null && locationSource === "gps" && (
         <div className="rounded-xl bg-neutral-900 border border-neutral-700 p-3 text-xs space-y-1">
-          <span className="font-bold text-white text-[10px] uppercase tracking-wider block font-mono">Live GPS Telemetry</span>
+          <span className="font-bold text-white text-[10px] uppercase tracking-wider block font-mono">{t("status.live")}</span>
           <div className="font-mono text-neutral-300">
             {gpsLat.toFixed(4)}°N, {gpsLon.toFixed(4)}°E
           </div>
@@ -90,7 +92,7 @@ export function LocationControls({
       <div className="space-y-1.5">
         <label className="flex items-center gap-1.5 text-[11px] font-medium text-neutral-400">
           <MapPin className="h-3 w-3 text-neutral-400" />
-          Select District
+          {t("nav.districtSection")}
         </label>
         <select
           value={currentDistrict}
@@ -112,7 +114,7 @@ export function LocationControls({
         className="w-full flex items-center justify-center gap-2 rounded-xl border border-neutral-800 bg-neutral-900 hover:bg-neutral-800 px-3 py-2 text-[11px] font-semibold text-neutral-300 transition-colors"
       >
         <Crosshair className="h-3 w-3" />
-        <span>Recenter Map</span>
+        <span>{t("location.recenter")}</span>
       </button>
     </div>
   );

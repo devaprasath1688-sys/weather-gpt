@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import type { WeatherData } from "@/types";
 import { WeatherConditionVisual } from "./WeatherConditionVisual";
+import { useLanguage } from "@/contexts/language-context";
 
 type WeatherHeroSectionProps = {
   activeWeather: WeatherData;
@@ -36,6 +37,7 @@ export function WeatherHeroSection({
   highTemp,
   lowTemp,
 }: WeatherHeroSectionProps) {
+  const { t } = useLanguage();
   const formatTemp = (tempC: number) => {
     if (tempUnit === "F") {
       return `${Math.round((tempC * 9) / 5 + 32)}°F`;
@@ -77,7 +79,7 @@ export function WeatherHeroSection({
                   : "bg-slate-400"
               }`}
             />
-            <span>{locationSource === "gps" ? "GPS Active" : "District Fix"}</span>
+            <span>{locationSource === "gps" ? t("weather.gpsActive") : t("weather.districtFix")}</span>
           </span>
         </div>
 
@@ -127,7 +129,7 @@ export function WeatherHeroSection({
           <div className="lg:col-span-7 space-y-4">
             <div className="space-y-1">
               <span className="text-[11px] font-mono uppercase tracking-widest text-sky-400 font-bold block">
-                Current Atmospheric State
+                {t("weather.current")}
               </span>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
                 {activeWeather.conditionCategory.replace("_", " ").toUpperCase()}
@@ -150,7 +152,7 @@ export function WeatherHeroSection({
 
               <div className="space-y-1 border-l border-[#142a47] pl-4 sm:pl-6 text-xs sm:text-sm">
                 <div className="font-mono text-slate-300">
-                  <span>Feels like </span>
+                  <span>{t("weather.feelsLike")} </span>
                   <strong className="text-white font-bold">
                     {formatTemp(activeWeather.feelsLikeC)}
                   </strong>
@@ -169,7 +171,7 @@ export function WeatherHeroSection({
             {/* Provider Verification Strip */}
             <div className="pt-2 flex items-center gap-2 text-[11px] font-mono text-slate-400">
               <ShieldCheck className="h-3.5 w-3.5 text-sky-400" />
-              <span>Calibrated via: </span>
+              <span>{t("weather.calibrated")} </span>
               <span className="text-sky-300 font-semibold">{providerName}</span>
             </div>
           </div>
@@ -188,7 +190,7 @@ export function WeatherHeroSection({
           {/* Precipitation / Rain Depth */}
           <div className="rounded-2xl border border-[#142a47] bg-[#07111e]/90 p-4 space-y-1.5 shadow-sm hover:border-sky-500/40 transition-all">
             <div className="flex items-center justify-between text-slate-400">
-              <span className="text-[10px] font-mono uppercase tracking-wider">24h Rain</span>
+              <span className="text-[10px] font-mono uppercase tracking-wider">{t("weather.rain24h")}</span>
               <CloudRain className="h-4 w-4 text-sky-400" />
             </div>
             <div>
@@ -196,7 +198,7 @@ export function WeatherHeroSection({
                 {activeWeather.rainfallMm24h} <span className="text-xs text-slate-400 font-normal">mm</span>
               </p>
               <span className="text-[10px] text-slate-400 block font-mono">
-                {activeWeather.rainfallMm24h > 0 ? "Precipitation active" : "Dry surface"}
+                {activeWeather.rainfallMm24h > 0 ? t("weather.precipitationActive") : t("weather.drySurface")}
               </span>
             </div>
             <div className="h-1 w-full bg-[#040810] rounded-full overflow-hidden">
@@ -210,7 +212,7 @@ export function WeatherHeroSection({
           {/* Surface Wind */}
           <div className="rounded-2xl border border-[#142a47] bg-[#07111e]/90 p-4 space-y-1.5 shadow-sm hover:border-sky-500/40 transition-all">
             <div className="flex items-center justify-between text-slate-400">
-              <span className="text-[10px] font-mono uppercase tracking-wider">Surface Wind</span>
+              <span className="text-[10px] font-mono uppercase tracking-wider">{t("weather.surfaceWind")}</span>
               <Wind className="h-4 w-4 text-teal-400" />
             </div>
             <div>
@@ -218,7 +220,7 @@ export function WeatherHeroSection({
                 {activeWeather.windSpeedKmh} <span className="text-xs text-slate-400 font-normal">km/h</span>
               </p>
               <span className="text-[10px] text-slate-400 block font-mono">
-                {activeWeather.windSpeedKmh > 30 ? "Elevated gusts" : "Moderate breeze"}
+                {activeWeather.windSpeedKmh > 30 ? t("weather.elevatedGusts") : t("weather.moderateBreeze")}
               </span>
             </div>
             <div className="h-1 w-full bg-[#040810] rounded-full overflow-hidden">
@@ -232,7 +234,7 @@ export function WeatherHeroSection({
           {/* Relative Humidity */}
           <div className="rounded-2xl border border-[#142a47] bg-[#07111e]/90 p-4 space-y-1.5 shadow-sm hover:border-sky-500/40 transition-all">
             <div className="flex items-center justify-between text-slate-400">
-              <span className="text-[10px] font-mono uppercase tracking-wider">Humidity</span>
+              <span className="text-[10px] font-mono uppercase tracking-wider">{t("weather.humidity")}</span>
               <Droplets className="h-4 w-4 text-blue-400" />
             </div>
             <div>
@@ -240,7 +242,7 @@ export function WeatherHeroSection({
                 {activeWeather.humidityPercent}%
               </p>
               <span className="text-[10px] text-slate-400 block font-mono">
-                {activeWeather.humidityPercent >= 75 ? "Humid air" : "Balanced vapor"}
+                {activeWeather.humidityPercent >= 75 ? t("weather.humidAir") : t("weather.balancedVapor")}
               </span>
             </div>
             <div className="h-1 w-full bg-[#040810] rounded-full overflow-hidden">
@@ -254,7 +256,7 @@ export function WeatherHeroSection({
           {/* Solar UV Index */}
           <div className="rounded-2xl border border-[#142a47] bg-[#07111e]/90 p-4 space-y-1.5 shadow-sm hover:border-sky-500/40 transition-all">
             <div className="flex items-center justify-between text-slate-400">
-              <span className="text-[10px] font-mono uppercase tracking-wider">UV Index</span>
+              <span className="text-[10px] font-mono uppercase tracking-wider">{t("weather.uvIndex")}</span>
               <Sun className="h-4 w-4 text-amber-400" />
             </div>
             <div>
@@ -263,10 +265,10 @@ export function WeatherHeroSection({
               </p>
               <span className="text-[10px] text-slate-400 block font-mono">
                 {activeWeather.uvIndex >= 8
-                  ? "Very High UV"
+                  ? t("weather.veryHighUv")
                   : activeWeather.uvIndex >= 6
-                  ? "High Exposure"
-                  : "Moderate Index"}
+                  ? t("weather.highExposure")
+                  : t("weather.moderateIndex")}
               </span>
             </div>
             <div className="h-1 w-full bg-[#040810] rounded-full overflow-hidden">

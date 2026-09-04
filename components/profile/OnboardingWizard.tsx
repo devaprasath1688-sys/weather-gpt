@@ -35,6 +35,7 @@ import {
 } from "@/lib/constants";
 import { useGeolocation, reverseGeocodeToDistrict } from "@/lib/geo";
 import type { OccupationKey, LanguageCode, NotificationPreference } from "@/types";
+import { useLanguage } from "@/contexts/language-context";
 
 type OnboardingState = {
   // Step 1: Location
@@ -183,6 +184,7 @@ const STEP_TITLES = [
 ];
 
 export function OnboardingWizard() {
+  const { t } = useLanguage();
   const router = useRouter();
   const { signUp } = useAuth();
   const { permissionState, requestLocation } = useGeolocation();
@@ -403,14 +405,14 @@ export function OnboardingWizard() {
           </div>
         </div>
         <div className="space-y-2">
-          <h2 className="text-2xl font-bold text-white">Setup Complete</h2>
+          <h2 className="text-2xl font-bold text-white">{t("onboarding.complete")}</h2>
           <p className="text-sm text-neutral-400 max-w-sm mx-auto">
             Your intelligence profile for <strong className="text-white">{formData.district}</strong> is ready.
           </p>
         </div>
         <div className="flex items-center justify-center gap-2 text-xs text-neutral-400 font-mono">
           <Sparkles className="h-3.5 w-3.5 animate-spin" />
-          <span>Entering WeatherGPT Dashboard...</span>
+          <span>{t("onboarding.entering")}</span>
         </div>
         <div className="pt-2">
           <Button
@@ -490,7 +492,7 @@ export function OnboardingWizard() {
             <div className="text-[11px] font-mono uppercase tracking-widest text-neutral-400">
               Step 01
             </div>
-            <h2 className="text-2xl font-bold text-white tracking-tight">Where are you located?</h2>
+            <h2 className="text-2xl font-bold text-white tracking-tight">{t("onboarding.locationQuestion")}</h2>
             <p className="text-xs sm:text-sm text-neutral-400">
               Select your district to receive localized radar telemetry and verified alerts.
             </p>
@@ -566,7 +568,7 @@ export function OnboardingWizard() {
             <div className="text-[11px] font-mono uppercase tracking-widest text-neutral-400">
               Step 02
             </div>
-            <h2 className="text-2xl font-bold text-white tracking-tight">What best describes you?</h2>
+            <h2 className="text-2xl font-bold text-white tracking-tight">{t("onboarding.occupationQuestion")}</h2>
             <p className="text-xs sm:text-sm text-neutral-400">
               WeatherGPT tailors personal risk weights to your daily operational routine.
             </p>
@@ -609,7 +611,7 @@ export function OnboardingWizard() {
             <div className="text-[11px] font-mono uppercase tracking-widest text-neutral-400">
               Step 03
             </div>
-            <h2 className="text-2xl font-bold text-white tracking-tight">Which weather risks matter to you?</h2>
+            <h2 className="text-2xl font-bold text-white tracking-tight">{t("onboarding.risksQuestion")}</h2>
             <p className="text-xs sm:text-sm text-neutral-400">
               Select all conditions that disrupt your safety, transit, or work.
             </p>
@@ -659,7 +661,7 @@ export function OnboardingWizard() {
             <div className="text-[11px] font-mono uppercase tracking-widest text-neutral-400">
               Step 04
             </div>
-            <h2 className="text-2xl font-bold text-white tracking-tight">What language should WeatherGPT use?</h2>
+            <h2 className="text-2xl font-bold text-white tracking-tight">{t("onboarding.languageQuestion")}</h2>
             <p className="text-xs sm:text-sm text-neutral-400">
               Voice summaries and directives will be presented in your chosen language.
             </p>
@@ -697,7 +699,7 @@ export function OnboardingWizard() {
             <div className="text-[11px] font-mono uppercase tracking-widest text-neutral-400">
               Step 05
             </div>
-            <h2 className="text-2xl font-bold text-white tracking-tight">How should WeatherGPT alert you?</h2>
+            <h2 className="text-2xl font-bold text-white tracking-tight">{t("onboarding.alertQuestion")}</h2>
             <p className="text-xs sm:text-sm text-neutral-400">
               Choose how proactively WeatherGPT should deliver severe announcements.
             </p>
@@ -751,7 +753,7 @@ export function OnboardingWizard() {
             <div className="text-[11px] font-mono uppercase tracking-widest text-neutral-400">
               Step 06
             </div>
-            <h2 className="text-2xl font-bold text-white tracking-tight">You’re all set.</h2>
+            <h2 className="text-2xl font-bold text-white tracking-tight">{t("onboarding.allSet")}</h2>
             <p className="text-xs sm:text-sm text-neutral-400">
               Review your configuration and finalize your account credentials to launch.
             </p>
@@ -764,19 +766,19 @@ export function OnboardingWizard() {
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
               <div className="bg-neutral-950 p-2.5 rounded-lg border border-neutral-800">
-                <span className="text-neutral-500 block text-[10px] uppercase font-mono">Location</span>
+                <span className="text-neutral-500 block text-[10px] uppercase font-mono">{t("profile.location")}</span>
                 <span className="font-semibold text-white">{formData.district}</span>
               </div>
               <div className="bg-neutral-950 p-2.5 rounded-lg border border-neutral-800">
-                <span className="text-neutral-500 block text-[10px] uppercase font-mono">Occupation</span>
+                <span className="text-neutral-500 block text-[10px] uppercase font-mono">{t("profile.occupation")}</span>
                 <span className="font-semibold text-white capitalize">{formData.occupation}</span>
               </div>
               <div className="bg-neutral-950 p-2.5 rounded-lg border border-neutral-800">
-                <span className="text-neutral-500 block text-[10px] uppercase font-mono">Language</span>
+                <span className="text-neutral-500 block text-[10px] uppercase font-mono">{t("profile.language")}</span>
                 <span className="font-semibold text-white uppercase">{formData.language}</span>
               </div>
               <div className="bg-neutral-950 p-2.5 rounded-lg border border-neutral-800">
-                <span className="text-neutral-500 block text-[10px] uppercase font-mono">Alerts</span>
+                <span className="text-neutral-500 block text-[10px] uppercase font-mono">{t("profile.alerts")}</span>
                 <span className="font-semibold text-white capitalize">{formData.notificationLevel}</span>
               </div>
             </div>
@@ -811,7 +813,7 @@ export function OnboardingWizard() {
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 required
                 className="w-full rounded-xl border border-neutral-800 bg-neutral-900 px-4 py-2.5 text-xs sm:text-sm text-white placeholder-neutral-500 transition-colors focus:border-white focus:outline-none"
-                placeholder="you@example.com"
+                placeholder={t("auth.emailPlaceholder")}
                 disabled={isSubmitting}
               />
             </div>
@@ -828,7 +830,7 @@ export function OnboardingWizard() {
                 required
                 minLength={6}
                 className="w-full rounded-xl border border-neutral-800 bg-neutral-900 px-4 py-2.5 text-xs sm:text-sm text-white placeholder-neutral-500 transition-colors focus:border-white focus:outline-none"
-                placeholder="At least 6 characters"
+                placeholder={t("auth.passwordPlaceholder")}
                 disabled={isSubmitting}
               />
             </div>
@@ -857,7 +859,7 @@ export function OnboardingWizard() {
             className="inline-flex items-center gap-2 rounded-xl border border-neutral-800 bg-neutral-900 px-5 py-2.5 text-xs font-semibold text-neutral-300 transition-colors hover:bg-neutral-800 hover:text-white"
           >
             <ArrowLeft className="h-4 w-4" />
-            <span>Back</span>
+                <span>{t("common.back")}</span>
           </button>
         ) : (
           <div />
@@ -870,7 +872,7 @@ export function OnboardingWizard() {
             variant="primary"
             className="px-6 py-2.5 text-xs"
           >
-            <span>Continue</span>
+                <span>{t("common.continue")}</span>
             <ArrowRight className="h-4 w-4" />
           </Button>
         )}

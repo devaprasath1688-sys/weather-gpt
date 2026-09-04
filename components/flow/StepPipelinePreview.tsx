@@ -12,6 +12,7 @@ import { generatePersonalizedRecommendation } from "@/lib/recommendations/genera
 import { RiskMeter } from "@/components/ui/RiskMeter";
 import { VerificationBadge } from "@/components/ui/VerificationBadge";
 import { Badge } from "@/components/ui/Badge";
+import { useLanguage } from "@/contexts/language-context";
 
 type StepPipelinePreviewProps = {
   activeStep: number;
@@ -19,6 +20,7 @@ type StepPipelinePreviewProps = {
 };
 
 export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreviewProps) {
+  const { t } = useLanguage();
   const { profile, weather: personaWeather, district, alerts, recommendation, notificationReason } = persona;
 
   // Live Weather Telemetry State
@@ -115,8 +117,8 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
               <User className="h-4 w-4" />
             </div>
             <div>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Step 01 Ingest</span>
-              <h3 className="font-bold text-base text-white">User Profile &amp; Location Context</h3>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Step 01 {t("pipeline.input")}</span>
+              <h3 className="font-bold text-base text-white">{t("pipeline.profileLocation")}</h3>
             </div>
           </div>
           <Badge tone="official">Profile Active</Badge>
@@ -124,7 +126,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
 
         <div className="grid gap-4 sm:grid-cols-3">
           <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-5 space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">Location Context</span>
+            <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">{t("pipeline.locationContext")}</span>
             <p className="text-xl font-bold text-white">{profile.district} District</p>
             <p className="text-xs text-neutral-400">{profile.city}, {profile.state}</p>
             <div className="pt-2 text-[11px] font-mono text-neutral-300 border-t border-neutral-800">
@@ -133,13 +135,13 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
           </div>
 
           <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-5 space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">Occupation Vector</span>
+            <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">{t("pipeline.occupationVector")}</span>
             <p className="text-xl font-bold text-white capitalize">{profile.occupation}</p>
             <p className="wgpt-body-text text-xs text-neutral-400">{profile.activityNotes || "Standard commuter / outdoor profile"}</p>
           </div>
 
           <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-5 space-y-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">Preferences</span>
+            <span className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">{t("pipeline.preferences")}</span>
             <p className="text-xl font-bold text-white uppercase font-mono">{profile.language}</p>
             <p className="text-xs text-neutral-400">
               Notifications: Rain ({profile.notificationPreferences.heavyRainfall ? "ON" : "OFF"}), Closures ({profile.notificationPreferences.officialClosures ? "ON" : "OFF"})
@@ -160,14 +162,14 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
               <CloudRain className="h-4 w-4" />
             </div>
             <div>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Step 02 Data</span>
-              <h3 className="font-bold text-base text-white">Meteorological Telemetry</h3>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Step 02 {t("pipeline.meteorology")}</span>
+              <h3 className="font-bold text-base text-white">{t("pipeline.meteorological")}</h3>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             {loadingLive ? (
-              <Badge tone="neutral">Fetching Live Weather...</Badge>
+              <Badge tone="neutral">{t("pipeline.fetching")}</Badge>
             ) : isLiveActive ? (
               <Badge tone="ok">
                 <Radio className="h-3 w-3 text-white animate-pulse" />
@@ -182,7 +184,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-5 space-y-1">
             <div className="flex items-center justify-between text-xs text-neutral-400">
-              <span>Temperature</span>
+              <span>{t("pipeline.temperature")}</span>
               <Thermometer className="h-4 w-4 text-neutral-400" />
             </div>
             <p className="text-3xl font-extrabold text-white font-mono">{activeWeather.temperatureC}°C</p>
@@ -191,7 +193,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
 
           <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-5 space-y-1">
             <div className="flex items-center justify-between text-xs text-neutral-400">
-              <span>24h Rain</span>
+              <span>{t("weather.rain24h")}</span>
               <CloudRain className="h-4 w-4 text-neutral-400" />
             </div>
             <p className="text-3xl font-extrabold text-white font-mono">{activeWeather.rainfallMm24h} mm</p>
@@ -200,20 +202,20 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
 
           <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-5 space-y-1">
             <div className="flex items-center justify-between text-xs text-neutral-400">
-              <span>Wind Velocity</span>
+              <span>{t("common.windVelocity")}</span>
               <Wind className="h-4 w-4 text-neutral-400" />
             </div>
             <p className="text-3xl font-extrabold text-white font-mono">{activeWeather.windSpeedKmh} <span className="text-sm font-normal text-neutral-500">km/h</span></p>
-            <span className="text-xs text-neutral-500 font-mono">Vector Analyzed</span>
+            <span className="text-xs text-neutral-500 font-mono">{t("pipeline.vectorAnalyzed")}</span>
           </div>
 
           <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-5 space-y-1">
             <div className="flex items-center justify-between text-xs text-neutral-400">
-              <span>Solar UV Index</span>
+              <span>{t("weather.uvIndex")}</span>
               <Sun className="h-4 w-4 text-neutral-400" />
             </div>
             <p className="text-3xl font-extrabold text-white font-mono">{activeWeather.uvIndex}</p>
-            <span className="text-xs text-neutral-500 font-mono">UV Radiation Band</span>
+            <span className="text-xs text-neutral-500 font-mono">{t("common.uvRadiation")}</span>
           </div>
         </div>
 
@@ -221,7 +223,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
         <div className="rounded-xl border border-neutral-800 bg-neutral-900 p-4 text-xs flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             <Activity className="h-4 w-4 text-white shrink-0" />
-            <span className="font-semibold text-white uppercase tracking-wider">Meteorological Condition:</span>
+              <span className="font-semibold text-white uppercase tracking-wider">{t("pipeline.condition")}</span>
             <span className="text-neutral-300 font-medium">{activeWeather.conditionDescription}</span>
           </div>
           <span className="text-neutral-500 font-mono">Updated: {activeWeather.updatedAt}</span>
@@ -230,7 +232,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
         {/* Hourly Forecast Stream */}
         {liveData?.hourlyForecast && liveData.hourlyForecast.length > 0 && (
           <div className="space-y-2.5 pt-2">
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">6-Hour Forecast Stream (Live)</h4>
+            <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">{t("pipeline.forecastStream")}</h4>
             <div className="grid grid-cols-2 sm:grid-cols-6 gap-2">
               {liveData.hourlyForecast.map((hour, idx) => (
                 <div key={idx} className="rounded-xl border border-neutral-800 bg-neutral-950 p-2.5 text-center space-y-1">
@@ -263,8 +265,8 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
               <Cpu className="h-4 w-4" />
             </div>
             <div>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Step 03 Analysis</span>
-              <h3 className="font-bold text-base text-white">Occupation-Aware Risk &amp; Impact Analysis</h3>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Step 03 {t("pipeline.intelligence")}</span>
+              <h3 className="font-bold text-base text-white">{t("pipeline.riskAnalysis")}</h3>
             </div>
           </div>
           <Badge tone={severityTone}>
@@ -282,7 +284,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
             />
 
             <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-4 space-y-2">
-              <span className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider block">Primary Hazard Driver</span>
+              <span className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider block">{t("pipeline.primaryHazard")}</span>
               <p className="text-sm font-bold text-white flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4 text-white shrink-0" />
                 {riskAnalysis.primaryHazard}
@@ -298,7 +300,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
                 <span className="text-xs font-bold text-white uppercase tracking-wider">
                   Target Impact ({profile.occupation})
                 </span>
-                <span className="text-[10px] font-mono text-neutral-500">Deterministic Analysis</span>
+                <span className="text-[10px] font-mono text-neutral-500">{t("pipeline.deterministic")}</span>
               </div>
               <p className="wgpt-body-text text-xs text-neutral-300">
                 {riskAnalysis.occupationImpact}
@@ -307,22 +309,22 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
 
             {/* Sub-scores breakdown */}
             <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-4 space-y-2">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 block">Hazard Sub-Score Vectors</span>
+              <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 block">{t("pipeline.subScores")}</span>
               <div className="grid grid-cols-2 gap-2 text-xs">
                 <div className="rounded-lg bg-neutral-900 border border-neutral-800 p-2.5 flex justify-between items-center">
-                  <span className="text-neutral-400">Precipitation:</span>
+                  <span className="text-neutral-400">{t("weather.rain24h")}:</span>
                   <span className="font-bold text-white font-mono">{riskAnalysis.subScores.rainRisk}/100</span>
                 </div>
                 <div className="rounded-lg bg-neutral-900 border border-neutral-800 p-2.5 flex justify-between items-center">
-                  <span className="text-neutral-400">Thermal Heat:</span>
+                  <span className="text-neutral-400">{t("risk.heat")}:</span>
                   <span className="font-bold text-white font-mono">{riskAnalysis.subScores.heatRisk}/100</span>
                 </div>
                 <div className="rounded-lg bg-neutral-900 border border-neutral-800 p-2.5 flex justify-between items-center">
-                  <span className="text-neutral-400">Wind Velocity:</span>
+                  <span className="text-neutral-400">{t("common.windVelocity")}:</span>
                   <span className="font-bold text-white font-mono">{riskAnalysis.subScores.windRisk}/100</span>
                 </div>
                 <div className="rounded-lg bg-neutral-900 border border-neutral-800 p-2.5 flex justify-between items-center">
-                  <span className="text-neutral-400">Solar UV:</span>
+                  <span className="text-neutral-400">{t("risk.solar")}:</span>
                   <span className="font-bold text-white font-mono">{riskAnalysis.subScores.uvRisk}/100</span>
                 </div>
               </div>
@@ -330,7 +332,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
 
             {/* Recommended Precautions List */}
             <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-4 space-y-2">
-              <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 block">Recommended Action Precautions</span>
+              <span className="text-[11px] font-mono uppercase tracking-wider text-neutral-400 block">{t("pipeline.precautions")}</span>
               <ul className="space-y-1.5 text-xs text-neutral-300">
                 {riskAnalysis.recommendedPrecautions.map((prec, i) => (
                   <li key={i} className="flex items-start gap-2">
@@ -363,16 +365,16 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
               <Building2 className="h-4 w-4" />
             </div>
             <div>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Step 04 Telemetry</span>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Step 04 {t("pipeline.meteorology")}</span>
               <h3 className="font-bold text-base text-white">
-                District Intelligence ({districtIntel.districtName}, {districtIntel.state})
+                {t("pipeline.districtIntel")} ({districtIntel.districtName}, {districtIntel.state})
               </h3>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <Badge tone={districtTone}>
-              District Risk: {districtIntel.overallRiskLevel.toUpperCase()} ({districtIntel.districtRiskScore}/100)
+              {t("pipeline.districtRisk")} {districtIntel.overallRiskLevel.toUpperCase()} ({districtIntel.districtRiskScore}/100)
             </Badge>
             <Badge tone={districtIntel.isLive ? "ok" : "warn"}>
               {districtIntel.dataSource}
@@ -385,7 +387,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
           <div className="flex flex-wrap items-center justify-between gap-2 border-b border-neutral-800 pb-3 text-xs font-mono">
             <span className="text-white font-bold flex items-center gap-1.5">
               <AlertTriangle className="h-4 w-4 text-neutral-400" />
-              Dominant Hazard: {districtIntel.dominantHazard}
+              {t("pipeline.dominantHazard")} {districtIntel.dominantHazard}
             </span>
             <span className="text-neutral-500">Updated: {districtIntel.lastUpdated}</span>
           </div>
@@ -395,7 +397,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
           </p>
 
           <div className="flex flex-wrap items-center gap-2 pt-2 text-[11px] border-t border-neutral-800">
-            <span className="text-neutral-400 font-semibold uppercase font-mono">Vulnerable Groups:</span>
+            <span className="text-neutral-400 font-semibold uppercase font-mono">{t("pipeline.vulnerableGroups")}</span>
             {(districtIntel.vulnerableOccupations || []).map((group) => (
               <span key={group} className="rounded-full bg-neutral-900 border border-neutral-700 px-2.5 py-0.5 text-neutral-200">
                 {group}
@@ -408,9 +410,9 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
         <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-5 space-y-4">
           <div className="flex items-center justify-between border-b border-neutral-800 pb-2">
             <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-400 font-mono">
-              Subdivision Disruption &amp; Sub-Area Status
+              {t("pipeline.subdivision")}
             </h4>
-            <span className="text-[10px] font-mono text-neutral-500">Active Alerts: {districtIntel.activeOfficialAlertsCount}</span>
+            <span className="text-[10px] font-mono text-neutral-500">{t("pipeline.activeAlerts")} {districtIntel.activeOfficialAlertsCount}</span>
           </div>
 
           <div className="space-y-2.5">
@@ -425,7 +427,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
                   <p className="mt-0.5 text-xs text-neutral-300">{area.disruptionLevel}</p>
                 </div>
                 <Badge tone={area.waterloggingRisk === "severe" || area.waterloggingRisk === "high" ? "danger" : area.waterloggingRisk === "elevated" ? "warn" : "ok"}>
-                  Risk: {area.waterloggingRisk.toUpperCase()}
+                  {t("pipeline.districtRisk")} {area.waterloggingRisk.toUpperCase()}
                 </Badge>
               </div>
             ))}
@@ -434,8 +436,8 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
 
         {/* Emergency Helpline Contacts */}
         <div className="flex flex-wrap gap-5 text-xs font-mono text-neutral-400 pt-2 border-t border-neutral-800">
-          <span>Helpline: <strong className="text-white">{districtIntel.emergencyContacts.helpline}</strong></span>
-          <span>Control Room: <strong className="text-white">{districtIntel.emergencyContacts.controlRoom}</strong></span>
+          <span>{t("pipeline.helpline")} <strong className="text-white">{districtIntel.emergencyContacts.helpline}</strong></span>
+          <span>{t("pipeline.controlRoom")} <strong className="text-white">{districtIntel.emergencyContacts.controlRoom}</strong></span>
         </div>
       </div>
     );
@@ -451,8 +453,8 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
               <ShieldAlert className="h-4 w-4" />
             </div>
             <div>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Step 05 Ground Truth</span>
-              <h3 className="font-bold text-base text-white">Official Government Alerts &amp; Verification Engine</h3>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Step 05 {t("pipeline.groundTruth")}</span>
+              <h3 className="font-bold text-base text-white">{t("pipeline.groundTruth")}</h3>
             </div>
           </div>
           {verificationReport ? (
@@ -461,7 +463,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
               sourceName={verificationReport.issuingAuthority}
             />
           ) : (
-            <Badge tone="ok">No Active Emergencies</Badge>
+            <Badge tone="ok">{t("pipeline.noEmergencies")}</Badge>
           )}
         </div>
 
@@ -486,7 +488,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
               <div className="space-y-2">
                 <h4 className="text-base font-bold text-white">{primaryAlert.title}</h4>
                 <div className="rounded-xl bg-neutral-900 p-4 font-mono text-xs text-neutral-300 border border-neutral-800 leading-relaxed">
-                  <span className="text-white font-semibold uppercase">[OFFICIAL UNTOUCHED PRESS RELEASE]: </span>
+                  <span className="text-white font-semibold uppercase">{t("pipeline.officialRelease")} </span>
                   {primaryAlert.rawAnnouncement}
                 </div>
                 {primaryAlert.officialRefUrl && (
@@ -509,9 +511,9 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
                 <div className="flex items-center justify-between border-b border-neutral-800 pb-2">
                   <div className="flex items-center gap-2 text-xs font-bold text-white">
                     <Sparkles className="h-4 w-4" />
-                    <span>Grounded AI Translation (Fact-Checked Against Official Bulletin)</span>
+                    <span>{t("pipeline.groundedTranslation")}</span>
                   </div>
-                  <span className="text-[10px] font-mono text-neutral-500">English &amp; Tamil</span>
+                  <span className="text-[10px] font-mono text-neutral-500">{t("pipeline.englishTamil")}</span>
                 </div>
                 <p className="wgpt-body-text text-sm font-medium text-neutral-100">
                   {groundedSummary.en}
@@ -519,7 +521,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
                 {groundedSummary.ta && (
                   <div className="pt-2 border-t border-neutral-800">
                     <span className="text-[11px] font-mono text-neutral-400 font-semibold block mb-1">
-                      Tamil (தமிழ்):
+                      {t("profile.language")}:
                     </span>
                     <p className="wgpt-body-text text-xs text-neutral-300">
                       {groundedSummary.ta}
@@ -533,7 +535,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
                 <div className="flex items-center justify-between border-b border-neutral-800 pb-2">
                   <span className="text-xs font-bold uppercase tracking-wider text-neutral-300 flex items-center gap-1.5">
                     <ShieldCheck className="h-4 w-4 text-white" />
-                    5-Point Ground-Truth Verification Rule Audit
+                    {t("pipeline.verificationAudit")}
                   </span>
                   <Badge tone={verificationReport.isVerifiedOfficial ? "ok" : "danger"}>
                     {verificationReport.status.toUpperCase()}
@@ -589,8 +591,8 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
               <Sparkles className="h-4 w-4" />
             </div>
             <div>
-              <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Step 06 Output</span>
-              <h3 className="font-bold text-base text-white">Personalized Action Directives</h3>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Step 06 {t("pipeline.dispatch")}</span>
+              <h3 className="font-bold text-base text-white">{t("pipeline.personalized")}</h3>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -609,9 +611,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
         <div className="rounded-2xl border border-neutral-700 bg-neutral-950 p-6 space-y-3 shadow-xl">
           <div className="flex items-center gap-2 border-b border-neutral-800 pb-2">
             <Zap className="h-4 w-4 text-white" />
-            <span className="text-xs font-bold uppercase tracking-wider text-white">
-              Primary Action Directive
-            </span>
+            <span className="text-xs font-bold uppercase tracking-wider text-white">{t("pipeline.primaryDirective")}</span>
           </div>
           <h3 className="text-lg font-bold text-white leading-snug">
             {phase6Recommendation.primaryDirective.en}
@@ -630,7 +630,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
         <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-6 space-y-4 shadow-sm">
           <h4 className="text-xs font-semibold uppercase tracking-wider text-neutral-400 flex items-center gap-2 font-mono">
             <CheckCircle2 className="h-4 w-4 text-white" />
-            Recommended Safety Actions
+            {t("pipeline.safetyActions")}
           </h4>
           <ul className="space-y-2 text-sm text-neutral-200">
             {phase6Recommendation.safetyActions.en.map((action, i) => (
@@ -643,7 +643,7 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
 
           {phase6Recommendation.safetyActions.ta && phase6Recommendation.safetyActions.ta.length > 0 && (
             <div className="pt-3 border-t border-neutral-800 space-y-2">
-              <span className="text-[11px] font-mono text-neutral-400 font-semibold">Tamil (தமிழ்):</span>
+              <span className="text-[11px] font-mono text-neutral-400 font-semibold">{t("profile.language")}:</span>
               <ul className="space-y-1.5 text-xs text-neutral-300">
                 {phase6Recommendation.safetyActions.ta.map((action, i) => (
                   <li key={i} className="flex items-start gap-2">
@@ -673,14 +673,14 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
         <div className="rounded-xl border border-neutral-800 bg-neutral-950 p-5 space-y-2.5">
           <div className="flex items-center gap-2 border-b border-neutral-800 pb-2">
             <AlertTriangle className="h-4 w-4 text-neutral-400" />
-            <span className="text-xs font-bold uppercase tracking-wider text-neutral-300">Why This Recommendation?</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-neutral-300">{t("pipeline.whyRecommendation")}</span>
           </div>
           <p className="wgpt-body-text text-xs text-neutral-300">
             {phase6Recommendation.reasoning.en}
           </p>
           {phase6Recommendation.reasoning.ta && (
             <div className="pt-2 border-t border-neutral-800">
-              <span className="text-[10px] font-mono text-neutral-400">Tamil:</span>
+              <span className="text-[10px] font-mono text-neutral-400">{t("profile.language")}:</span>
               <p className="wgpt-body-text text-xs text-neutral-400 mt-0.5">
                 {phase6Recommendation.reasoning.ta}
               </p>
@@ -693,10 +693,10 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
           <div className="flex items-center justify-between border-b border-neutral-800 pb-2">
             <span className="text-xs font-bold uppercase tracking-wider text-neutral-300 flex items-center gap-1.5 font-mono">
               <Layers className="h-4 w-4 text-white" />
-              Grounding &amp; Data Source Chain
+              {t("pipeline.groundingChain")}
             </span>
             <span className="text-[10px] font-mono text-neutral-500">
-              {phase6Recommendation.groundingSources.length} telemetry streams
+              {phase6Recommendation.groundingSources.length} {t("pipeline.streams")}
             </span>
           </div>
           <div className="grid gap-2 sm:grid-cols-2 text-xs">
@@ -727,11 +727,11 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
             <Bell className="h-4 w-4" />
           </div>
           <div>
-            <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Step 07 Dispatch</span>
-            <h3 className="font-bold text-base text-white">Targeted Notification Routing</h3>
+            <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400">Step 07 {t("pipeline.dispatch")}</span>
+            <h3 className="font-bold text-base text-white">{t("pipeline.notificationRouting")}</h3>
           </div>
         </div>
-        <Badge tone="official">Right User → Right Notification</Badge>
+        <Badge tone="official">{t("pipeline.rightNotification")}</Badge>
       </div>
 
       <div className="rounded-2xl border border-neutral-800 bg-neutral-950 p-6 space-y-4 shadow-xl">
@@ -741,16 +741,16 @@ export function StepPipelinePreview({ activeStep, persona }: StepPipelinePreview
           </div>
           <div>
             <h4 className="font-bold text-sm text-white">
-              Targeted Notification Dispatch Confirmed for {persona.name}
+              {t("pipeline.dispatchConfirmed", { name: persona.name })}
             </h4>
-            <p className="text-xs text-neutral-400">Filtering active · Non-affected districts suppressed</p>
+            <p className="text-xs text-neutral-400">{t("pipeline.filtering")}</p>
           </div>
         </div>
 
         <div className="rounded-xl border border-neutral-800 bg-neutral-900 p-4 text-xs space-y-2">
           <div className="flex flex-wrap items-center justify-between text-neutral-400 font-mono gap-2">
-            <span>Payload: &quot;{recommendation.headline.en.slice(0, 50)}...&quot;</span>
-            <span>Target District: {profile.district}</span>
+            <span>{t("pipeline.payload")} &quot;{recommendation.headline.en.slice(0, 50)}...&quot;</span>
+            <span>{t("pipeline.targetDistrict")} {profile.district}</span>
           </div>
           <p className="wgpt-body-text text-neutral-300 pt-2 border-t border-neutral-800">{notificationReason}</p>
         </div>

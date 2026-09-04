@@ -11,6 +11,7 @@ import {
   Send,
 } from "lucide-react";
 import { PRODUCT_FLOW } from "@/lib/constants";
+import { useLanguage } from "@/contexts/language-context";
 
 type ProductFlowVisualizerProps = {
   activeStep: number; // 1 to 7
@@ -41,6 +42,7 @@ export function ProductFlowVisualizer({
   activeStep,
   onStepSelect,
 }: ProductFlowVisualizerProps) {
+  const { t } = useLanguage();
   return (
     <div className="space-y-6">
       {/* Pipeline Header */}
@@ -49,16 +51,16 @@ export function ProductFlowVisualizer({
           <div className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-sky-400 animate-pulse" />
             <span className="text-[11px] font-semibold uppercase tracking-widest text-sky-400 font-mono">
-              Pipeline Architecture
+              {t("pipeline.architecture")}
             </span>
           </div>
           <h2 className="mt-1 text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
-            Locked 7-Step Intelligence Flow
+            {t("pipeline.lockedFlow")}
           </h2>
         </div>
         <div className="inline-flex items-center gap-2 rounded-full border border-sky-500/30 bg-[#0a1628] px-3.5 py-1.5 text-xs font-semibold text-sky-300 shadow-[0_0_12px_-2px_rgba(56,189,248,0.25)]">
           <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
-          <span>Step 0{activeStep} Active</span>
+          <span>{t("pipeline.stepActive", { step: `0${activeStep}` })}</span>
         </div>
       </div>
 
@@ -110,7 +112,7 @@ export function ProductFlowVisualizer({
                   <span className={`text-[9px] font-mono uppercase tracking-wider font-semibold block mb-1 ${
                     isActive ? "text-sky-400" : "text-slate-500"
                   }`}>
-                    {phaseLabel}
+                    {t(`pipeline.${phaseLabel.toLowerCase()}` as "pipeline.input")}
                   </span>
 
                   {/* Step Title */}
@@ -126,7 +128,7 @@ export function ProductFlowVisualizer({
                 <div className={`mt-3 pt-2 border-t border-[#142a47]/80 text-[10px] ${
                   isActive ? "text-sky-300/80 font-mono font-medium" : "text-slate-500"
                 }`}>
-                  {isActive ? "Viewing output" : "Click to view"}
+                  {isActive ? t("pipeline.viewing") : t("pipeline.clickView")}
                 </div>
               </button>
             );

@@ -7,6 +7,7 @@ import {
   useSpeechSynthesis,
   getLanguageCode,
 } from "@/lib/voice";
+import { useLanguage } from "@/contexts/language-context";
 
 export type AssistantContext = {
   profile?: {
@@ -82,13 +83,6 @@ type ChatMessage = {
   content: string;
   createdAt: number;
 };
-
-const QUICK_QUESTIONS = [
-  "What is my weather now?",
-  "Will it rain today?",
-  "What is my risk level?",
-  "Is it safe to travel?",
-];
 
 let messageCounter = 0;
 function createMessageId(prefix: "usr" | "ast") {
@@ -190,17 +184,15 @@ function formatTime(timestamp: number) {
   }
 }
 
-const INITIAL_MESSAGES: ChatMessage[] = [
-  {
+export function WeatherAssistant({ context }: WeatherAssistantProps) {
+  const { t, language } = useLanguage();
+  const quickQuestions = [t("assistant.q1"), t("assistant.q2"), t("assistant.q3"), t("assistant.q4")];
+  const initialMessages: ChatMessage[] = [{
     id: "initial-assistant-msg",
     role: "assistant",
-    content:
-      "Hello! I’m your WeatherGPT assistant. How can I help you with current weather, rain forecast, risk analysis, or travel conditions?",
+    content: t("assistant.greeting"),
     createdAt: 0,
-  },
-];
-
-export function WeatherAssistant({ context }: WeatherAssistantProps) {
+  }];
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -208,7 +200,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
   const [autoTtsEnabled, setAutoTtsEnabled] = useState(false);
   const [wasVoiceInput, setWasVoiceInput] = useState(false);
   const [voiceLangMode, setVoiceLangMode] = useState<"auto" | "ta" | "en">("auto");
-  const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
+  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
 
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -224,8 +216,8 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
   const activeSttLang = useMemo(() => {
     if (voiceLangMode === "ta") return "ta-IN";
     if (voiceLangMode === "en") return "en-IN";
-    return context?.profile?.language === "ta" ? "ta-IN" : "en-IN";
-  }, [voiceLangMode, context?.profile?.language]);
+    return getLanguageCode(context?.profile?.language || language).sttLang;
+  }, [voiceLangMode, context?.profile?.language, language]);
 
   const defaultTtsLang = useMemo(() => {
     return activeSttLang;
@@ -345,7 +337,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
 
         // Auto-read response if user enabled Auto-TTS or triggered this query via voice
         if (autoTtsEnabled || isVoiceTriggered) {
-          const { ttsLang } = getLanguageCode(undefined, assistantText);
+          const { ttsLang } = getLanguageCode(language, assistantText);
           speak(assistantText, {
             messageId: assistantMsgId,
             lang: ttsLang,
@@ -379,7 +371,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
         }, 50);
       }
     },
-    [input, isLoading, messages, context, stopSpeaking, autoTtsEnabled, speak]
+    [input, isLoading, messages, context, stopSpeaking, autoTtsEnabled, speak, language]
   );
 
   // Speech-to-Text Hook with automatic dispatch on final recognition
@@ -420,10 +412,10 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
   const clearChat = useCallback(() => {
     stopSpeaking();
     stopListening();
-    setMessages(INITIAL_MESSAGES);
+    setMessages(initialMessages);
     setError("");
     setInput("");
-  }, [stopSpeaking, stopListening]);
+  }, [stopSpeaking, stopListening, initialMessages]);
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -431,7 +423,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
   };
 
   const handleSpeakMessage = (msg: ChatMessage) => {
-    const { ttsLang } = getLanguageCode(undefined, msg.content);
+    const { ttsLang } = getLanguageCode(language, msg.content);
     toggleSpeaking(msg.content, {
       messageId: msg.id,
       lang: ttsLang,
@@ -441,7 +433,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        aria-label="Open WeatherGPT Assistant"
+        aria-label={t("assistant.open")}
         className="
           fixed
           bottom-6
@@ -556,8 +548,8 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
               onClick={() => setAutoTtsEnabled((prev) => !prev)}
               title={
                 autoTtsEnabled
-                  ? "Auto-read responses is ON (Click to turn off)"
-                  : "Auto-read responses is OFF (Click to turn on)"
+                  ? t("assistant.autoOn")
+                  : t("assistant.autoOff")
               }
               className={`
                 rounded-lg p-1.5 transition
@@ -579,7 +571,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
           <button
             type="button"
             onClick={clearChat}
-            title="Clear chat history"
+            title={t("assistant.clear")}
             className="
               rounded-lg
               p-1.5
@@ -599,7 +591,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
               stopListening();
               setOpen(false);
             }}
-            title="Close assistant"
+            title={t("assistant.close")}
             className="
               rounded-lg
               p-1.5
@@ -648,7 +640,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
           <button
             type="button"
             onClick={() => setVoiceLangMode("auto")}
-            title="Auto-detect English / Tamil / Tanglish"
+            title={t("assistant.autoOff")}
             className={`px-1.5 py-0.5 rounded text-[8px] font-bold uppercase transition ${
               voiceLangMode === "auto"
                 ? "bg-sky-500 text-slate-950 font-bold"
@@ -660,7 +652,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
           <button
             type="button"
             onClick={() => setVoiceLangMode("en")}
-            title="English / Tanglish voice input"
+            title={t("assistant.speakEnglish")}
             className={`px-1.5 py-0.5 rounded text-[8px] font-bold transition ${
               voiceLangMode === "en"
                 ? "bg-sky-500 text-slate-950 font-bold"
@@ -672,7 +664,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
           <button
             type="button"
             onClick={() => setVoiceLangMode("ta")}
-            title="Tamil voice input (தமிழ்)"
+            title={t("assistant.speakTamil")}
             className={`px-1.5 py-0.5 rounded text-[8px] font-bold transition ${
               voiceLangMode === "ta"
                 ? "bg-sky-500 text-slate-950 font-bold"
@@ -768,8 +760,8 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
                         onClick={() => handleSpeakMessage(message)}
                         title={
                           isThisSpeaking
-                            ? "Stop speaking"
-                            : "Listen to this response"
+                            ? t("assistant.stopSpeaking")
+                            : t("assistant.listenResponse")
                         }
                         className="
                           inline-flex
@@ -794,12 +786,12 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
                               <span className="w-0.5 bg-sky-300 rounded-full animate-sound-wave-2" />
                               <span className="w-0.5 bg-sky-400 rounded-full animate-sound-wave-3" />
                             </div>
-                            <span>Speaking...</span>
+                            <span>{t("assistant.speaking")}</span>
                           </span>
                         ) : (
                           <span className="inline-flex items-center gap-1">
                             <Volume2 className="h-3 w-3" />
-                            <span>Listen</span>
+                            <span>{t("assistant.listen")}</span>
                           </span>
                         )}
                       </button>
@@ -851,7 +843,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
                 <Loader2 className="h-3.5 w-3.5 animate-spin text-sky-400" />
 
                 <span className="wgpt-body-text text-xs text-slate-300 font-medium">
-                  {wasVoiceInput ? "Analyzing query & telemetry..." : "Thinking..."}
+                  {wasVoiceInput ? t("assistant.analyzing") : t("assistant.thinking")}
                 </span>
 
                 <div className="flex gap-1">
@@ -918,7 +910,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
                     ? `&quot;${sttTranscript}&quot;`
                     : voiceLangMode === "ta"
                     ? "தமிழில் பேசுங்கள்..."
-                    : "Listening... Speak your question"}
+                    : t("assistant.listening")}
                 </span>
               </div>
             </div>
@@ -928,7 +920,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
               onClick={stopListening}
               className="shrink-0 rounded-xl bg-sky-500 hover:bg-sky-400 px-3 py-1.5 text-[11px] font-bold text-slate-950 shadow-md transition-all"
             >
-              Done
+              {t("assistant.done")}
             </button>
           </div>
         </div>
@@ -976,7 +968,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
         "
       >
         <div className="mb-2 flex gap-1.5 overflow-x-auto pb-1 scrollbar-thin">
-          {QUICK_QUESTIONS.map((question) => (
+          {quickQuestions.map((question) => (
             <button
               key={question}
               type="button"
@@ -1032,7 +1024,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
             onChange={(event) => setInput(event.target.value)}
             disabled={isLoading || isListening}
             placeholder={
-              isListening ? "Listening to your voice..." : "Ask WeatherGPT..."
+              isListening ? `${t("assistant.listen")}...` : `${t("assistant.send")}...`
             }
             autoComplete="off"
             className="
@@ -1060,7 +1052,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
                   ? "Listening... Click to stop"
                   : `Speak in ${voiceLangMode === "ta" ? "Tamil" : "English/Tanglish"}`
               }
-              aria-label={isListening ? "Stop listening" : "Start voice input"}
+              aria-label={isListening ? t("assistant.close") : t("assistant.listen")}
               className={`
                 flex
                 h-8
@@ -1093,7 +1085,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
           <button
             type="submit"
             disabled={!input.trim() || isLoading || isListening}
-            aria-label="Send message"
+            aria-label={t("assistant.send")}
             className="
               flex
               h-8
@@ -1121,7 +1113,7 @@ export function WeatherAssistant({ context }: WeatherAssistantProps) {
 
         <div className="pb-2 text-center">
           <span className="text-[8px] font-mono text-slate-600">
-            Voice &amp; Text grounded in WeatherGPT context
+            {t("assistant.voiceGrounded")}
           </span>
         </div>
       </div>

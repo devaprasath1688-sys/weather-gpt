@@ -19,6 +19,7 @@ import {
 import { useAuth } from "@/contexts/auth-context";
 import { useIsMounted } from "@/lib/useIsMounted";
 import { Reveal } from "@/components/ui/Reveal";
+import { useLanguage } from "@/contexts/language-context";
 
 type LandingPageProps = {
   onExploreDashboard?: () => void;
@@ -28,6 +29,7 @@ export function LandingPage({
   onExploreDashboard,
 }: LandingPageProps) {
   const { user, signOut } = useAuth();
+    const { t } = useLanguage();
   const mounted = useIsMounted();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -98,14 +100,14 @@ export function LandingPage({
                   className="flex items-center gap-1.5 rounded-xl border border-sky-500/20 bg-sky-500/10 px-3.5 py-1.5 text-xs font-semibold text-sky-300 hover:bg-sky-500/20 hover:border-sky-400/40 hover:text-white transition-all duration-200 press-tactile"
                 >
                   <Activity className="h-3.5 w-3.5" />
-                  <span>Launch Dashboard</span>
+                  <span>{t("nav.launchDashboard")}</span>
                 </button>
 
                 <button
                   onClick={() => signOut()}
                   className="rounded-xl border border-white/[0.06] bg-white/[0.03] px-3 py-1.5 text-xs font-medium text-slate-400 hover:text-white hover:border-white/10 transition-all duration-200"
                 >
-                  Sign Out
+                  {t("nav.signOut")}
                 </button>
 
               </div>
@@ -114,7 +116,7 @@ export function LandingPage({
                 href="/login"
                 className="rounded-xl border border-white/[0.06] bg-white/[0.03] px-3.5 py-1.5 text-xs font-semibold text-slate-300 hover:border-white/10 hover:bg-white/[0.06] hover:text-white transition-all duration-200"
               >
-                Sign In
+                {t("nav.signIn")}
               </Link>
             )}
           </div>
@@ -144,7 +146,7 @@ export function LandingPage({
               className="flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-200 hover:bg-white/[0.06] transition-colors"
             >
               <Radio className="h-3.5 w-3.5 text-sky-400" />
-              <span>Live Telemetry</span>
+              <span>{t("status.live")}</span>
             </a>
 
             <a
@@ -171,7 +173,7 @@ export function LandingPage({
               className="flex items-center gap-2 rounded-xl px-3.5 py-2 text-xs font-medium text-slate-200 hover:bg-white/[0.06] transition-colors"
             >
               <ShieldCheck className="h-3.5 w-3.5 text-sky-400" />
-              <span>Trust Model</span>
+                <span>{t("nav.trust")}</span>
             </a>
 
             <div className="pt-2 border-t border-white/[0.06] flex gap-2">
@@ -184,7 +186,7 @@ export function LandingPage({
                   }}
                   className="flex-1 text-center rounded-xl bg-sky-500 py-2 text-xs font-bold text-slate-950 shadow-sm press-tactile"
                 >
-                  Launch Dashboard
+                  {t("nav.launchDashboard")}
                 </button>
               ) : (
                 <Link
@@ -192,7 +194,7 @@ export function LandingPage({
                   onClick={() => setMobileMenuOpen(false)}
                   className="flex-1 text-center rounded-xl border border-white/[0.06] bg-white/[0.03] py-2 text-xs font-semibold text-slate-200"
                 >
-                  Sign In
+                  {t("nav.signIn")}
                 </Link>
               )}
             </div>
@@ -299,7 +301,7 @@ export function LandingPage({
                   href="/signup"
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-sky-500 hover:bg-sky-400 px-8 py-3.5 text-sm font-bold text-slate-950 shadow-[0_4px_20px_-4px_rgba(56,189,248,0.4)] transition-all duration-300 hover:shadow-[0_8px_28px_-4px_rgba(56,189,248,0.5)] press-tactile"
                 >
-                  <span>Get Started</span>
+                  <span>{t("nav.signUp")}</span>
                   <ArrowRight className="h-4 w-4" />
                 </Link>
               )}

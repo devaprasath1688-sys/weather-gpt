@@ -33,9 +33,11 @@ import { WeatherAssistant, type AssistantContext } from "@/components/assistant/
 import { WeatherHeroSection } from "@/components/hero/WeatherHeroSection";
 import { HourlyTimeline } from "@/components/forecast/HourlyTimeline";
 import { DailyForecastGrid } from "@/components/forecast/DailyForecastGrid";
+import { useLanguage } from "@/contexts/language-context";
 
 export default function HomePage() {
   const { user, userProfile } = useAuth();
+  const { t } = useLanguage();
   const { permissionState, requestLocation } = useGeolocation();
 
   // Mode: "landing" (default for root URL) vs "dashboard" (when viewing dashboard tabs)
@@ -576,10 +578,10 @@ export default function HomePage() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="font-mono text-xs font-bold text-sky-400 uppercase tracking-wider">
-                    04 / Geographic Context
+                    04 / {t("nav.districtSection")}
                   </span>
                   <h2 className="text-sm font-bold text-white uppercase tracking-wide">
-                    Live Weather Map ({selectedDistrict} District)
+                    {t("nav.weather")} ({selectedDistrict} District)
                   </h2>
                 </div>
               </div>
@@ -600,10 +602,10 @@ export default function HomePage() {
             <section className="space-y-3">
               <div className="flex items-center gap-2">
                 <span className="font-mono text-xs font-bold text-sky-400 uppercase tracking-wider">
-                  05 / Location &amp; Environment
+                  05 / {t("profile.location")} &amp; Environment
                 </span>
                 <h2 className="text-sm font-bold text-white uppercase tracking-wide">
-                  Location &amp; Environmental Context
+                  {t("profile.location")} &amp; Environmental Context
                 </h2>
               </div>
 
@@ -612,7 +614,7 @@ export default function HomePage() {
                   {/* District Switcher */}
                   <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-3.5 space-y-2">
                     <span className="text-[10px] uppercase font-mono text-sky-400 block font-semibold">
-                      District &amp; State
+                      {t("nav.districtSection")} &amp; State
                     </span>
                     <select
                       value={selectedDistrict}
@@ -636,7 +638,7 @@ export default function HomePage() {
                   {/* Coordinates & Positioning */}
                   <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-3.5 space-y-1.5">
                     <span className="text-[10px] uppercase font-mono text-sky-400 block font-semibold">
-                      Geospatial Coordinates
+                      {t("nav.district")}
                     </span>
                     <p className="text-sm font-bold text-white font-mono">
                       {activeProfile.latitude.toFixed(4)}°N, {activeProfile.longitude.toFixed(4)}°E
@@ -662,7 +664,7 @@ export default function HomePage() {
                   {/* Active Occupation Profile */}
                   <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-3.5 space-y-2">
                     <span className="text-[10px] uppercase font-mono text-sky-400 block font-semibold">
-                      Active Profile Occupation
+                      {t("profile.occupation")}
                     </span>
                     <select
                       value={selectedOccupation}
@@ -693,7 +695,7 @@ export default function HomePage() {
                     06 / Impact Analytics
                   </span>
                   <h2 className="text-sm font-bold text-white uppercase tracking-wide">
-                    Risk Overview
+                    {t("nav.risk")}
                   </h2>
                 </div>
                 <span className="rounded-full border border-sky-500/30 bg-[#0a1628] px-3 py-0.5 text-xs font-bold font-mono text-sky-300 shadow-sm">
@@ -729,7 +731,7 @@ export default function HomePage() {
 
                 {/* Rationale Box */}
                 <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-4 space-y-1 text-xs">
-                  <span className="text-sky-300 font-bold block font-mono">Why this risk score exists:</span>
+                  <span className="text-sky-300 font-bold block font-mono">{t("risk.why")}</span>
                   <p className="wgpt-body-text text-slate-300">
                     {riskAnalysis.explanation}
                   </p>
@@ -738,7 +740,7 @@ export default function HomePage() {
                 {/* 5 Risk Sub-Categories */}
                 <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs font-mono">
                   <div className="bg-[#07111e] border border-[#142a47] p-3 rounded-xl text-center space-y-1 hover:border-sky-500/30 transition-colors">
-                    <span className="text-[10px] text-slate-400 uppercase block">Rain Risk</span>
+                    <span className="text-[10px] text-slate-400 uppercase block">{t("risk.rain")}</span>
                     <span className="text-base font-bold text-sky-400">{riskAnalysis.subScores.rainRisk}/100</span>
                     <div className="h-1 w-full bg-[#040810] rounded-full overflow-hidden">
                       <div className="h-full bg-sky-400" style={{ width: `${riskAnalysis.subScores.rainRisk}%` }} />
@@ -746,7 +748,7 @@ export default function HomePage() {
                   </div>
 
                   <div className="bg-[#07111e] border border-[#142a47] p-3 rounded-xl text-center space-y-1 hover:border-sky-500/30 transition-colors">
-                    <span className="text-[10px] text-slate-400 uppercase block">Solar UV</span>
+                    <span className="text-[10px] text-slate-400 uppercase block">{t("risk.solar")}</span>
                     <span className="text-base font-bold text-sky-400">{riskAnalysis.subScores.uvRisk}/100</span>
                     <div className="h-1 w-full bg-[#040810] rounded-full overflow-hidden">
                       <div className="h-full bg-sky-400" style={{ width: `${riskAnalysis.subScores.uvRisk}%` }} />
@@ -754,7 +756,7 @@ export default function HomePage() {
                   </div>
 
                   <div className="bg-[#07111e] border border-[#142a47] p-3 rounded-xl text-center space-y-1 hover:border-sky-500/30 transition-colors">
-                    <span className="text-[10px] text-slate-400 uppercase block">Wind Risk</span>
+                    <span className="text-[10px] text-slate-400 uppercase block">{t("risk.wind")}</span>
                     <span className="text-base font-bold text-sky-400">{riskAnalysis.subScores.windRisk}/100</span>
                     <div className="h-1 w-full bg-[#040810] rounded-full overflow-hidden">
                       <div className="h-full bg-sky-400" style={{ width: `${riskAnalysis.subScores.windRisk}%` }} />
@@ -762,7 +764,7 @@ export default function HomePage() {
                   </div>
 
                   <div className="bg-[#07111e] border border-[#142a47] p-3 rounded-xl text-center space-y-1 hover:border-sky-500/30 transition-colors">
-                    <span className="text-[10px] text-slate-400 uppercase block">Heat Risk</span>
+                    <span className="text-[10px] text-slate-400 uppercase block">{t("risk.heat")}</span>
                     <span className="text-base font-bold text-sky-400">{riskAnalysis.subScores.heatRisk}/100</span>
                     <div className="h-1 w-full bg-[#040810] rounded-full overflow-hidden">
                       <div className="h-full bg-sky-400" style={{ width: `${riskAnalysis.subScores.heatRisk}%` }} />
@@ -770,7 +772,7 @@ export default function HomePage() {
                   </div>
 
                   <div className="col-span-2 sm:col-span-1 bg-[#07111e] border border-[#142a47] p-3 rounded-xl text-center space-y-1 hover:border-sky-500/30 transition-colors">
-                    <span className="text-[10px] text-slate-400 uppercase block">Travel Risk</span>
+                    <span className="text-[10px] text-slate-400 uppercase block">{t("risk.travel")}</span>
                     <span className="text-base font-bold text-sky-400">{Math.round((riskAnalysis.subScores.rainRisk + riskAnalysis.subScores.windRisk) / 2)}/100</span>
                     <div className="h-1 w-full bg-[#040810] rounded-full overflow-hidden">
                       <div className="h-full bg-sky-400" style={{ width: `${Math.round((riskAnalysis.subScores.rainRisk + riskAnalysis.subScores.windRisk) / 2)}%` }} />
@@ -790,7 +792,7 @@ export default function HomePage() {
                     07 / Ground Truth
                   </span>
                   <h2 className="text-sm font-bold text-white uppercase tracking-wide">
-                    Official Alerts &amp; Orders
+                      {t("nav.alerts")}
                   </h2>
                 </div>
                 <span className="text-[10px] font-mono uppercase bg-[#0a1628] text-sky-300 border border-sky-500/30 px-3 py-0.5 rounded-full shadow-sm">
@@ -813,7 +815,7 @@ export default function HomePage() {
                           &quot;{alert.rawAnnouncement}&quot;
                         </p>
                         <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-[#142a47]/80 text-[10px] text-slate-400">
-                          <span>Authority: <strong className="text-white">{alert.sourceName}</strong></span>
+                          <span>{t("risk.authority")} <strong className="text-white">{alert.sourceName}</strong></span>
                           {alert.officialRefUrl && (
                             <a
                               href={alert.officialRefUrl}
@@ -822,7 +824,7 @@ export default function HomePage() {
                               className="inline-flex items-center gap-1 text-sky-400 hover:underline font-mono"
                             >
                               <ExternalLink className="h-3 w-3" />
-                              <span>Source Bulletin</span>
+                              <span>{t("risk.sourceBulletin")}</span>
                             </a>
                           )}
                         </div>
@@ -950,7 +952,7 @@ export default function HomePage() {
                   </h2>
                 </div>
                 <div className="flex items-center gap-2 text-xs font-mono">
-                  <span className="text-slate-400">Dominant Hazard:</span>
+                  <span className="text-slate-400">{t("pipeline.dominantHazard")}</span>
                   <span className="text-sky-300 font-bold">{districtIntel.dominantHazard}</span>
                 </div>
               </div>
@@ -972,8 +974,8 @@ export default function HomePage() {
                 </div>
 
                 <div className="flex flex-wrap gap-4 text-xs font-mono text-slate-400 pt-2 border-t border-[#142a47]">
-                  <span>District Helpline: <strong className="text-sky-300">{districtIntel.emergencyContacts.helpline}</strong></span>
-                  <span>Control Room: <strong className="text-sky-300">{districtIntel.emergencyContacts.controlRoom}</strong></span>
+                  <span>{t("pipeline.helpline")} <strong className="text-sky-300">{districtIntel.emergencyContacts.helpline}</strong></span>
+                  <span>{t("pipeline.controlRoom")} <strong className="text-sky-300">{districtIntel.emergencyContacts.controlRoom}</strong></span>
                 </div>
               </div>
             </section>
@@ -985,7 +987,7 @@ export default function HomePage() {
               <div className="max-w-3xl space-y-2 text-center mx-auto">
                 <div className="inline-flex items-center gap-2 rounded-full border border-sky-500/30 bg-[#07111e] px-3.5 py-1 text-xs font-semibold text-sky-300 shadow-[0_0_12px_-2px_rgba(56,189,248,0.25)]">
                   <ShieldCheck className="h-3.5 w-3.5 text-sky-400" />
-                  <span>Ground Truth Verification Standard</span>
+                  <span>{t("pipeline.groundTruth")}</span>
                 </div>
                 <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white">
                   Right Information. Right User.
@@ -998,25 +1000,25 @@ export default function HomePage() {
               <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 text-xs">
                 <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-4 space-y-1.5 hover:border-sky-500/30 transition-colors">
                   <span className="font-mono text-[10px] uppercase text-sky-400 font-semibold">01 · Ground Truth</span>
-                  <p className="font-bold text-white text-sm">Verified Official Sources</p>
+                  <p className="font-bold text-white text-sm">{t("common.verifiedOfficial")}</p>
                   <p className="text-[11px] text-slate-400">Untouched District Collectorate and IMD bulletins.</p>
                 </div>
 
                 <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-4 space-y-1.5 hover:border-sky-500/30 transition-colors">
                   <span className="font-mono text-[10px] uppercase text-sky-400 font-semibold">02 · Verification</span>
-                  <p className="font-bold text-white text-sm">AI Fact Extraction</p>
+                  <p className="font-bold text-white text-sm">{t("pipeline.verification")}</p>
                   <p className="text-[11px] text-slate-400">Strict fact extraction with zero hallucinated emergency orders.</p>
                 </div>
 
                 <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-4 space-y-1.5 hover:border-sky-500/30 transition-colors">
                   <span className="font-mono text-[10px] uppercase text-sky-400 font-semibold">03 · Tailored</span>
-                  <p className="font-bold text-white text-sm">Personalized For You</p>
+                  <p className="font-bold text-white text-sm">{t("nav.recommendations")}</p>
                   <p className="text-[11px] text-slate-400">Targeted to your occupation, transit routine, and district.</p>
                 </div>
 
                 <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-4 space-y-1.5 hover:border-sky-500/30 transition-colors">
                   <span className="font-mono text-[10px] uppercase text-sky-400 font-semibold">04 · Zero Fatigue</span>
-                  <p className="font-bold text-white text-sm">Actionable Intelligence</p>
+                  <p className="font-bold text-white text-sm">{t("nav.intelligence")}</p>
                   <p className="text-[11px] text-slate-400">Clear safety directives while suppressing irrelevant district spam.</p>
                 </div>
               </div>
@@ -1030,7 +1032,7 @@ export default function HomePage() {
         {activeTab === "weather" && (
           <div className="space-y-8">
             <div className="space-y-2 border-b border-[#142a47] pb-4">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Live Weather Telemetry</h2>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">{t("nav.weather")}</h2>
               <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
                 High-resolution meteorological sensor stream for <strong className="text-white">{selectedDistrict} District</strong>.
               </p>
@@ -1039,7 +1041,7 @@ export default function HomePage() {
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               <div className="rounded-2xl border border-[#142a47] bg-[#0a1628]/90 p-6 space-y-3 shadow-md hover:border-sky-500/30 transition-colors">
                 <div className="flex items-center justify-between text-slate-400">
-                  <span className="text-xs font-mono uppercase">Thermal Metrics</span>
+                  <span className="text-xs font-mono uppercase">{t("weather.current")}</span>
                   <Thermometer className="h-4 w-4 text-sky-400" />
                 </div>
                 <div className="space-y-1">
@@ -1053,7 +1055,7 @@ export default function HomePage() {
 
               <div className="rounded-2xl border border-[#142a47] bg-[#0a1628]/90 p-6 space-y-3 shadow-md hover:border-sky-500/30 transition-colors">
                 <div className="flex items-center justify-between text-slate-400">
-                  <span className="text-xs font-mono uppercase">Precipitation &amp; Moisture</span>
+                  <span className="text-xs font-mono uppercase">{t("weather.rain24h")}</span>
                   <CloudRain className="h-4 w-4 text-sky-400" />
                 </div>
                 <div className="space-y-1">
@@ -1067,7 +1069,7 @@ export default function HomePage() {
 
               <div className="rounded-2xl border border-[#142a47] bg-[#0a1628]/90 p-6 space-y-3 shadow-md hover:border-sky-500/30 transition-colors">
                 <div className="flex items-center justify-between text-slate-400">
-                  <span className="text-xs font-mono uppercase">Wind &amp; Solar Radiation</span>
+                  <span className="text-xs font-mono uppercase">{t("common.windVelocity")}</span>
                   <Wind className="h-4 w-4 text-sky-400" />
                 </div>
                 <div className="space-y-1">
@@ -1108,7 +1110,7 @@ export default function HomePage() {
         {activeTab === "risk" && (
           <div className="space-y-8">
             <div className="space-y-2 border-b border-[#142a47] pb-4">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Risk &amp; Impact Analysis</h2>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">{t("nav.risk")}</h2>
               <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
                 Deterministic mathematical hazard modeling tailored to <strong className="text-white capitalize">{selectedOccupation}</strong> in <strong className="text-white">{selectedDistrict} District</strong>.
               </p>
@@ -1123,12 +1125,12 @@ export default function HomePage() {
               <div className="rounded-2xl border border-[#142a47] bg-[#0a1628]/90 p-6 space-y-4 shadow-md">
                 <h3 className="font-bold text-sm text-white uppercase tracking-wider flex items-center gap-2">
                   <Activity className="h-4 w-4 text-sky-400" />
-                  <span>Environmental Hazard Breakdown</span>
+                  <span>{t("pipeline.subScores")}</span>
                 </h3>
                 <div className="space-y-3 text-xs">
                   <div className="space-y-1">
                     <div className="flex justify-between font-mono">
-                      <span className="text-slate-400">Precipitation Inundation Hazard</span>
+                      <span className="text-slate-400">{t("risk.rain")}</span>
                       <span className="text-sky-400 font-bold">{riskAnalysis.subScores.rainRisk}/100</span>
                     </div>
                     <div className="h-2 w-full bg-[#040810] rounded-full overflow-hidden border border-[#142a47]">
@@ -1138,7 +1140,7 @@ export default function HomePage() {
 
                   <div className="space-y-1">
                     <div className="flex justify-between font-mono">
-                      <span className="text-slate-400">Thermal Heat Stress Load</span>
+                      <span className="text-slate-400">{t("risk.heat")}</span>
                       <span className="text-sky-400 font-bold">{riskAnalysis.subScores.heatRisk}/100</span>
                     </div>
                     <div className="h-2 w-full bg-[#040810] rounded-full overflow-hidden border border-[#142a47]">
@@ -1148,7 +1150,7 @@ export default function HomePage() {
 
                   <div className="space-y-1">
                     <div className="flex justify-between font-mono">
-                      <span className="text-slate-400">Wind Velocity Impact</span>
+                      <span className="text-slate-400">{t("risk.wind")}</span>
                       <span className="text-sky-400 font-bold">{riskAnalysis.subScores.windRisk}/100</span>
                     </div>
                     <div className="h-2 w-full bg-[#040810] rounded-full overflow-hidden border border-[#142a47]">
@@ -1158,7 +1160,7 @@ export default function HomePage() {
 
                   <div className="space-y-1">
                     <div className="flex justify-between font-mono">
-                      <span className="text-slate-400">Solar UV Radiation Exposure</span>
+                      <span className="text-slate-400">{t("risk.solar")}</span>
                       <span className="text-sky-400 font-bold">{riskAnalysis.subScores.uvRisk}/100</span>
                     </div>
                     <div className="h-2 w-full bg-[#040810] rounded-full overflow-hidden border border-[#142a47]">
@@ -1171,7 +1173,7 @@ export default function HomePage() {
               <div className="rounded-2xl border border-[#142a47] bg-[#0a1628]/90 p-6 space-y-4 shadow-md">
                 <h3 className="font-bold text-sm text-white uppercase tracking-wider flex items-center gap-2">
                   <UserCheck className="h-4 w-4 text-sky-400" />
-                  <span>Occupational Vulnerability Analysis</span>
+                  <span>{t("pipeline.riskAnalysis")}</span>
                 </h3>
                 <div className="space-y-3 text-xs">
                   <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-4 space-y-1.5">
@@ -1203,7 +1205,7 @@ export default function HomePage() {
         {activeTab === "alerts" && (
           <div className="space-y-8">
             <div className="space-y-2 border-b border-[#142a47] pb-4">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Official Government Bulletins</h2>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">{t("nav.alerts")}</h2>
               <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
                 Ground-truth official orders verified against District Collectorate and IMD administrative portals for <strong className="text-white">{selectedDistrict} District</strong>.
               </p>
@@ -1213,7 +1215,7 @@ export default function HomePage() {
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-[#142a47] pb-4">
                 <div className="flex items-center gap-2">
                   <ShieldCheck className="h-5 w-5 text-sky-400" />
-                  <h3 className="font-bold text-white text-base">District Administrative Bulletins</h3>
+                  <h3 className="font-bold text-white text-base">{t("nav.alerts")}</h3>
                 </div>
                 <span className="text-xs font-mono text-sky-300 bg-[#07111e] px-3 py-1 rounded-full border border-sky-500/30">
                   {activeAlerts.length} Official Bulletins Active
@@ -1247,7 +1249,7 @@ export default function HomePage() {
 
                         <div className="flex flex-wrap items-center justify-between gap-3 text-xs pt-2 border-t border-[#142a47]">
                           <div className="flex items-center gap-2 text-slate-400">
-                            <span>Authority: <strong className="text-white">{alert.sourceName}</strong></span>
+                            <span>{t("risk.authority")} <strong className="text-white">{alert.sourceName}</strong></span>
                             <span>•</span>
                             <span className="inline-flex items-center gap-1 text-sky-300">
                               <CheckCircle2 className="h-3.5 w-3.5 text-sky-400" />
@@ -1262,7 +1264,7 @@ export default function HomePage() {
                               rel="noopener noreferrer"
                               className="inline-flex items-center gap-1 text-sky-400 hover:text-sky-300 font-mono text-xs hover:underline"
                             >
-                              <span>Official Bulletin Link</span>
+                              <span>{t("common.officialLink")}</span>
                               <ExternalLink className="h-3 w-3" />
                             </a>
                           )}
@@ -1274,7 +1276,7 @@ export default function HomePage() {
               ) : (
                 <div className="text-center py-10 space-y-3">
                   <CheckCircle2 className="h-10 w-10 text-sky-400 mx-auto" />
-                  <h4 className="font-bold text-white text-sm uppercase tracking-wider font-mono">No Active Warnings</h4>
+                  <h4 className="font-bold text-white text-sm uppercase tracking-wider font-mono">{t("common.noWarnings")}</h4>
                   <p className="wgpt-body-text text-xs text-slate-400 max-w-md mx-auto">
                     All administrative operations, educational institutions, and public transit schedules for {selectedDistrict} District are operating normally.
                   </p>
@@ -1290,7 +1292,7 @@ export default function HomePage() {
         {activeTab === "recommendations" && (
           <div className="space-y-8">
             <div className="space-y-2 border-b border-[#142a47] pb-4">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">Personalized Directives</h2>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">{t("nav.recommendations")}</h2>
               <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
                 Contextual safety decisions generated for <strong className="text-white capitalize">{selectedOccupation}</strong> profile in <strong className="text-white">{selectedDistrict} District</strong>.
               </p>
@@ -1300,7 +1302,7 @@ export default function HomePage() {
               <div className="md:col-span-8 space-y-6">
                 <div className="rounded-2xl border border-[#142a47] bg-[#0a1628]/90 p-6 sm:p-8 space-y-5 shadow-xl backdrop-blur-sm">
                   <div className="flex items-center justify-between border-b border-[#142a47] pb-3">
-                    <span className="text-xs font-mono uppercase font-bold text-sky-400">Primary Safety Directive</span>
+                    <span className="text-xs font-mono uppercase font-bold text-sky-400">{t("pipeline.primaryDirective")}</span>
                     <span className="text-xs font-mono uppercase px-2.5 py-0.5 rounded-full bg-sky-500/10 text-sky-300 border border-sky-500/30">
                       {recommendation.severity} Priority
                     </span>
@@ -1339,19 +1341,19 @@ export default function HomePage() {
 
               <div className="md:col-span-4 space-y-4">
                 <div className="rounded-2xl border border-[#142a47] bg-[#0a1628]/90 p-5 space-y-3 shadow-xl backdrop-blur-sm">
-                  <span className="text-xs font-mono uppercase font-bold text-sky-400 block">User Context Filter</span>
+                  <span className="text-xs font-mono uppercase font-bold text-sky-400 block">{t("pipeline.profileLocation")}</span>
                   <div className="space-y-2 text-xs">
                     <div className="flex justify-between py-1.5 border-b border-[#142a47]">
-                      <span className="text-slate-400">District:</span>
+                      <span className="text-slate-400">{t("pipeline.targetDistrict")}</span>
                       <span className="font-bold text-white">{selectedDistrict}</span>
                     </div>
                     <div className="flex justify-between py-1.5 border-b border-[#142a47]">
-                      <span className="text-slate-400">Occupation:</span>
+                      <span className="text-slate-400">{t("profile.occupation")}:</span>
                       <span className="font-bold text-white capitalize">{selectedOccupation}</span>
                     </div>
                     <div className="flex justify-between py-1.5 border-b border-[#142a47]">
-                      <span className="text-slate-400">Telemetry Relevance:</span>
-                      <span className="font-bold text-sky-400 font-mono">100% Deterministic</span>
+                      <span className="text-slate-400">{t("common.telemetryRelevance")}</span>
+                      <span className="font-bold text-sky-400 font-mono">{t("common.deterministic100")}</span>
                     </div>
                   </div>
                 </div>
@@ -1366,7 +1368,7 @@ export default function HomePage() {
         {activeTab === "district" && (
           <div className="space-y-8">
             <div className="space-y-2 border-b border-[#142a47] pb-4">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">District Intelligence &amp; Flood Zones</h2>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">{t("nav.district")}</h2>
               <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
                 Subdivision vulnerability, waterlogging risk, and emergency response contacts for <strong className="text-white">{selectedDistrict} District</strong>.
               </p>
@@ -1393,14 +1395,14 @@ export default function HomePage() {
             </div>
 
             <div className="rounded-2xl border border-[#142a47] bg-[#0a1628]/90 p-6 space-y-3 shadow-md">
-              <h3 className="font-bold text-sm text-white uppercase tracking-wider font-mono">Emergency Control Room &amp; Helplines</h3>
+              <h3 className="font-bold text-sm text-white uppercase tracking-wider font-mono">{t("pipeline.controlRoom")} &amp; {t("pipeline.helpline")}</h3>
               <div className="grid gap-4 sm:grid-cols-2 text-xs font-mono">
                 <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-4 space-y-1">
-                  <span className="text-slate-400 uppercase text-[10px] block">State Disaster Helpline</span>
+                  <span className="text-slate-400 uppercase text-[10px] block">{t("pipeline.helpline")}</span>
                   <span className="text-lg font-bold text-sky-400">{districtIntel.emergencyContacts.helpline}</span>
                 </div>
                 <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-4 space-y-1">
-                  <span className="text-slate-400 uppercase text-[10px] block">District Disaster Control Room</span>
+                  <span className="text-slate-400 uppercase text-[10px] block">{t("pipeline.controlRoom")}</span>
                   <span className="text-lg font-bold text-sky-400">{districtIntel.emergencyContacts.controlRoom}</span>
                 </div>
               </div>
@@ -1414,7 +1416,7 @@ export default function HomePage() {
         {activeTab === "pipeline" && (
           <div className="space-y-8">
             <div className="space-y-2 border-b border-[#142a47] pb-4">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">7-Step Intelligence Architecture</h2>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">{t("pipeline.lockedFlow")}</h2>
               <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
                 The deterministic 7-step pipeline powering WeatherGPT from raw sensor telemetry to targeted user dispatch.
               </p>
@@ -1439,7 +1441,7 @@ export default function HomePage() {
         {activeTab === "trust" && (
           <div className="space-y-8">
             <div className="space-y-2 border-b border-[#142a47] pb-4">
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">WeatherGPT Trust Architecture</h2>
+              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">{t("nav.trust")}</h2>
               <p className="wgpt-body-text text-xs sm:text-sm text-slate-400">
                 Core architectural principles ensuring zero hallucinated closures and 100% grounded meteorological intelligence.
               </p>
@@ -1447,7 +1449,7 @@ export default function HomePage() {
 
             <div className="rounded-2xl border border-[#142a47] bg-[#0a1628]/90 p-6 sm:p-8 space-y-6 shadow-xl backdrop-blur-sm">
               <div className="rounded-xl border border-[#142a47] bg-[#07111e] p-5 space-y-2">
-                <span className="text-[10px] font-mono uppercase text-sky-400 font-semibold block">Separation of Concerns Principle</span>
+                <span className="text-[10px] font-mono uppercase text-sky-400 font-semibold block">{t("nav.trust")}</span>
                 <p className="text-sm font-semibold text-white">
                   DATA → AI ANALYSIS → OFFICIAL INFORMATION → PERSONALIZED RECOMMENDATION
                 </p>
@@ -1470,7 +1472,7 @@ export default function HomePage() {
                     </h3>
                     <div className="pt-2 border-t border-[#142a47] flex items-center gap-1.5 text-[10px] text-sky-300 font-mono">
                       <CheckCircle2 className="h-3 w-3 text-sky-400" />
-                      <span>Verified Standard</span>
+                      <span>{t("common.verifiedOfficial")}</span>
                     </div>
                   </div>
                 ))}

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import { useLanguage } from "@/contexts/language-context";
 
 const RISK_LEGEND = [
   { level: "LOW", color: "#71717a", desc: "Safe baseline" },
@@ -11,9 +12,10 @@ const RISK_LEGEND = [
 ];
 
 export function MapLegend() {
+  const { t } = useLanguage();
   return (
     <div className="absolute bottom-4 left-4 z-[1000] rounded-2xl border border-neutral-800 bg-neutral-950/95 p-4 space-y-2 shadow-2xl max-w-[200px] backdrop-blur-md">
-      <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 font-semibold block">Risk Spectrum</span>
+      <span className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 font-semibold block">{t("map.riskSpectrum")}</span>
       <div className="space-y-1.5">
         {RISK_LEGEND.map((item) => (
           <div key={item.level} className="flex items-center gap-2 text-xs">

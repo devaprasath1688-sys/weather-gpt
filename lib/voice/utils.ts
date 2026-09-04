@@ -33,7 +33,7 @@ export function cleanTextForSpeech(rawText: string): string {
 }
 
 /**
- * Detects whether the text is predominantly Tamil, English, or mixed
+ * Detects the requested Indian language and selects its voice code.
  * to select the appropriate TTS voice and STT language code.
  */
 export function getLanguageCode(
@@ -43,6 +43,14 @@ export function getLanguageCode(
   // If user profile explicitly prefers Tamil
   if (preferredLanguage === "ta") {
     return { sttLang: "ta-IN", ttsLang: "ta-IN" };
+  }
+
+  const languageCodes: Record<string, string> = {
+    en: "en-IN", hi: "hi-IN", te: "te-IN", ml: "ml-IN", kn: "kn-IN",
+    ur: "ur-IN", mr: "mr-IN", bn: "bn-IN", or: "od-IN",
+  };
+  if (preferredLanguage && languageCodes[preferredLanguage]) {
+    return { sttLang: languageCodes[preferredLanguage], ttsLang: languageCodes[preferredLanguage] };
   }
 
   // If text contains Tamil Unicode block

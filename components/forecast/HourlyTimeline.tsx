@@ -3,6 +3,7 @@
 import React from "react";
 import { BarChart3, Sun, CloudSun, Cloud, CloudRain, Zap, Flame, Wind } from "lucide-react";
 import type { HourlyForecast } from "@/types";
+import { useLanguage } from "@/contexts/language-context";
 
 type HourlyTimelineProps = {
   hourlyData: HourlyForecast[];
@@ -36,20 +37,21 @@ function getHourWeatherIcon(condition: string, className = "h-5 w-5") {
 }
 
 export function HourlyTimeline({ hourlyData, formatTemp }: HourlyTimelineProps) {
+  const { t } = useLanguage();
   return (
     <section className="space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <span className="font-mono text-xs font-bold text-sky-400 uppercase tracking-wider">
-            02 / Hourly Outlook
+            02 / {t("forecast.hourly")}
           </span>
           <h2 className="text-sm font-bold text-white uppercase tracking-wide">
-            24-Hour Forecast Timeline
+            {t("forecast.timeline")}
           </h2>
         </div>
         <div className="flex items-center gap-1.5 text-xs text-slate-400 font-mono">
           <BarChart3 className="h-3.5 w-3.5 text-sky-400" />
-          <span>24-Hour Continuous Horizon</span>
+          <span>{t("forecast.horizon")}</span>
         </div>
       </div>
 
@@ -86,7 +88,7 @@ export function HourlyTimeline({ hourlyData, formatTemp }: HourlyTimelineProps) 
 
                 {hour.popPercent > 0 ? (
                   <span className="text-[10px] font-mono text-sky-300 bg-sky-500/15 border border-sky-500/30 px-2 py-0.5 rounded-full font-bold">
-                    {hour.popPercent}% rain
+                    {hour.popPercent}% {t("forecast.rainPop")}
                   </span>
                 ) : (
                   <span className="text-[10px] font-mono text-slate-500">0%</span>

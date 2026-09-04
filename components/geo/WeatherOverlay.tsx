@@ -4,6 +4,7 @@ import React from "react";
 import { CloudRain, Thermometer, Wind, Sun, Radio } from "lucide-react";
 import type { WeatherData } from "@/types";
 import type { RiskAnalysisResult } from "@/types/risk";
+import { useLanguage } from "@/contexts/language-context";
 
 type WeatherOverlayProps = {
   weather: WeatherData;
@@ -13,6 +14,7 @@ type WeatherOverlayProps = {
 };
 
 export function WeatherOverlay({ weather, risk, districtName, isLive }: WeatherOverlayProps) {
+  const { t } = useLanguage();
   return (
     <div className="rounded-2xl border border-neutral-800 bg-neutral-950 p-5 space-y-3.5 shadow-xl">
       <div className="flex items-center justify-between border-b border-neutral-800 pb-2.5">
@@ -21,7 +23,7 @@ export function WeatherOverlay({ weather, risk, districtName, isLive }: WeatherO
         </span>
         <span className="inline-flex items-center gap-1.5 text-[10px] font-mono font-bold text-white px-2 py-0.5 rounded-full bg-neutral-900 border border-neutral-700">
           {isLive && <Radio className="h-3 w-3 animate-pulse" />}
-          {isLive ? "LIVE FEED" : "PRESET"}
+          {isLive ? t("common.live") : t("common.preset")}
         </span>
       </div>
 
@@ -30,28 +32,28 @@ export function WeatherOverlay({ weather, risk, districtName, isLive }: WeatherO
           <Thermometer className="h-4 w-4 text-neutral-400 shrink-0" />
           <div>
             <span className="text-white font-bold block">{weather.temperatureC}°C</span>
-            <span className="text-neutral-500 text-[10px]">Feels {weather.feelsLikeC}°C</span>
+            <span className="text-neutral-500 text-[10px]">{t("common.feels")} {weather.feelsLikeC}°C</span>
           </div>
         </div>
         <div className="flex items-center gap-2.5 rounded-xl bg-neutral-900 border border-neutral-800 p-2.5">
           <CloudRain className="h-4 w-4 text-neutral-400 shrink-0" />
           <div>
             <span className="text-white font-bold block">{weather.rainfallMm24h}mm</span>
-            <span className="text-neutral-500 text-[10px]">24h Rain</span>
+            <span className="text-neutral-500 text-[10px]">{t("weather.rain24h")}</span>
           </div>
         </div>
         <div className="flex items-center gap-2.5 rounded-xl bg-neutral-900 border border-neutral-800 p-2.5">
           <Wind className="h-4 w-4 text-neutral-400 shrink-0" />
           <div>
             <span className="text-white font-bold block">{weather.windSpeedKmh} km/h</span>
-            <span className="text-neutral-500 text-[10px]">Wind Velocity</span>
+            <span className="text-neutral-500 text-[10px]">{t("common.windVelocity")}</span>
           </div>
         </div>
         <div className="flex items-center gap-2.5 rounded-xl bg-neutral-900 border border-neutral-800 p-2.5">
           <Sun className="h-4 w-4 text-neutral-400 shrink-0" />
           <div>
             <span className="text-white font-bold block">UV {weather.uvIndex}</span>
-            <span className="text-neutral-500 text-[10px]">Solar Index</span>
+            <span className="text-neutral-500 text-[10px]">{t("common.solarIndex")}</span>
           </div>
         </div>
       </div>
